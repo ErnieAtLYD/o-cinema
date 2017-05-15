@@ -2,7 +2,7 @@
 		<div class="container">
 			<div class="row">
 			<div class="span2">
-				<h5>&copy; 2011-<?php echo date("Y") ?> O Cinema</h5>
+				<h5>&copy; 2011-<?php echo date( 'Y' ); ?> O Cinema</h5>
 			
 				<h5>Navigation</h5>
 				<ul>
@@ -31,15 +31,15 @@
 				<h5>Upcoming Events</h5>
 				<ul>
 	  			<?php global $post;
-	  			if( function_exists( 'get_events' ) ) {
+	  			if ( function_exists( 'get_events' ) ) {
 					$posts = tribe_get_events( array(
-						'eventDisplay' => 'upcoming',
-						'post_per_page' => -1
+						'eventDisplay' => 'list',
+						'post_per_page' => -1,
 					));
 				}
-				foreach( $posts as $post ) : setup_postdata($post); 
+				foreach ( $posts as $post ) : setup_postdata( $post );
 					echo '<li>';
-					echo '<a href="' . get_permalink($post->ID) . '">' . $post->post_title . '</a>';
+					echo '<a href="' . get_permalink( $post->ID ) . '">' . $post->post_title . '</a>';
 					echo '</li>';
 				endforeach; ?>
 				</ul>

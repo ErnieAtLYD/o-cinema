@@ -76,7 +76,7 @@
 	<?php
 		$events = tribe_get_events(
 			array(
-				'orderby' => 'EventStartDate',
+				'eventDisplay' => 'list',
 				'posts_per_page' => -1,
 			)
 		);

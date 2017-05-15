@@ -78,6 +78,10 @@ if ( isset( $web[ $node ] ) || count( $web[ $node ] ) >= $index && ! is_null( $_
 /* Render TwiML */
 header( 'content-type: text/xml' );
 echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Response>\n";
+
+// FIXME: Uncomment this out when it's time to push live
+// $destination = 'showing';
+
 switch ( $destination ) {
 	case 'vmrecord': ?>
 		<?php email( $_REQUEST['RecordingUrl'] ) ?>

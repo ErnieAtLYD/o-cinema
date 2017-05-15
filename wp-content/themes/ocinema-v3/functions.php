@@ -230,6 +230,16 @@ function get_json_from_agile_api( $evtinfo ) {
 	}
 }
 
+function convert_date_to_spoken( $hit ) {
+	$date = DateTime::createFromFormat( 'm/d', $hit[0] );
+
+	if ( ! $date ) {
+		//invalid date supplied, return original string
+		return $hit[0];
+	}
+	return $date->format( 'l F jS' );
+}
+
 
 /* Print front dates: used in both venue pages, front page and twilio
  * Given a POST ID ($post->ID, usually)
@@ -255,7 +265,7 @@ function printFrontRunDates( $id, $is_audio = false ) {
 
 		if ( isset( $json['StartDate'] ) ) {
 			echo 'ONE NIGHT ONLY: ';
-			echo date( ( $is_audio ) ? 'l F jS' : 'n/j', strtotime( $json['StartDate'] ) );
+			echo date( ( $is_audio ) ? 'l F jS \a\t g:iA' : 'n/j', strtotime( $json['StartDate'] ) );
 		} else {
 			foreach ( $json as $agile_event ) {
 				$timestamp = strtotime( $agile_event['StartDate'] );
@@ -281,7 +291,6 @@ function printFrontRunDates( $id, $is_audio = false ) {
 			}
 		}
 	} else {
-
 		$meta = get_sql_from_id_and_key( $id, 'showing' );
 
 		// If today falls in the range of the event,
@@ -303,17 +312,24 @@ function printFrontRunDates( $id, $is_audio = false ) {
 					$pos = strpos( $key->meta_value, '@' );
 				}
 				if ( false === $pos ) {
+					$string = $key->meta_value;
+
 					// example: Opening May 26th!
-					echo $key->meta_value;
+					if ( $is_audio ) {
+						$pattern = '~(\d{1,2}/\d{1,2})~';
+						$string = preg_replace_callback( $pattern, 'convert_date_to_spoken', $string );
+					}
+
+					echo $string;
 
 				} else {
 					if ( $todays_date < $start_date ) {
 						// examples: Thu, Jun 9th @ 6pm
 						echo 'ONE NIGHT ONLY: ';
-						echo tribe_get_start_date( $id, true, ( $is_audio ) ? 'l F jS' : 'n/j' );
+						echo tribe_get_start_date( $id, true, ( $is_audio ) ? 'l F jS \a\t g:iA' : 'n/j' );
 					} else {
 						echo 'SHOWING TODAY, ';
-						echo date( ( $is_audio ) ? 'l F jS' : 'n/j', strtotime( $todays_date ) );
+						echo date( ( $is_audio ) ? 'l F jS \a\t g:iA' : 'n/j', strtotime( $todays_date ) );
 						echo ': ';
 						echo substr( $key->meta_value, $pos );
 					}
