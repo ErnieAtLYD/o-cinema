@@ -87,7 +87,9 @@ class WC_Gateway_Stripe extends WC_Payment_Gateway {
 		$icon .= '<img src="' . WC_HTTPS::force_https_url( WC()->plugin_url() . '/assets/images/icons/credit-cards/mastercard' . $ext ) . '" alt="Mastercard" width="32" ' . $style . ' />';
 		$icon .= '<img src="' . WC_HTTPS::force_https_url( WC()->plugin_url() . '/assets/images/icons/credit-cards/amex' . $ext ) . '" alt="Amex" width="32" ' . $style . ' />';
 
-		if ( 'USD' === get_woocommerce_currency() ) {
+		$base_location = wc_get_base_location();
+
+		if ( 'US' === $base_location['country'] ) {
 			$icon .= '<img src="' . WC_HTTPS::force_https_url( WC()->plugin_url() . '/assets/images/icons/credit-cards/discover' . $ext ) . '" alt="Discover" width="32" ' . $style . ' />';
 			$icon .= '<img src="' . WC_HTTPS::force_https_url( WC()->plugin_url() . '/assets/images/icons/credit-cards/jcb' . $ext ) . '" alt="JCB" width="32" ' . $style . ' />';
 			$icon .= '<img src="' . WC_HTTPS::force_https_url( WC()->plugin_url() . '/assets/images/icons/credit-cards/diners' . $ext ) . '" alt="Diners" width="32" ' . $style . ' />';
@@ -285,7 +287,7 @@ class WC_Gateway_Stripe extends WC_Payment_Gateway {
 	public function payment_scripts() {
 		if ( $this->stripe_checkout ) {
 			wp_enqueue_script( 'stripe', 'https://checkout.stripe.com/v2/checkout.js', '', '2.0', true );
-			wp_enqueue_script( 'woocommerce_stripe', plugins_url( 'assets/js/stripe_checkout.js', WC_STRIPE_MAIN_FILE ), array( 'stripe' ), WC_STRIPE_VERSION, true );
+			wp_enqueue_script( 'woocommerce_stripe', plugins_url( 'assets/js/stripe-checkout.js', WC_STRIPE_MAIN_FILE ), array( 'stripe' ), WC_STRIPE_VERSION, true );
 		} else {
 			wp_enqueue_script( 'stripe', 'https://js.stripe.com/v2/', '', '1.0', true );
 			wp_enqueue_script( 'woocommerce_stripe', plugins_url( 'assets/js/stripe.js', WC_STRIPE_MAIN_FILE ), array( 'jquery-payment', 'stripe' ), WC_STRIPE_VERSION, true );
@@ -441,6 +443,7 @@ class WC_Gateway_Stripe extends WC_Payment_Gateway {
 
 			// Handle payment
 			if ( $order->get_total() > 0 ) {
+
 				if ( $order->get_total() * 100 < WC_Stripe::get_minimum_amount() ) {
 					throw new Exception( sprintf( __( 'Sorry, the minimum allowed order total is %1$s to use this payment method.', 'woocommerce-gateway-stripe' ), wc_price( WC_Stripe::get_minimum_amount() / 100 ) ) );
 				}
