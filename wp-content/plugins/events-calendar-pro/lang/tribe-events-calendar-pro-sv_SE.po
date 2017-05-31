@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Events Calendar Pro package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2017-01-27 16:27:59+0000\n"
+"PO-Revision-Date: 2017-05-10 18:55:43+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -10,10 +10,15 @@ msgstr ""
 "X-Generator: GlotPress/1.0-alpha-1100\n"
 "Project-Id-Version: Events Calendar Pro\n"
 
+#: src/Tribe/Main.php:1326
+msgctxt "Event title map marker prefix"
+msgid "%s: "
+msgstr ""
+
 #: src/admin-views/event-recurrence.php:99
 #: src/admin-views/event-recurrence.php:335
 msgid "months"
-msgstr ""
+msgstr "månader"
 
 #: src/admin-views/event-recurrence.php:140
 msgctxt "Begins the line indicating when a recurrence time starts"
@@ -22,16 +27,16 @@ msgstr ""
 
 #: src/admin-views/event-recurrence.php:150
 msgid "the same time:"
-msgstr ""
+msgstr "samma tid:"
 
 #: src/admin-views/event-recurrence.php:151
 msgid "a different time:"
-msgstr ""
+msgstr "en annan tid:"
 
 #: src/admin-views/event-recurrence.php:179
 #: src/admin-views/event-recurrence.php:381
 msgid "Series ends"
-msgstr ""
+msgstr "Serie slutar"
 
 #: src/admin-views/event-recurrence.php:188
 #: src/admin-views/event-recurrence.php:391
@@ -45,20 +50,20 @@ msgstr ""
 #: src/admin-views/event-recurrence.php:235
 #: src/admin-views/event-recurrence.php:449
 msgid "Show Details"
-msgstr ""
+msgstr "Visa detaljer"
 
 #: src/admin-views/event-recurrence.php:236
 #: src/admin-views/event-recurrence.php:450
 msgid "Hide Details"
-msgstr ""
+msgstr "Dölj detaljer"
 
 #: src/admin-views/event-recurrence.php:244
 msgid "Schedule multiple events"
-msgstr ""
+msgstr "Schemalägg fler tillfällen"
 
 #: src/admin-views/event-recurrence.php:247
 msgid "Add more events"
-msgstr ""
+msgstr "Lägg till fler förekomster"
 
 #: src/admin-views/event-recurrence.php:260
 msgid "Event will not occur:"
@@ -70,12 +75,12 @@ msgstr ""
 
 #: src/admin-views/recurrence/months.php:11
 msgid "the same day:"
-msgstr ""
+msgstr "samma dag:"
 
 #: src/admin-views/recurrence/months.php:12
 #: src/admin-views/recurrence/years.php:64
 msgid "a different day:"
-msgstr ""
+msgstr "en annan dag:"
 
 #: src/admin-views/recurrence/months.php:30
 #: src/admin-views/recurrence/years.php:82
@@ -97,7 +102,7 @@ msgstr ""
 #: src/admin-views/recurrence/months.php:62
 #: src/admin-views/recurrence/years.php:108
 msgid "Use date:"
-msgstr ""
+msgstr "Använd datum:"
 
 #: src/admin-views/recurrence/months.php:99
 #: src/admin-views/recurrence/years.php:145
@@ -108,11 +113,11 @@ msgstr ""
 #: src/admin-views/recurrence/time.php:10
 #: src/admin-views/recurrence/time.php:84
 msgid "same day"
-msgstr ""
+msgstr "samma dag"
 
 #: src/admin-views/recurrence/time.php:12
 msgid "next day"
-msgstr ""
+msgstr "nästa dag"
 
 #: src/admin-views/recurrence/time.php:15
 msgctxt "number suffix for numbers ending in 1"
@@ -155,11 +160,11 @@ msgstr ""
 
 #: src/admin-views/recurrence/years.php:27
 msgid "year"
-msgstr ""
+msgstr "år"
 
 #: src/admin-views/recurrence/years.php:30
 msgid "years"
-msgstr ""
+msgstr "år"
 
 #: src/admin-views/recurrence/years.php:36
 msgctxt "Begins the line indicating on which month the event will occur"
@@ -172,7 +177,7 @@ msgstr ""
 
 #: src/admin-views/recurrence/years.php:63
 msgid "the same day"
-msgstr ""
+msgstr "samma dag"
 
 #: src/admin-views/widget-admin-advanced-list.php:127
 msgctxt "events list widget setting"
@@ -181,43 +186,43 @@ msgstr ""
 
 #: src/Tribe/Recurrence/Strings.php:63
 msgid "An all day event every [interval] day(s), happening [count] times"
-msgstr ""
+msgstr "Ett heldagsevenemang var [interval] dag(ar), inträffar [count] gånger"
 
 #: src/Tribe/Recurrence/Strings.php:64
 msgid "An all day event every [interval] day(s) at [start_time], happening [count] times"
-msgstr ""
+msgstr "Ett heldagsevenemang var [interval] dag(ar) klockan [start_time], inträffar [count] gånger"
 
 #: src/Tribe/Recurrence/Strings.php:65
 msgid "A multi-day event every [interval] day(s), happening [count] times"
-msgstr ""
+msgstr "Ett flerdagsevenemang var [interval] dag(ar), inträffar [count] gånger"
 
 #: src/Tribe/Recurrence/Strings.php:66
 msgid "A multi-day event every [interval] day(s) at [start_time], happening [count] times"
-msgstr ""
+msgstr "Ett flerdagsevenemang var [interval] dag(ar) klockan [start_time], inträffar [count] gånger"
 
 #: src/Tribe/Recurrence/Strings.php:69
 msgid "An event every [interval] day(s) that begins at [start_time], repeating indefinitely"
-msgstr ""
+msgstr "Ett evenemang var [interval] dag(ar) som börjar [start_time], upprepas obegränsat"
 
 #: src/Tribe/Recurrence/Strings.php:70
 msgid "An all day event every [interval] day(s), repeating indefinitely"
-msgstr ""
+msgstr "Ett heldagsevenemang var [interval] dag(ar), upprepas obegränsat"
 
 #: src/Tribe/Recurrence/Strings.php:71
 msgid "An all day event every [interval] day(s) at [start_time], repeating indefinitely"
-msgstr ""
+msgstr "Ett heldagsevenemang var [interval] dag(ar) klockan [start_time], upprepas obegränsat"
 
 #: src/Tribe/Recurrence/Strings.php:72
 msgid "A multi-day event every [interval] day(s), repeating indefinitely"
-msgstr ""
+msgstr "Ett flerdagsevenemang var [interval] dag(ar), upprepas obegränsat"
 
 #: src/Tribe/Recurrence/Strings.php:73
 msgid "A multi-day event every [interval] day(s) at [start_time], repeating indefinitely"
-msgstr ""
+msgstr "Ett flerdagsevenemang var [interval] dag(ar) klockan [start_time], upprepas obegränsat"
 
 #: src/Tribe/Recurrence/Strings.php:76
 msgid "An event every [interval] week(s) that begins at [start_time] on [days_of_week], repeating until [series_end_date]"
-msgstr ""
+msgstr "Ett evenemang var [interval] vecka/veckor som börjar [start_time] på [days_of_week], upprepas till [series_end_day]"
 
 #: src/Tribe/Recurrence/Strings.php:77
 msgid "An all day event every [interval] week(s) on [days_of_week], repeating until [series_end_date]"
@@ -261,35 +266,35 @@ msgstr ""
 
 #: src/Tribe/Recurrence/Strings.php:91
 msgid "An all day event every [interval] week(s) on [days_of_week], repeating indefinitely"
-msgstr ""
+msgstr "Ett heldagsevenemang var [interval] vecka/veckor på [days_of_week], upprepas obegränsat"
 
 #: src/Tribe/Recurrence/Strings.php:92
 msgid "An all day event every [interval] week(s) on [days_of_week] at [start_time], repeating indefinitely"
-msgstr ""
+msgstr "Ett heldagsevenemang var [interval] vecka/veckor på [days_of_week] klockan [start_time], upprepas obegränsat"
 
 #: src/Tribe/Recurrence/Strings.php:93
 msgid "A multi-day event every [interval] week(s) starting on [days_of_week], repeating indefinitely"
-msgstr ""
+msgstr "Ett flerdagsevenemang var [interval] vecka/veckor börjar på [days_of_week], upprepas obegränsat"
 
 #: src/Tribe/Recurrence/Strings.php:94
 msgid "A multi-day event every [interval] week(s) starting on [days_of_week] at [start_time], repeating indefinitely"
-msgstr ""
+msgstr "Ett flerdagsevenemang var [interval] vecka/veckor börjar på [days_of_week] klockan [start_time], upprepas obegränsat"
 
 #: src/Tribe/Recurrence/Strings.php:97
 msgid "An event every [interval] month(s) that begins at [start_time] on [month_day_description], repeating until [series_end_date]"
-msgstr ""
+msgstr "Ett evenemang var [interval] månad(er) som börjar klockan [start_time] på [month_day_description], upprepas till [series_end_date]"
 
 #: src/Tribe/Recurrence/Strings.php:98
 msgid "An all day event every [interval] month(s) on [month_day_description], repeating until [series_end_date]"
-msgstr ""
+msgstr "Ett heldagsevenemang var [interval] månad(er) på [month_day_description], upprepas till [series_end_date]"
 
 #: src/Tribe/Recurrence/Strings.php:99
 msgid "An all day event every [interval] month(s) on [month_day_description] at [start_time], repeating until [series_end_date]"
-msgstr ""
+msgstr "Ett heldagsevenemang var [interval] månad(er) på [month_day_description] klockan [start_time], upprepas till [series_end_date]"
 
 #: src/Tribe/Recurrence/Strings.php:100
 msgid "A multi-day event every [interval] month(s) starting on [month_day_description], repeating until [series_end_date]"
-msgstr ""
+msgstr "Ett flerdagsevenemang var [interval] månad(er) börjar på [month_day_description], upprepas till [series_end_date]"
 
 #: src/Tribe/Recurrence/Strings.php:101
 msgid "A multi-day event every [interval] month(s) starting on [month_day_description] at [start_time], repeating until [series_end_date]"
@@ -537,7 +542,7 @@ msgstr ""
 
 #: src/admin-views/event-recurrence.php:21
 msgid "Event Series:"
-msgstr ""
+msgstr "Återkommande evenemang:"
 
 #: src/admin-views/event-recurrence.php:26
 msgid "Delete This"
@@ -546,7 +551,7 @@ msgstr ""
 #: src/admin-views/event-recurrence.php:91
 #: src/admin-views/event-recurrence.php:327
 msgid "weeks"
-msgstr ""
+msgstr "veckor"
 
 #: src/admin-views/event-recurrence.php:96
 #: src/admin-views/event-recurrence.php:332
@@ -555,39 +560,39 @@ msgstr "månad"
 
 #: src/Tribe/Recurrence/Strings.php:17
 msgid "the 3rd day of the month"
-msgstr ""
+msgstr "tredje dagen i månaden"
 
 #: src/Tribe/Recurrence/Strings.php:18
 msgid "the 4th day of the month"
-msgstr ""
+msgstr "fjärde dagen i månaden"
 
 #: src/Tribe/Recurrence/Strings.php:19
 msgid "the 5th day of the month"
-msgstr ""
+msgstr "femte dagen i månaden"
 
 #: src/Tribe/Recurrence/Strings.php:20
 msgid "the 6th day of the month"
-msgstr ""
+msgstr "sjätte dagen i månaden"
 
 #: src/Tribe/Recurrence/Strings.php:21
 msgid "the 7th day of the month"
-msgstr ""
+msgstr "sjunde dagen i månaden"
 
 #: src/Tribe/Recurrence/Strings.php:22
 msgid "the 8th day of the month"
-msgstr ""
+msgstr "åttonde dagen i månaden"
 
 #: src/Tribe/Recurrence/Strings.php:23
 msgid "the 9th day of the month"
-msgstr ""
+msgstr "nionde dagen i månaden"
 
 #: src/Tribe/Recurrence/Strings.php:24
 msgid "the 10th day of the month"
-msgstr ""
+msgstr "tionde dagen i månaden"
 
 #: src/Tribe/Recurrence/Strings.php:25
 msgid "the 11th day of the month"
-msgstr ""
+msgstr "elfte dagen i månaden"
 
 #: src/Tribe/Recurrence/Strings.php:26
 msgid "the 12th day of the month"
@@ -627,11 +632,11 @@ msgstr ""
 
 #: src/Tribe/Recurrence/Strings.php:35
 msgid "the 21st day of the month"
-msgstr ""
+msgstr "21:a dagen i månaden"
 
 #: src/Tribe/Recurrence/Strings.php:36
 msgid "the 22nd day of the month"
-msgstr ""
+msgstr "22:a dagen i månaden"
 
 #: src/Tribe/Recurrence/Strings.php:37
 msgid "the 23rd day of the month"
@@ -720,19 +725,19 @@ msgstr ""
 
 #: src/Tribe/Recurrence/Strings.php:13
 msgid "All day"
-msgstr ""
+msgstr "Hela dagen"
 
 #: src/Tribe/Recurrence/Strings.php:14
 msgid "%1$s"
-msgstr ""
+msgstr "%1$s"
 
 #: src/Tribe/Recurrence/Strings.php:15
 msgid "the 1st day of the month"
-msgstr ""
+msgstr "första dagen i månaden"
 
 #: src/Tribe/Recurrence/Strings.php:16
 msgid "the 2nd day of the month"
-msgstr ""
+msgstr "andra dagen i månaden"
 
 #: src/admin-views/widget-admin-advanced-list.php:111
 #: src/admin-views/widget-admin-this-week.php:147
@@ -1068,7 +1073,7 @@ msgstr "dag"
 #: src/admin-views/event-recurrence.php:47
 #: src/admin-views/event-recurrence.php:285
 msgid "Once"
-msgstr ""
+msgstr "En gång"
 
 #: src/admin-views/event-recurrence.php:456
 msgid "Add Exclusion"
@@ -1088,7 +1093,7 @@ msgstr ""
 
 #. Author of the plugin/theme
 msgid "Modern Tribe, Inc."
-msgstr ""
+msgstr "Modern Tribe, Inc."
 
 #. Author URI of the plugin/theme
 msgid "http://m.tri.be/20"
@@ -1248,10 +1253,6 @@ msgstr "Innan du postar en ny tråd, gör en sökning för att se till att din f
 #: src/functions/template-tags/general.php:323
 msgid "The current default organizer is: %s"
 msgstr "Nuvarande förvald arrangör är: %s"
-
-#: src/Tribe/Main.php:1326
-msgid "Event: "
-msgstr "Evenemang"
 
 #: src/functions/template-tags/general.php:338
 msgid "The current default venue is: %s"
@@ -1894,6 +1895,10 @@ msgstr "Aktivering av detta val tar inte bort anpassade fälts data eller funkti
 msgid "Are you sure you wish to remove this field and its data from all events? Once you click OK this cannot be undone."
 msgstr "Är du säker på att du vill ta bort detta fält och dess data från alla evenemang? När du klickar på OK kan detta inte ångras."
 
+#: src/admin-views/event-meta.php:13
+msgid "Additional %s Fields"
+msgstr "Ytterligare %s Fält"
+
 #: src/admin-views/event-recurrence.php:39
 #: src/admin-views/event-recurrence.php:277
 msgid "event"
@@ -1918,12 +1923,12 @@ msgstr "På"
 #: src/admin-views/event-recurrence.php:189
 #: src/admin-views/event-recurrence.php:392
 msgid "after"
-msgstr ""
+msgstr "efter"
 
 #: src/admin-views/event-recurrence.php:190
 #: src/admin-views/event-recurrence.php:393
 msgid "never"
-msgstr ""
+msgstr "aldrig"
 
 #: src/admin-views/event-recurrence.php:223
 #: src/admin-views/event-recurrence.php:425
@@ -1936,7 +1941,7 @@ msgstr "evenemang"
 msgid "You must select a recurrence end date"
 msgstr "Du måste välja ett slutdatum för repetitionen"
 
-#: events-calendar-pro.php:81
+#: events-calendar-pro.php:85
 msgid "The Events Calendar"
 msgstr "Evenemangskalender"
 
@@ -1945,7 +1950,7 @@ msgstr "Evenemangskalender"
 msgid "Daily"
 msgstr "Dagligen"
 
-#: events-calendar-pro.php:82
+#: events-calendar-pro.php:86
 msgid "To begin using Events Calendar PRO, please install the latest version of <a href=\"%s\" class=\"thickbox\" title=\"%s\">The Events Calendar</a>."
 msgstr "För att börja använda Events Calendar PRO måste du installera den senaste versionen av <a href=\"%s\" class=\"thickbox\" title=\"%s\">The Events Calendar</a>."
 
@@ -2095,7 +2100,7 @@ msgstr "Ta bort"
 
 #: src/admin-views/event-recurrence.php:461
 msgid "Recurrence Description:"
-msgstr "Återkommande Beskrivning:"
+msgstr "Återkommande beskrivning:"
 
 #: src/Tribe/Geo_Loc.php:111
 msgid "Distance"

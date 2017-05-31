@@ -4,8 +4,8 @@ Contributors: ModernTribe, barry.hughes, bordoni, borkweb, brianjessee, brook-tr
 Tags: events, calendar, event, venue, organizer, dates, date, google maps, conference, workshop, concert, meeting, seminar, summit, class, modern tribe, tribe, widget, pro
 Donate link: http://m.tri.be/29
 Requires at least: 3.9
-Tested up to: 4.7.4
-Stable tag: 4.4.7
+Tested up to: 4.7.5
+Stable tag: 4.4.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -203,9 +203,16 @@ Our Premium Plugins:
 
 == Changelog ==
 
+= [4.4.8] 2017-05-17 =
+
+* Fix - Ensure the /all/ view orders correctly when sitewide timezone mode is in effect (our thanks to Christopher,
+  alzheimesdementiasupport and many other users for flagging this issue) [76231]
+* Tweak - Further adjustments to plugin licensing code [78506]
+* Tweak - Language and translation improvements
+
 = [4.4.7] 2017-05-04 =
 
-* Tweak - adjustments made to our plugin licensing system
+* Tweak - Adjustments made to our plugin licensing system
 
 = [4.4.6] 2017-04-19 =
 

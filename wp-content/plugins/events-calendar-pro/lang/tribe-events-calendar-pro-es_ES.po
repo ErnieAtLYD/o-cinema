@@ -2,13 +2,18 @@
 # This file is distributed under the same license as the Events Calendar Pro package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2017-01-27 16:27:59+0000\n"
+"PO-Revision-Date: 2017-05-10 18:50:49+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: GlotPress/1.0-alpha-1100\n"
 "Project-Id-Version: Events Calendar Pro\n"
+
+#: src/Tribe/Main.php:1326
+msgctxt "Event title map marker prefix"
+msgid "%s: "
+msgstr ""
 
 #: src/admin-views/event-recurrence.php:99
 #: src/admin-views/event-recurrence.php:335
@@ -1249,10 +1254,6 @@ msgstr "Antes de publicar un nuevo tema, por favor, hacer una búsqueda para ase
 msgid "The current default organizer is: %s"
 msgstr "El Organizador definido por defecto es actualmente: %s"
 
-#: src/Tribe/Main.php:1326
-msgid "Event: "
-msgstr "Evento:"
-
 #: src/functions/template-tags/general.php:338
 msgid "The current default venue is: %s"
 msgstr "El Lugar definido por defecto es actualmente: %s"
@@ -1894,6 +1895,10 @@ msgstr "Al habilitar esta opción no se remueven los campos personalizados o su 
 msgid "Are you sure you wish to remove this field and its data from all events? Once you click OK this cannot be undone."
 msgstr "¿Estas seguro que deseas remover este campo y sus datos de todos los eventos? una vez que haga click esto no podra deshacerse."
 
+#: src/admin-views/event-meta.php:13
+msgid "Additional %s Fields"
+msgstr "Campos adicionales de %s"
+
 #: src/admin-views/event-recurrence.php:39
 #: src/admin-views/event-recurrence.php:277
 msgid "event"
@@ -1936,7 +1941,7 @@ msgstr "eventos"
 msgid "You must select a recurrence end date"
 msgstr "Usted debe elegir una fecha final recurrente"
 
-#: events-calendar-pro.php:81
+#: events-calendar-pro.php:85
 msgid "The Events Calendar"
 msgstr "The Events Calendar"
 
@@ -1945,7 +1950,7 @@ msgstr "The Events Calendar"
 msgid "Daily"
 msgstr "Diaria"
 
-#: events-calendar-pro.php:82
+#: events-calendar-pro.php:86
 msgid "To begin using Events Calendar PRO, please install the latest version of <a href=\"%s\" class=\"thickbox\" title=\"%s\">The Events Calendar</a>."
 msgstr "Para poder comenzar a usar Events Calendar PRO, por favor asegurese de tener instalada la última versión de <a href=\"%s\" class=\"thickbox\" title=\"%s\">The Events Calendar</a>."
 
@@ -2303,7 +2308,7 @@ msgstr "Ciudad"
 
 #: src/functions/template-tags/widgets.php:234
 msgid "%s for week of %s"
-msgstr ""
+msgstr "%s para la semana del %s"
 
 #: src/admin-views/widget-admin-advanced-list.php:35
 msgid "State (US) Or Province (Int)"

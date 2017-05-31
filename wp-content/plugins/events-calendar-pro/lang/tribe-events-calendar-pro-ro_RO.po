@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Events Calendar Pro package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2017-01-27 16:27:59+0000\n"
+"PO-Revision-Date: 2017-05-11 05:36:40+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -10,78 +10,83 @@ msgstr ""
 "X-Generator: GlotPress/1.0-alpha-1100\n"
 "Project-Id-Version: Events Calendar Pro\n"
 
+#: src/Tribe/Main.php:1326
+msgctxt "Event title map marker prefix"
+msgid "%s: "
+msgstr ""
+
 #: src/admin-views/event-recurrence.php:99
 #: src/admin-views/event-recurrence.php:335
 msgid "months"
-msgstr ""
+msgstr "luni"
 
 #: src/admin-views/event-recurrence.php:140
 msgctxt "Begins the line indicating when a recurrence time starts"
 msgid "At"
-msgstr ""
+msgstr "La"
 
 #: src/admin-views/event-recurrence.php:150
 msgid "the same time:"
-msgstr ""
+msgstr "același timp"
 
 #: src/admin-views/event-recurrence.php:151
 msgid "a different time:"
-msgstr ""
+msgstr "un timp diferit"
 
 #: src/admin-views/event-recurrence.php:179
 #: src/admin-views/event-recurrence.php:381
 msgid "Series ends"
-msgstr ""
+msgstr "Seria se termină"
 
 #: src/admin-views/event-recurrence.php:188
 #: src/admin-views/event-recurrence.php:391
 msgid "on"
-msgstr ""
+msgstr "pe"
 
 #: src/admin-views/event-recurrence.php:207
 msgid "Series ends on this date"
-msgstr ""
+msgstr "Seria se termină la această dată"
 
 #: src/admin-views/event-recurrence.php:235
 #: src/admin-views/event-recurrence.php:449
 msgid "Show Details"
-msgstr ""
+msgstr "Arată detalii"
 
 #: src/admin-views/event-recurrence.php:236
 #: src/admin-views/event-recurrence.php:450
 msgid "Hide Details"
-msgstr ""
+msgstr "Ascunde detalii"
 
 #: src/admin-views/event-recurrence.php:244
 msgid "Schedule multiple events"
-msgstr ""
+msgstr "Planifică evenimente multiple"
 
 #: src/admin-views/event-recurrence.php:247
 msgid "Add more events"
-msgstr ""
+msgstr "Adaugă mai multe evenimente"
 
 #: src/admin-views/event-recurrence.php:260
 msgid "Event will not occur:"
-msgstr ""
+msgstr "Evenimentul nu va apare:"
 
 #: src/admin-views/event-recurrence.php:463
 msgid "Recurrence Description"
-msgstr ""
+msgstr "Descriere recurentă"
 
 #: src/admin-views/recurrence/months.php:11
 msgid "the same day:"
-msgstr ""
+msgstr "aceiași zi:"
 
 #: src/admin-views/recurrence/months.php:12
 #: src/admin-views/recurrence/years.php:64
 msgid "a different day:"
-msgstr ""
+msgstr "o zi diferită:"
 
 #: src/admin-views/recurrence/months.php:30
 #: src/admin-views/recurrence/years.php:82
 msgctxt "Qualifying the \"different day\". Example: \"day\" in \"day 12 of the month\""
 msgid "day"
-msgstr ""
+msgstr "zi"
 
 #: src/admin-views/recurrence/months.php:37
 #: src/admin-views/recurrence/years.php:89
@@ -92,52 +97,52 @@ msgstr ""
 #: src/admin-views/recurrence/months.php:54
 #: src/admin-views/recurrence/years.php:100
 msgid "Use pattern:"
-msgstr ""
+msgstr "Folosește tipar:"
 
 #: src/admin-views/recurrence/months.php:62
 #: src/admin-views/recurrence/years.php:108
 msgid "Use date:"
-msgstr ""
+msgstr "Folosește data:"
 
 #: src/admin-views/recurrence/months.php:99
 #: src/admin-views/recurrence/years.php:145
 msgctxt "As in: day 12 of the month"
 msgid "of the month"
-msgstr ""
+msgstr "în luna"
 
 #: src/admin-views/recurrence/time.php:10
 #: src/admin-views/recurrence/time.php:84
 msgid "same day"
-msgstr ""
+msgstr "aceiași zi"
 
 #: src/admin-views/recurrence/time.php:12
 msgid "next day"
-msgstr ""
+msgstr "ziua următoare"
 
 #: src/admin-views/recurrence/time.php:15
 msgctxt "number suffix for numbers ending in 1"
 msgid "%1$sst day"
-msgstr ""
+msgstr "%1$s prima zi"
 
 #: src/admin-views/recurrence/time.php:20
 msgctxt "number suffix for numbers ending in 2"
 msgid "%1$snd day"
-msgstr ""
+msgstr "%1$s a doua zi"
 
 #: src/admin-views/recurrence/time.php:25
 msgctxt "number suffix for numbers ending in 3"
 msgid "%1$srd day"
-msgstr ""
+msgstr "%1$s a treia zi"
 
 #: src/admin-views/recurrence/time.php:30
 msgctxt "number suffix for numbers ending in something other than 1, 2, or 3"
 msgid "%1$sth day"
-msgstr ""
+msgstr "%1$s prima zi"
 
 #: src/admin-views/recurrence/time.php:57
 msgctxt "custom recurrence time separator"
 msgid "to"
-msgstr ""
+msgstr "la"
 
 #: src/admin-views/recurrence/time.php:73
 msgctxt "custom recurrence time/date separator"
@@ -146,50 +151,50 @@ msgstr ""
 
 #: src/admin-views/recurrence/weeks.php:5
 msgid "Event Series Recurrence Day of Week"
-msgstr ""
+msgstr "Recurența seriei de evenimente ziua săptămânii"
 
 #: src/admin-views/recurrence/weeks.php:7
 msgctxt "Begins the line indicating what day of the week the event will occur on"
 msgid "On"
-msgstr ""
+msgstr "La"
 
 #: src/admin-views/recurrence/years.php:27
 msgid "year"
-msgstr ""
+msgstr "an"
 
 #: src/admin-views/recurrence/years.php:30
 msgid "years"
-msgstr ""
+msgstr "ani"
 
 #: src/admin-views/recurrence/years.php:36
 msgctxt "Begins the line indicating on which month the event will occur"
 msgid "in"
-msgstr ""
+msgstr "în"
 
 #: src/admin-views/recurrence/years.php:37
 msgid "Which month will the event recur in?"
-msgstr ""
+msgstr "În ce lună va apare evenimentul?"
 
 #: src/admin-views/recurrence/years.php:63
 msgid "the same day"
-msgstr ""
+msgstr "aceiași zi"
 
 #: src/admin-views/widget-admin-advanced-list.php:127
 msgctxt "events list widget setting"
 msgid "Limit to featured events only"
-msgstr ""
+msgstr "Limitat numai la evenimentele promovate"
 
 #: src/Tribe/Recurrence/Strings.php:63
 msgid "An all day event every [interval] day(s), happening [count] times"
-msgstr ""
+msgstr "Un eveniment pe toată durata zilei [interval], care se întâmplă de [count] ori"
 
 #: src/Tribe/Recurrence/Strings.php:64
 msgid "An all day event every [interval] day(s) at [start_time], happening [count] times"
-msgstr ""
+msgstr "Un eveniment pe toată durata zilei care are loc la fiecare [interval] zile, care se întâmplă de [count] ori"
 
 #: src/Tribe/Recurrence/Strings.php:65
 msgid "A multi-day event every [interval] day(s), happening [count] times"
-msgstr ""
+msgstr "Un eveniment de mai multe zile care are loc la fiecare [interval] zile, care se întâmplă de [count] ori"
 
 #: src/Tribe/Recurrence/Strings.php:66
 msgid "A multi-day event every [interval] day(s) at [start_time], happening [count] times"
@@ -1250,10 +1255,6 @@ msgstr "Înainte de a posta un topic nou, efectuați o căutare pentru a vă asi
 msgid "The current default organizer is: %s"
 msgstr "Organizatorul curent implicit este: %s"
 
-#: src/Tribe/Main.php:1326
-msgid "Event: "
-msgstr ""
-
 #: src/functions/template-tags/general.php:338
 msgid "The current default venue is: %s"
 msgstr "Locaţia curentă implicită este: %s"
@@ -1885,6 +1886,10 @@ msgstr "Activând această opţiune, nu se vor elimina şi datele câmpului pers
 msgid "Are you sure you wish to remove this field and its data from all events? Once you click OK this cannot be undone."
 msgstr "Confirmaţi eliminarea acestui câmp şi a datelor sale, din toate evenimentele? Odată ce apăsaţi OK, nu se mai poate reveni."
 
+#: src/admin-views/event-meta.php:13
+msgid "Additional %s Fields"
+msgstr ""
+
 #: src/admin-views/event-recurrence.php:39
 #: src/admin-views/event-recurrence.php:277
 msgid "event"
@@ -1927,7 +1932,7 @@ msgstr ""
 msgid "You must select a recurrence end date"
 msgstr "Trebuie să selectaţi data de finalizare a repetării"
 
-#: events-calendar-pro.php:81
+#: events-calendar-pro.php:85
 msgid "The Events Calendar"
 msgstr "The Events Calendar"
 
@@ -1936,7 +1941,7 @@ msgstr "The Events Calendar"
 msgid "Daily"
 msgstr "Zilnic"
 
-#: events-calendar-pro.php:82
+#: events-calendar-pro.php:86
 msgid "To begin using Events Calendar PRO, please install the latest version of <a href=\"%s\" class=\"thickbox\" title=\"%s\">The Events Calendar</a>."
 msgstr "Pentru a începe să folosiţi Events Calendar PRO, vă rugăm să instalaţi ultima versiune a <a href=\"%s\" class=\"thickbox\" title=\"%s\">The Events Calendar</a>."
 

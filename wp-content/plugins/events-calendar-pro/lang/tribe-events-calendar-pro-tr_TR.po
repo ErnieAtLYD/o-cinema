@@ -10,6 +10,11 @@ msgstr ""
 "X-Generator: GlotPress/1.0-alpha-1100\n"
 "Project-Id-Version: Events Calendar Pro\n"
 
+#: src/Tribe/Main.php:1326
+msgctxt "Event title map marker prefix"
+msgid "%s: "
+msgstr ""
+
 #: src/admin-views/event-recurrence.php:99
 #: src/admin-views/event-recurrence.php:335
 msgid "months"
@@ -1249,10 +1254,6 @@ msgstr "Yeni bir başlık açmadan önce, lütfen bir arama yaparak sorununuzun 
 msgid "The current default organizer is: %s"
 msgstr "Aktif Varsayılan organizatör: %s"
 
-#: src/Tribe/Main.php:1326
-msgid "Event: "
-msgstr "Etkinlik:"
-
 #: src/functions/template-tags/general.php:338
 msgid "The current default venue is: %s"
 msgstr "Aktif Varsayılan mekan: %s"
@@ -1894,6 +1895,10 @@ msgstr "Bu özelliği aktif etmek Custom Field verisini ya da özelliğini kald�
 msgid "Are you sure you wish to remove this field and its data from all events? Once you click OK this cannot be undone."
 msgstr "Bu alanı ve içerisindeki etkinlik verisini kaldırma işleminden emin misiniz? Bir kere onayladığınızda, geri alınamaz. "
 
+#: src/admin-views/event-meta.php:13
+msgid "Additional %s Fields"
+msgstr ""
+
 #: src/admin-views/event-recurrence.php:39
 #: src/admin-views/event-recurrence.php:277
 msgid "event"
@@ -1936,7 +1941,7 @@ msgstr ""
 msgid "You must select a recurrence end date"
 msgstr "Yineleme bitiş tarihi seçmelisiniz."
 
-#: events-calendar-pro.php:81
+#: events-calendar-pro.php:85
 msgid "The Events Calendar"
 msgstr "Etkinlikler Takvimi"
 
@@ -1945,7 +1950,7 @@ msgstr "Etkinlikler Takvimi"
 msgid "Daily"
 msgstr "Günlük"
 
-#: events-calendar-pro.php:82
+#: events-calendar-pro.php:86
 msgid "To begin using Events Calendar PRO, please install the latest version of <a href=\"%s\" class=\"thickbox\" title=\"%s\">The Events Calendar</a>."
 msgstr "Events Calendar Pro'yu kullanmak için, lütfen <a href=\"%s\" class=\"thickbox\" title=\"%s\">The Events Calendar</a>'ın son versyonunu indiriniz."
 

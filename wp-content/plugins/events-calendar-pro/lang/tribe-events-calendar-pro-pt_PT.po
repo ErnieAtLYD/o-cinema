@@ -10,6 +10,11 @@ msgstr ""
 "X-Generator: GlotPress/1.0-alpha-1100\n"
 "Project-Id-Version: Events Calendar Pro\n"
 
+#: src/Tribe/Main.php:1326
+msgctxt "Event title map marker prefix"
+msgid "%s: "
+msgstr ""
+
 #: src/admin-views/event-recurrence.php:99
 #: src/admin-views/event-recurrence.php:335
 msgid "months"
@@ -1249,10 +1254,6 @@ msgstr "Antes de iniciar um novo tópico, pesquise e garanta que o assunto não 
 msgid "The current default organizer is: %s"
 msgstr "O organizador padrão é <strong>%s</strong>"
 
-#: src/Tribe/Main.php:1326
-msgid "Event: "
-msgstr "Evento:"
-
 #: src/functions/template-tags/general.php:338
 msgid "The current default venue is: %s"
 msgstr "O local padrão é <strong>%s</strong>"
@@ -1894,6 +1895,10 @@ msgstr "Ativar esta opção não irá remover o campo personalizado ou sua funci
 msgid "Are you sure you wish to remove this field and its data from all events? Once you click OK this cannot be undone."
 msgstr "Tem certeza de que deseja remover este campo e seus dados de todos os eventos? Depois de clicar em OK isso não pode ser desfeito."
 
+#: src/admin-views/event-meta.php:13
+msgid "Additional %s Fields"
+msgstr "Campos %s Adicionais"
+
 #: src/admin-views/event-recurrence.php:39
 #: src/admin-views/event-recurrence.php:277
 msgid "event"
@@ -1936,7 +1941,7 @@ msgstr "eventos"
 msgid "You must select a recurrence end date"
 msgstr "Você precisa selecionar uma data final"
 
-#: events-calendar-pro.php:81
+#: events-calendar-pro.php:85
 msgid "The Events Calendar"
 msgstr "The Events Calendar"
 
@@ -1945,7 +1950,7 @@ msgstr "The Events Calendar"
 msgid "Daily"
 msgstr "Diariamente"
 
-#: events-calendar-pro.php:82
+#: events-calendar-pro.php:86
 msgid "To begin using Events Calendar PRO, please install the latest version of <a href=\"%s\" class=\"thickbox\" title=\"%s\">The Events Calendar</a>."
 msgstr "Para usar O Calendário de Eventos PRO, por favor instale a última versão de<a href=\"%s\" class=\"thickbox\" title=\"%s\">Calendário de Eventos</a>."
 

@@ -10,6 +10,11 @@ msgstr ""
 "X-Generator: GlotPress/1.0-alpha-1100\n"
 "Project-Id-Version: Events Calendar Pro\n"
 
+#: src/Tribe/Main.php:1326
+msgctxt "Event title map marker prefix"
+msgid "%s: "
+msgstr ""
+
 #: src/admin-views/event-recurrence.php:99
 #: src/admin-views/event-recurrence.php:335
 msgid "months"
@@ -1250,10 +1255,6 @@ msgstr "Pirms jauna atbalsta pavediena uzsākšanas, lūdzu apskatiet, vai jūsu
 msgid "The current default organizer is: %s"
 msgstr "Noklusētais organizators ir: %s"
 
-#: src/Tribe/Main.php:1326
-msgid "Event: "
-msgstr ""
-
 #: src/functions/template-tags/general.php:338
 msgid "The current default venue is: %s"
 msgstr "Noklusētā vietas vērtība ir: %s"
@@ -1895,6 +1896,10 @@ msgstr "Šīs iespējas aktivizēšana neaizvāks papildus laukus, tikai to redi
 msgid "Are you sure you wish to remove this field and its data from all events? Once you click OK this cannot be undone."
 msgstr "Vai tiešām vēlaties dzēst visus laukus visiem notikumiem? Ja uzklikšķināsiet ok, šo nevarēs atgūt."
 
+#: src/admin-views/event-meta.php:13
+msgid "Additional %s Fields"
+msgstr ""
+
 #: src/admin-views/event-recurrence.php:39
 #: src/admin-views/event-recurrence.php:277
 msgid "event"
@@ -1937,7 +1942,7 @@ msgstr ""
 msgid "You must select a recurrence end date"
 msgstr "Jums jānorāda atkārtošanās un datums"
 
-#: events-calendar-pro.php:81
+#: events-calendar-pro.php:85
 msgid "The Events Calendar"
 msgstr "Notikumu kalendārs"
 
@@ -1946,7 +1951,7 @@ msgstr "Notikumu kalendārs"
 msgid "Daily"
 msgstr "Ik dienu"
 
-#: events-calendar-pro.php:82
+#: events-calendar-pro.php:86
 msgid "To begin using Events Calendar PRO, please install the latest version of <a href=\"%s\" class=\"thickbox\" title=\"%s\">The Events Calendar</a>."
 msgstr "Lai sāktu lietot Events Calendar PRO, lūdzu uzinstalējiet jaunāko <a href=\"%s\" class=\"thickbox\" title=\"%s\">The Events Calendar</a> versiju."
 

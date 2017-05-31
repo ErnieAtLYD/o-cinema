@@ -10,6 +10,11 @@ msgstr ""
 "X-Generator: GlotPress/1.0-alpha-1100\n"
 "Project-Id-Version: Events Calendar Pro\n"
 
+#: src/Tribe/Main.php:1326
+msgctxt "Event title map marker prefix"
+msgid "%s: "
+msgstr ""
+
 #: src/admin-views/event-recurrence.php:99
 #: src/admin-views/event-recurrence.php:335
 msgid "months"
@@ -1249,10 +1254,6 @@ msgstr "Abans d'obrir un nou fil, si us plau, fes una cerca per assegurar-te de 
 msgid "The current default organizer is: %s"
 msgstr "L'actual organitzador predeterminat és: %s"
 
-#: src/Tribe/Main.php:1326
-msgid "Event: "
-msgstr "Esdeveniment:"
-
 #: src/functions/template-tags/general.php:338
 msgid "The current default venue is: %s"
 msgstr "L'actual recinte predeterminat és: %s"
@@ -1894,6 +1895,10 @@ msgstr "Si s'habilita aquesta opció no s'eliminarà la informació dels camps p
 msgid "Are you sure you wish to remove this field and its data from all events? Once you click OK this cannot be undone."
 msgstr "Estàs segur de que vols eliminar aquest camp i la seva informació de tots els esdeveniments? Un cop cliquis OK això no es podrà desfer."
 
+#: src/admin-views/event-meta.php:13
+msgid "Additional %s Fields"
+msgstr "Camps d'%s addicionals"
+
 #: src/admin-views/event-recurrence.php:39
 #: src/admin-views/event-recurrence.php:277
 msgid "event"
@@ -1936,7 +1941,7 @@ msgstr "esdeveniments"
 msgid "You must select a recurrence end date"
 msgstr "Has de seleccionar una data de finalització de recurrència"
 
-#: events-calendar-pro.php:81
+#: events-calendar-pro.php:85
 msgid "The Events Calendar"
 msgstr "The Events Calendar"
 
@@ -1945,7 +1950,7 @@ msgstr "The Events Calendar"
 msgid "Daily"
 msgstr "Diari"
 
-#: events-calendar-pro.php:82
+#: events-calendar-pro.php:86
 msgid "To begin using Events Calendar PRO, please install the latest version of <a href=\"%s\" class=\"thickbox\" title=\"%s\">The Events Calendar</a>."
 msgstr "Per començar a utilitzar Events Calendar PRO, si us plau, instal·la la darrera versió de <a href=\"%s\" class=\"thickbox\" title=\"%s\">The Events Calendar</a>."
 

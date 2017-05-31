@@ -10,6 +10,11 @@ msgstr ""
 "X-Generator: GlotPress/1.0-alpha-1100\n"
 "Project-Id-Version: Events Calendar Pro\n"
 
+#: src/Tribe/Main.php:1326
+msgctxt "Event title map marker prefix"
+msgid "%s: "
+msgstr ""
+
 #: src/admin-views/event-recurrence.php:99
 #: src/admin-views/event-recurrence.php:335
 msgid "months"
@@ -1249,10 +1254,6 @@ msgstr "Voordat jy 'n nuwe onderwerp plaas, doen 'n soektog om seker te maak jou
 msgid "The current default organizer is: %s"
 msgstr "Die huidige standaard organiseerder is: %s"
 
-#: src/Tribe/Main.php:1326
-msgid "Event: "
-msgstr "Geleentheid:"
-
 #: src/functions/template-tags/general.php:338
 msgid "The current default venue is: %s"
 msgstr "Die huidige standaard plek is: %s"
@@ -1894,6 +1895,10 @@ msgstr "Deur hierdie opsie te kies sal pasgemaakte veld inligting of funksie nie
 msgid "Are you sure you wish to remove this field and its data from all events? Once you click OK this cannot be undone."
 msgstr "Is jy seker jy wil hierdie veld en sy inligting van al die gebeure te verwyder? As jy kliek op OK dit kan nie ongedaan gemaak word nie."
 
+#: src/admin-views/event-meta.php:13
+msgid "Additional %s Fields"
+msgstr ""
+
 #: src/admin-views/event-recurrence.php:39
 #: src/admin-views/event-recurrence.php:277
 msgid "event"
@@ -1936,7 +1941,7 @@ msgstr "geleenthede"
 msgid "You must select a recurrence end date"
 msgstr "Jy moet 'n herhaling einde datum kies"
 
-#: events-calendar-pro.php:81
+#: events-calendar-pro.php:85
 msgid "The Events Calendar"
 msgstr "Die Geleenthede Kalender"
 
@@ -1945,7 +1950,7 @@ msgstr "Die Geleenthede Kalender"
 msgid "Daily"
 msgstr "Daagliks"
 
-#: events-calendar-pro.php:82
+#: events-calendar-pro.php:86
 msgid "To begin using Events Calendar PRO, please install the latest version of <a href=\"%s\" class=\"thickbox\" title=\"%s\">The Events Calendar</a>."
 msgstr "Om Events Calendar PRO te begin gebruik, installeer asb die nuutste weergawe van <a href=\"%s\" class=\"thickbox\" title=\"%s\">The Events Calendar</a>."
 

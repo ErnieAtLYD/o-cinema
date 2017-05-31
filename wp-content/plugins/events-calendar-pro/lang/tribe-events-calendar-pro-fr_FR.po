@@ -10,6 +10,11 @@ msgstr ""
 "X-Generator: GlotPress/1.0-alpha-1100\n"
 "Project-Id-Version: Events Calendar Pro\n"
 
+#: src/Tribe/Main.php:1326
+msgctxt "Event title map marker prefix"
+msgid "%s: "
+msgstr ""
+
 #: src/admin-views/event-recurrence.php:99
 #: src/admin-views/event-recurrence.php:335
 msgid "months"
@@ -1249,10 +1254,6 @@ msgstr "Avant de soumettre une nouvelle demande, nous vous prions d'utiliser la 
 msgid "The current default organizer is: %s"
 msgstr "L'organisateur par défaut est : %s"
 
-#: src/Tribe/Main.php:1326
-msgid "Event: "
-msgstr "Événement :"
-
 #: src/functions/template-tags/general.php:338
 msgid "The current default venue is: %s"
 msgstr "Le lieu par défaut est : %s"
@@ -1894,6 +1895,10 @@ msgstr "Activer cette option ne supprimera pas le champs de donnée personnalis�
 msgid "Are you sure you wish to remove this field and its data from all events? Once you click OK this cannot be undone."
 msgstr "Êtes-vous sur de vouloir effacer ce champ et les données lui appartenant dans tous vos événements ? Une fois cliqué OK, vous ne pouvez pas revenir en arrière."
 
+#: src/admin-views/event-meta.php:13
+msgid "Additional %s Fields"
+msgstr "Champs supplémentaires %s"
+
 #: src/admin-views/event-recurrence.php:39
 #: src/admin-views/event-recurrence.php:277
 msgid "event"
@@ -1936,7 +1941,7 @@ msgstr "événements"
 msgid "You must select a recurrence end date"
 msgstr "Vous devez sélectionner une date de fin de récurrence"
 
-#: events-calendar-pro.php:81
+#: events-calendar-pro.php:85
 msgid "The Events Calendar"
 msgstr "The Events Calendar"
 
@@ -1945,7 +1950,7 @@ msgstr "The Events Calendar"
 msgid "Daily"
 msgstr "Quotidiennement"
 
-#: events-calendar-pro.php:82
+#: events-calendar-pro.php:86
 msgid "To begin using Events Calendar PRO, please install the latest version of <a href=\"%s\" class=\"thickbox\" title=\"%s\">The Events Calendar</a>."
 msgstr "Pour commencer à utiliser Events Calendar PRO, merci d'installer la dernière version de <a href=\"%s\" class=\"thickbox\" title=\"%s\">The Events Calendar</a>."
 

@@ -50,7 +50,7 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		public $shortcodes;
 
 		const REQUIRED_TEC_VERSION = '4.4.3';
-		const VERSION = '4.4.7';
+		const VERSION = '4.4.8';
 
 		private function __construct() {
 			$this->pluginDir = trailingslashit( basename( EVENTS_CALENDAR_PRO_DIR ) );
@@ -1323,8 +1323,8 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 
 				$data = array(
 					'geocenter' => $geoloc->estimate_center_point(),
-					'map_tooltip_event' => __( 'Event: ', 'tribe-events-calendar-pro' ),
-					'map_tooltip_address' => __( 'Address: ', 'tribe-events-calendar-pro' ),
+					'map_tooltip_event' => esc_html( sprintf( _x( '%s: ', 'Event title map marker prefix', 'tribe-events-calendar-pro' ), tribe_get_event_label_singular() ) ),
+					'map_tooltip_address' => esc_html__( 'Address: ', 'tribe-events-calendar-pro' ),
 				);
 
 				$data = apply_filters( 'tribe_events_pro_localize_script', $data, 'Tribe__Events__Pro__Main', 'tribe-events-pro' );

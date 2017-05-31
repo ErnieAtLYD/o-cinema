@@ -81,11 +81,13 @@ var addToHomeConfig = {
 			?>
 		  </div><!--/.nav-collapse -->
 		  <ul style="padding-left:10px;" class="nav pull-right">
+		  	<?php if ( function_exists( 'WC' ) ) : ?>
 			<li>
 			  <a class="logo cart-contents" href="<?php echo WC()->cart->get_cart_url(); ?>" title="<?php _e( 'View your shopping cart' ); ?>" target="_blank">
 				<i class="fa fa-shopping-cart fa-lg"></i> <?php echo WC()->cart->cart_contents_count; ?>
 			  </a>
 			</li>
+			<?php endif; ?>
 			<li>
 			  <a class="logo" href="https://twitter.com/ocinema" target="_blank">
 				<i class="fa fa-twitter fa-lg"></i>

@@ -4,6 +4,8 @@
 // Load external file to add support for MultiPostThumbnails. Allows you to set more than one "feature image" per post.
 require_once( 'library/multi-post-thumbnails.php' );
 
+add_action( 'after_setup_theme', 'woocommerce_support' );
+
 add_action( 'after_setup_theme', 'wpt_setup' );
 if ( ! function_exists( 'wpt_setup' ) ) :
 	function wpt_setup() {
@@ -394,5 +396,9 @@ function printEventRunDates( $id ) {
 add_filter( 'gform_submit_button', 'form_submit_button', 10, 2 );
 
 require_once( 'wp_bootstrap_navwalker.php' );
+
+function woocommerce_support() {
+    add_theme_support( 'woocommerce' );
+}
 
 ?>

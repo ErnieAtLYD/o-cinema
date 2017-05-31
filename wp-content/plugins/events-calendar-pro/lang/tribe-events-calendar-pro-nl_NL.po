@@ -10,6 +10,11 @@ msgstr ""
 "X-Generator: GlotPress/1.0-alpha-1100\n"
 "Project-Id-Version: Events Calendar Pro\n"
 
+#: src/Tribe/Main.php:1326
+msgctxt "Event title map marker prefix"
+msgid "%s: "
+msgstr ""
+
 #: src/admin-views/event-recurrence.php:99
 #: src/admin-views/event-recurrence.php:335
 msgid "months"
@@ -1249,10 +1254,6 @@ msgstr "Kijk eerst of jouw vraag of probleem niet al een keer gesteld en beantwo
 msgid "The current default organizer is: %s"
 msgstr "De huidige standaard organisator is: %s"
 
-#: src/Tribe/Main.php:1326
-msgid "Event: "
-msgstr "Evenement:"
-
 #: src/functions/template-tags/general.php:338
 msgid "The current default venue is: %s"
 msgstr "De huidige standaard locatie is: %s"
@@ -1894,6 +1895,10 @@ msgstr "Het aanvinken van deze optie zal alleen de standaard metabox editor wijz
 msgid "Are you sure you wish to remove this field and its data from all events? Once you click OK this cannot be undone."
 msgstr "Weet je zeker dat je dit veld én alle data van de bijbehorende evenementen wilt verwijderen? Dit kan niet ongedaan gemaakt worden als eenmaal op OK is geklikt."
 
+#: src/admin-views/event-meta.php:13
+msgid "Additional %s Fields"
+msgstr "Additionele %s velden"
+
 #: src/admin-views/event-recurrence.php:39
 #: src/admin-views/event-recurrence.php:277
 msgid "event"
@@ -1936,7 +1941,7 @@ msgstr "Evenementen"
 msgid "You must select a recurrence end date"
 msgstr "Je moet een herhaling einddatum selecteren"
 
-#: events-calendar-pro.php:81
+#: events-calendar-pro.php:85
 msgid "The Events Calendar"
 msgstr "The Events Calendar"
 
@@ -1945,7 +1950,7 @@ msgstr "The Events Calendar"
 msgid "Daily"
 msgstr "Dagelijks"
 
-#: events-calendar-pro.php:82
+#: events-calendar-pro.php:86
 msgid "To begin using Events Calendar PRO, please install the latest version of <a href=\"%s\" class=\"thickbox\" title=\"%s\">The Events Calendar</a>."
 msgstr "Om te Events Calendar PRO te gebruiken moet je eerst de laatste versie installeren van <a href=\"%s\" class=\"thickbox\" title=\"%s\">The Events Calendar</a>."
 

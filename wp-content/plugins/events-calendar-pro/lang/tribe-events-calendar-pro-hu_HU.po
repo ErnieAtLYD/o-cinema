@@ -10,6 +10,11 @@ msgstr ""
 "X-Generator: GlotPress/1.0-alpha-1100\n"
 "Project-Id-Version: Events Calendar Pro\n"
 
+#: src/Tribe/Main.php:1326
+msgctxt "Event title map marker prefix"
+msgid "%s: "
+msgstr ""
+
 #: src/admin-views/event-recurrence.php:99
 #: src/admin-views/event-recurrence.php:335
 msgid "months"
@@ -1249,10 +1254,6 @@ msgstr "Új téma indítása előtt kérjük, végezz el egy keresést, hátha a
 msgid "The current default organizer is: %s"
 msgstr "A jelenlegi alapértelmezett szervező: %s"
 
-#: src/Tribe/Main.php:1326
-msgid "Event: "
-msgstr "Esemény:"
-
 #: src/functions/template-tags/general.php:338
 msgid "The current default venue is: %s"
 msgstr "A jelenlegi alapértelmezett helyszín: %s"
@@ -1894,6 +1895,10 @@ msgstr "Az opció engedélyezésével nem fogod eltávolítani az egyéni mezők
 msgid "Are you sure you wish to remove this field and its data from all events? Once you click OK this cannot be undone."
 msgstr "Biztos vagy benne, hogy el akarod távolítani ezt a mezőt és az adatait az összes eseménytől? Az OK gombra kattintás után már nem vonható vissza."
 
+#: src/admin-views/event-meta.php:13
+msgid "Additional %s Fields"
+msgstr ""
+
 #: src/admin-views/event-recurrence.php:39
 #: src/admin-views/event-recurrence.php:277
 msgid "event"
@@ -1936,7 +1941,7 @@ msgstr "esemény"
 msgid "You must select a recurrence end date"
 msgstr "Ki kell választanod az ismétlődés végét"
 
-#: events-calendar-pro.php:81
+#: events-calendar-pro.php:85
 msgid "The Events Calendar"
 msgstr "Az Events Calendar"
 
@@ -1945,7 +1950,7 @@ msgstr "Az Events Calendar"
 msgid "Daily"
 msgstr "Naponta"
 
-#: events-calendar-pro.php:82
+#: events-calendar-pro.php:86
 msgid "To begin using Events Calendar PRO, please install the latest version of <a href=\"%s\" class=\"thickbox\" title=\"%s\">The Events Calendar</a>."
 msgstr "Az Events Calendar PRO használatának megkezdéséhez kérjük, telepítsd a<a href=\"%s\" class=\"thickbox\" title=\"%s\">The Events Calendar</a> legújabb verzióját."
 

@@ -10,6 +10,11 @@ msgstr ""
 "X-Generator: GlotPress/1.0-alpha-1100\n"
 "Project-Id-Version: Events Calendar Pro\n"
 
+#: src/Tribe/Main.php:1326
+msgctxt "Event title map marker prefix"
+msgid "%s: "
+msgstr ""
+
 #: src/admin-views/event-recurrence.php:99
 #: src/admin-views/event-recurrence.php:335
 msgid "months"
@@ -1250,10 +1255,6 @@ msgstr "Prije nego postavite pitanje i otvorite novu temu, molimo vas uradite pr
 msgid "The current default organizer is: %s"
 msgstr "Trenutni zadani organizator je: %s"
 
-#: src/Tribe/Main.php:1326
-msgid "Event: "
-msgstr ""
-
 #: src/functions/template-tags/general.php:338
 msgid "The current default venue is: %s"
 msgstr "Trenutno zadano mjesto održavanja je: %s "
@@ -1885,6 +1886,10 @@ msgstr "Izbor ove opcije neće ukloniti podatke niti funkcionalnos iz custom pol
 msgid "Are you sure you wish to remove this field and its data from all events? Once you click OK this cannot be undone."
 msgstr "Da li ste sigurni da želite skloniti ovo polje i sve njegove podatke iz svih događaja? Kada kliknete na OK to ne može biti opovrgnuto."
 
+#: src/admin-views/event-meta.php:13
+msgid "Additional %s Fields"
+msgstr ""
+
 #: src/admin-views/event-recurrence.php:39
 #: src/admin-views/event-recurrence.php:277
 msgid "event"
@@ -1927,7 +1932,7 @@ msgstr ""
 msgid "You must select a recurrence end date"
 msgstr "Morate odabrati ponavljanje i krajnji datum"
 
-#: events-calendar-pro.php:81
+#: events-calendar-pro.php:85
 msgid "The Events Calendar"
 msgstr "Kalendar događaja"
 
@@ -1936,7 +1941,7 @@ msgstr "Kalendar događaja"
 msgid "Daily"
 msgstr "Dnevno"
 
-#: events-calendar-pro.php:82
+#: events-calendar-pro.php:86
 msgid "To begin using Events Calendar PRO, please install the latest version of <a href=\"%s\" class=\"thickbox\" title=\"%s\">The Events Calendar</a>."
 msgstr "Da bi ste počeli sa korišćenjem Events Calendar PRO, molimo vas instalirajte poslednju verziju <a href=\"%s\" class=\"thickbox\" title=\"%s\">The Events Calendar-a</a>."
 

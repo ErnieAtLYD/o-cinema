@@ -2,13 +2,18 @@
 # This file is distributed under the same license as the Events Calendar Pro package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2017-03-20 22:31:24+0000\n"
+"PO-Revision-Date: 2017-05-15 21:30:14+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: GlotPress/1.0-alpha-1100\n"
 "Project-Id-Version: Events Calendar Pro\n"
+
+#: src/Tribe/Main.php:1326
+msgctxt "Event title map marker prefix"
+msgid "%s: "
+msgstr ""
 
 #: src/admin-views/event-recurrence.php:99
 #: src/admin-views/event-recurrence.php:335
@@ -529,11 +534,11 @@ msgstr "Bei jährlich benutzerdefinierten Wiederholungen mit einem anderen Tag m
 
 #: src/admin-views/event-recurrence.php:16
 msgid "Are you sure you want to delete these events?"
-msgstr "Sollen diese Veranstaltungen tatsächlich gelöscht werden?"
+msgstr "Wollen Sie diese Veranstaltungen wirklich entfernen?"
 
 #: src/admin-views/event-recurrence.php:17
 msgid "Are you sure you want to delete this exclusion?"
-msgstr "Wollen Sie diese Ausnahme wirklich löschen?"
+msgstr "Wollen Sie diese Ausnahme wirklich entfernen?"
 
 #: src/admin-views/event-recurrence.php:21
 msgid "Event Series:"
@@ -671,7 +676,7 @@ msgstr "31. Tag des Monats"
 
 #: src/Tribe/Recurrence/Strings.php:48
 msgid "One event on [single_date] at [start_time]"
-msgstr "Eine Veranstaltung am"
+msgstr "Eine Veranstaltung um [start_time] am  [single_date]"
 
 #: src/Tribe/Recurrence/Strings.php:49
 msgid "One all day event on [single_date]"
@@ -679,7 +684,7 @@ msgstr "Eine ganztägige Veranstaltung am [single_date]"
 
 #: src/Tribe/Recurrence/Strings.php:50
 msgid "One all day event on [single_date] at [start_time]"
-msgstr "Eine ganztägige Veranstaltung am [single_date]"
+msgstr "Eine ganztägige Veranstaltung um [start_time] am [single_date]"
 
 #: src/Tribe/Recurrence/Strings.php:51
 msgid "One multi-day event starting on [single_date]"
@@ -687,7 +692,7 @@ msgstr "Eine ganztägige Veranstaltung am [single_date]"
 
 #: src/Tribe/Recurrence/Strings.php:52
 msgid "One multi-day event starting on [single_date] at [start_time]"
-msgstr "Eine mehrtägige Veranstaltung um [start_time] am [Single_date]"
+msgstr "Eine mehrtägige Veranstaltung um [start_time] am [single_date]"
 
 #: src/Tribe/Recurrence/Strings.php:55
 msgid "An event every [interval] day(s) that begins at [start_time], repeating until [series_end_date]"
@@ -1248,10 +1253,6 @@ msgstr "Bevor Sie einen neuen Beitrag schreiben, nutzen Sie die Suche, um sicher
 #: src/functions/template-tags/general.php:323
 msgid "The current default organizer is: %s"
 msgstr "Der aktuelle Standard Veranstalter ist: %s"
-
-#: src/Tribe/Main.php:1326
-msgid "Event: "
-msgstr "Veranstaltung: "
 
 #: src/functions/template-tags/general.php:338
 msgid "The current default venue is: %s"
@@ -1894,6 +1895,10 @@ msgstr "Mit dieser Option wird nur der Editor zum Hinzufügen von benutzerdefini
 msgid "Are you sure you wish to remove this field and its data from all events? Once you click OK this cannot be undone."
 msgstr "Sind Sie sicher, dass Sie dieses Feld inklusive aller darin enthaltenen Daten von allen Veranstaltungen löschen wollen? Dies kann nicht rückgängig gemacht werden!"
 
+#: src/admin-views/event-meta.php:13
+msgid "Additional %s Fields"
+msgstr "Zusätzliche %s Felder"
+
 #: src/admin-views/event-recurrence.php:39
 #: src/admin-views/event-recurrence.php:277
 msgid "event"
@@ -1936,7 +1941,7 @@ msgstr "Events"
 msgid "You must select a recurrence end date"
 msgstr "Sie müssen ein Enddatum für die Terminserie auswählen"
 
-#: events-calendar-pro.php:81
+#: events-calendar-pro.php:85
 msgid "The Events Calendar"
 msgstr "Der Events Calendar"
 
@@ -1945,7 +1950,7 @@ msgstr "Der Events Calendar"
 msgid "Daily"
 msgstr "Täglich"
 
-#: events-calendar-pro.php:82
+#: events-calendar-pro.php:86
 msgid "To begin using Events Calendar PRO, please install the latest version of <a href=\"%s\" class=\"thickbox\" title=\"%s\">The Events Calendar</a>."
 msgstr "Um Events Calendar PRO nutzen zu können, installieren Sie vorher die aktuelle Version von <a href=\"%s\" class=\"thickbox\" title=\"%s\">Events Calendar</a> (freie Version)."
 
@@ -2235,7 +2240,7 @@ msgstr "Standard Bundesland / Kanton / Provinz"
 
 #: src/Tribe/Geo_Loc.php:891
 msgid "Fixed geolocation data for %d venues"
-msgstr "Feste Geodaten für die %d Veranstaltungsorte"
+msgstr "Geodaten für %d Veranstaltungsorte korrigiert"
 
 #: src/admin-views/tribe-options-defaults.php:145
 msgid "Default postal code/zip code"

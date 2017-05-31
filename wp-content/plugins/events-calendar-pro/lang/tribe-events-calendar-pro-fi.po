@@ -10,6 +10,11 @@ msgstr ""
 "X-Generator: GlotPress/1.0-alpha-1100\n"
 "Project-Id-Version: Events Calendar Pro\n"
 
+#: src/Tribe/Main.php:1326
+msgctxt "Event title map marker prefix"
+msgid "%s: "
+msgstr ""
+
 #: src/admin-views/event-recurrence.php:99
 #: src/admin-views/event-recurrence.php:335
 msgid "months"
@@ -1249,10 +1254,6 @@ msgstr "Ennen uuden viestiketjun avaamista, tee haku varmistaaksesi, ettei ongel
 msgid "The current default organizer is: %s"
 msgstr "Nykyinen oletusjärjestäjä on: %s"
 
-#: src/Tribe/Main.php:1326
-msgid "Event: "
-msgstr "Tapahtuma:"
-
 #: src/functions/template-tags/general.php:338
 msgid "The current default venue is: %s"
 msgstr "Nykyinen oletustapahtumapaikka on: %s"
@@ -1894,6 +1895,10 @@ msgstr "Tämä valinta ei poista mukautetun kentän tietoja tai toimintoja, vaan
 msgid "Are you sure you wish to remove this field and its data from all events? Once you click OK this cannot be undone."
 msgstr "Oletko varma, että haluat poistaa tämän kentän ja sen tiedot kaikista tapahtumista? Kun klikkaat OK, toimintoa ei voi peruuttaa."
 
+#: src/admin-views/event-meta.php:13
+msgid "Additional %s Fields"
+msgstr "%s - Lisäkentät"
+
 #: src/admin-views/event-recurrence.php:39
 #: src/admin-views/event-recurrence.php:277
 msgid "event"
@@ -1936,7 +1941,7 @@ msgstr "tapahtumat"
 msgid "You must select a recurrence end date"
 msgstr "Sinun täytyy valita toiston päättymispäivä"
 
-#: events-calendar-pro.php:81
+#: events-calendar-pro.php:85
 msgid "The Events Calendar"
 msgstr "The Events Calendar"
 
@@ -1945,7 +1950,7 @@ msgstr "The Events Calendar"
 msgid "Daily"
 msgstr "Päivittäin"
 
-#: events-calendar-pro.php:82
+#: events-calendar-pro.php:86
 msgid "To begin using Events Calendar PRO, please install the latest version of <a href=\"%s\" class=\"thickbox\" title=\"%s\">The Events Calendar</a>."
 msgstr "Asenna <a href =\"%s\"class =\"thickbox\"title =\"%s\">The Events Calendarin</a> uusin versio aloittaaksesi Events Calendar PRO:n käyttö."
 
