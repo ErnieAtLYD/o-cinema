@@ -4,8 +4,8 @@ Contributors: ModernTribe, barry.hughes, bordoni, borkweb, brianjessee, brook-tr
 Tags: events, calendar, event, venue, organizer, dates, date, google maps, conference, workshop, concert, meeting, seminar, summit, class, modern tribe, tribe, widget, pro
 Donate link: http://m.tri.be/29
 Requires at least: 3.9
-Tested up to: 4.7.5
-Stable tag: 4.4.8
+Tested up to: 4.8
+Stable tag: 4.4.12
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -202,6 +202,34 @@ Our Premium Plugins:
 * <a href="http://m.tri.be/fa" target="_blank">The Events Calendar: Filter Bar</a>
 
 == Changelog ==
+
+= [4.4.12] 2017-06-22 =
+
+* Tweak - Improved how Cost field looks and it's consistency across views [71092 & 71094]
+* Tweak - Added actions: `tribe_events_inside_cost`
+* Tweak - Changed views: `pro/map/single-event`, `pro/map/single-featured`
+* Language - 0 new strings added, 50 updated, 0 fuzzied, and 0 obsoleted [tribe-events-calendar-pro]
+
+= [4.4.11.1] 2017-06-15 =
+
+* Fix - Ensure featured images render as expected within photo view (our thanks to @gchead for flagging this issue) [80880]
+
+= [4.4.11] 2017-06-14 =
+
+* Fix - Corrected typo in Featured Venue widget options [80034]
+* Fix - Correct some erroneous description text that would arise in recurring event tooltips. [75791]
+* Fix - Backwards compatibility fixes for recurrence rules created in 4.3.4 or earlier [71944]
+* Tweak - Only show APM filters to users with the 'install_plugins' capability [69825]
+* Tweak - filter the allowed post statuses for the countdown widget, default to 'publish' [65390]
+
+= [4.4.10] 2017-06-06 =
+
+* Tweak - Improve the styles for Custom Fields [76880]
+* Language - 0 new strings added, 38 updated, 0 fuzzied, and 1 obsoleted [events-pro]
+
+= [4.4.9] 2017-06-01 =
+
+* Fix - Countdown widget now respects the 'Generate JSON-LD data' setting [79119]
 
 = [4.4.8] 2017-05-17 =
 
@@ -968,4 +996,3 @@ Please see the changelog for the complete list of changes in this release. Remem
 = 3.0 =
 
 3.x is a HUGE upgrade from Events Calendar PRO 2.x. If you're upgrading from 1.3.3 or any release between 2.0 and 2.0.10, make sure to upgrade to Events Calendar PRO 2.0.11 first. If you're upgrading from Events Calendar PRO 2.0.11, please back up your data BEFORE initiating, and be prepared to manually update your customizations based on changes to the plugin's tempting structure.
-

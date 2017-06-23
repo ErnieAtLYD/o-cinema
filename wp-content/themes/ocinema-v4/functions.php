@@ -84,14 +84,14 @@ function returnFancyHtmlForVenue( $id ) {
 // http://outlandish.com/blog/xml-to-json/
 function xmlToArray( $xml, $options = array() ) {
 	$defaults = array(
-		'namespaceSeparator' => ':',//you may want this to be something other than a colon
-		'attributePrefix' => '@',   //to distinguish between attributes and nodes with the same name
-		'alwaysArray' => array(),   //array of xml tag names which should always become arrays
-		'autoArray' => true,        //only create arrays for tags which appear more than once
-		'textContent' => '$',       //key used for the text content of elements
-		'autoText' => true,         //skip textContent key if node has no attributes or child nodes
-		'keySearch' => false,       //optional search and replace on tag and attribute names
-		'keyReplace' => false,//replace values for above search values (as passed to str_replace())
+		'namespaceSeparator' => ':', //you may want this to be something other than a colon
+		'attributePrefix' => '@',    //to distinguish between attributes and nodes with the same name
+		'alwaysArray' => array(),    //array of xml tag names which should always become arrays
+		'autoArray' => true,         //only create arrays for tags which appear more than once
+		'textContent' => '$',        //key used for the text content of elements
+		'autoText' => true,          //skip textContent key if node has no attributes or child nodes
+		'keySearch' => false,        //optional search and replace on tag and attribute names
+		'keyReplace' => false,      //replace values for above search values (as passed to str_replace())
 	);
 	$options = array_merge( $defaults, $options );
 	$namespaces = $xml->getDocNamespaces();
@@ -103,11 +103,11 @@ function xmlToArray( $xml, $options = array() ) {
 		foreach ( $xml->attributes( $namespace ) as $attributeName => $attribute ) {
 			//replace characters in attribute name
 			if ( $options['keySearch'] ) { $attributeName =
-					str_replace( $options['keySearch'], $options['keyReplace'], $attributeName );
+				str_replace( $options['keySearch'], $options['keyReplace'], $attributeName );
 			}
 			$attributeKey = $options['attributePrefix']
-					. ($prefix ? $prefix . $options['namespaceSeparator'] : '')
-					. $attributeName;
+				. ($prefix ? $prefix . $options['namespaceSeparator'] : '')
+				. $attributeName;
 			$attributesArray[ $attributeKey ] = (string) $attribute;
 		}
 	}
@@ -122,7 +122,7 @@ function xmlToArray( $xml, $options = array() ) {
 
 			//replace characters in tag name
 			if ( $options['keySearch'] ) { $childTagName =
-					str_replace( $options['keySearch'], $options['keyReplace'], $childTagName );
+				str_replace( $options['keySearch'], $options['keyReplace'], $childTagName );
 			}
 			//add namespace prefix, if any
 			if ( $prefix ) { $childTagName = $prefix . $options['namespaceSeparator'] . $childTagName;
@@ -132,8 +132,8 @@ function xmlToArray( $xml, $options = array() ) {
 				//only entry with this key
 				//test if tags of this type should always be arrays, no matter the element count
 				$tagsArray[ $childTagName ] =
-						in_array( $childTagName, $options['alwaysArray'] ) || ! $options['autoArray']
-						? array( $childProperties ) : $childProperties;
+					in_array( $childTagName, $options['alwaysArray'] ) || ! $options['autoArray']
+					? array( $childProperties ) : $childProperties;
 			} elseif (
 				is_array( $tagsArray[ $childTagName ] ) && array_keys( $tagsArray[ $childTagName ] )
 				=== range( 0, count( $tagsArray[ $childTagName ] ) - 1 )
@@ -150,7 +150,8 @@ function xmlToArray( $xml, $options = array() ) {
 	//get text content of node
 	$textContentArray = array();
 	$plainText = trim( (string) $xml );
-	if ( $plainText !== '' ) { $textContentArray[ $options['textContent'] ] = $plainText;
+	if ( $plainText !== '' ) {
+		$textContentArray[ $options['textContent'] ] = $plainText;
 	}
 
 	//stick it all together
