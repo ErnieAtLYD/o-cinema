@@ -1,11 +1,11 @@
 <?php
 /**
-* A single event.  This displays the event title, description, meta, and
-* optionally, the Google map for the event.
-*
-* You can customize this view by putting a replacement file of the same
-* name (single.php) in the events/ directory of your theme.
-*/
+ * A single event.  This displays the event title, description, meta, and
+ * optionally, the Google map for the event.
+ *
+ * You can customize this view by putting a replacement file of the same
+ * name (single.php) in the events/ directory of your theme.
+ */
 
 // Don't load directly
 if ( ! defined( 'ABSPATH' ) ) { die( '-1' ); }
@@ -140,35 +140,33 @@ get_header();
 					echo tribe_get_venue_id();
 					echo ' btn-block" href="';
 					echo get_field( 'ticketurl' );
-					echo '">
+					echo '" style="font-family:\'Lato\', sans-serif; font-weight:700; font-size:24px; color: #fff !important;">
 						Purchase Tickets Now <i class="fa fa-ticket fa-lg"></i>';
 					echo '</a>';
 				endif;
 				?>
 			</div>
 
-			<a class="venue-thumb" href="<?php echo tribe_get_venue_link( null, false ); ?>">
-				<div>
-					<div>
-						<h3 style="margin:0; line-height:30px;"><?php returnFancyHtmlForVenue(tribe_get_venue_id() ); ?></h3>
-						<span style=""><?php echo tribe_get_address(); ?>,
-						<?php echo tribe_get_city(); ?>
-						<?php echo tribe_get_phone(); ?></span>
+			<a class="venue-thumb" href="<?php echo tribe_get_venue_link( null, false ); ?>" style="display:block;position:relative; background-image:url(<?php the_field( 'venue_banner', $queried_venue ); ?>); background-size:cover; height:14em; margin:1em 0;">
+				<div style="background: rgba(0, 0, 0, 0.67); position:absolute; bottom:0; width:100%; color:#fff;">
+					<div style="margin:10px;">
+						<h3 style="margin:0; line-height:30px;"><?php returnFancyHtmlForVenue( tribe_get_venue_id() ); ?></h3>
+						<span style="font-family: 'Carrois Gothic', sans-serif;"><?php echo tribe_get_address(); ?>, <?php echo tribe_get_city(); ?> <?php echo tribe_get_phone(); ?></span>
 					</div>
 				</div>
 			</a>
 
 			<?php
 			if ( get_field( 'event_details' ) != '' ) {
-				echo '<h3 class="hidden-print">Additional information';
+				echo '<h3 class="hidden-print" style="text-transform:uppercase;">Additional information';
 				echo '</h3>';
-				echo '<div class="details muted">';
+				echo '<div class="details muted" style="font-family: \'Carrois Gothic\', sans-serif;">';
 				the_field( 'event_details' );
 				echo '</div>';
 			}
 
 			if ( get_field( 'event_sponsor' ) != '' ) {
-				echo '<h3>With the Support Of</h3><div class="event-sponsor">';
+				echo '<h3 style="text-transform:uppercase;">With the Support Of</h3><div class="event-sponsor">';
 				the_field( 'event_sponsor' );
 				echo '</div>';
 			}
@@ -203,7 +201,7 @@ get_header();
 					<?php /* if (tribe_get_end_date(null, FALSE, 'U') < time()  ) { ?><p class="alert" style="margin-top:20px"><strong>PLEASE NOTE:</strong> This event has passed.</p> <?php } */ ?>
 
 					<!-- h3>Synopsis</h3 -->
-					<div id="synopsis">
+					<div id="synopsis" style="font-family:'Carrois Gothic', sans-serif; font-size:108%; margin: 2em 0 0 1em;">
 						<?php the_content(); ?>
 					</div>
 					<?php
@@ -225,12 +223,13 @@ get_header();
 				</div>
 				<div class="span3">
 
-				<div class="social-media" style=""></div>                 
+				<div class="social-media" style="margin-top:2em;">
+				</div>                 
 
-				<div class="thumbnail poster">
+				<div class="thumbnail poster" style="margin:2em 0;">
 					<?php if ( function_exists( 'the_post_thumbnail' ) ) {
 						$attr = array(
-							'style' => '',
+							'style' => 'width:90%; margin:13px;',
 						);
 						the_post_thumbnail( 'poster-full' );
 					} ?>
