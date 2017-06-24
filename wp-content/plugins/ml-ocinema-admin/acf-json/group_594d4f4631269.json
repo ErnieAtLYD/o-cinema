@@ -1,0 +1,181 @@
+{
+    "key": "group_594d4f4631269",
+    "title": "Events Field Group",
+    "fields": [
+        {
+            "key": "field_5084cdb193e67",
+            "label": "Event Metadata",
+            "name": "event_metadata",
+            "type": "text",
+            "instructions": "Information which is shown underneath the name of the Event; metadata about the movie itself",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "Denmark, 2011, 97 minutes, Unrated",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5084ce47b1f86",
+            "label": "Event Details",
+            "name": "event_details",
+            "type": "wysiwyg",
+            "instructions": "Displayed in the sidebar, underneath the detail support box",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "100",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "• General Admission - $11.00\r\n• Student \/ Senior - $9.50\r\n• Members - $7.50\r\n\r\nGeneral Admission, Student \/ Senior & Members tickets are available online AND at the door.\r\n\r\nALL FILMS START EXACTLY AT THE LISTED TIME, AND ALL TICKET SALES ARE FINAL. NO REFUNDS, NO EXCHANGES, NO EXCEPTIONS.",
+            "tabs": "all",
+            "toolbar": "basic",
+            "media_upload": 0,
+            "delay": 0
+        },
+        {
+            "key": "field_5084ce47b24b5",
+            "label": "Event Sponsor",
+            "name": "event_sponsor",
+            "type": "wysiwyg",
+            "instructions": "Shows up under the \"Under the Support Of\" module in the sidebar, after Event Details.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "100",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "basic",
+            "media_upload": 1,
+            "delay": 0
+        },
+        {
+            "key": "field_5084ce47b672f",
+            "label": "Event Reviews",
+            "name": "event_reviews",
+            "type": "wysiwyg",
+            "instructions": "Mostly referring for quotes from movies. For full effect, make sure the quotes are in the BLOCKQUOTE tags and the sources are in the SMALL tags in HTML. (Please see Ernie if that makes no sense.)",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "toolbar": "full",
+            "media_upload": 0,
+            "tabs": "all",
+            "delay": 0
+        },
+        {
+            "key": "field_584da6b8af2dc",
+            "label": "Slideshow",
+            "name": "event_slideshow",
+            "type": "gallery",
+            "instructions": "Upload any high-resolution photos here and it will now be shown in a gallery.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "preview_size": "thumbnail",
+            "library": "uploadedTo",
+            "min": 0,
+            "max": 0,
+            "min_width": 0,
+            "min_height": 0,
+            "min_size": 0,
+            "max_width": 0,
+            "max_height": 0,
+            "max_size": 0,
+            "mime_types": "",
+            "insert": "append"
+        },
+        {
+            "key": "field_5086abfd83f1a",
+            "label": "Event Video Trailer",
+            "name": "trailer",
+            "type": "url",
+            "instructions": "Insert the URL of the embedded video URL, from YouTube or Vimeo",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_5086abfd84472",
+            "label": "Event Ticket URL",
+            "name": "ticketurl",
+            "type": "url",
+            "instructions": "The URL of the place to purchase the ticket (such as on EventBrite or BrownPaperTickets) or a place where people can purchase or reserve their tickets (such as on tugg)",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_594d5c33684fb",
+            "label": "Override \"one night only\" prefix",
+            "name": "override_desc",
+            "type": "text",
+            "instructions": "If this event only has one performance, it will say \"ONE NIGHT ONLY: \" unless you override the field. This will appear on both the homepage and spoken by a robot if someone calls into a theater.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "ONE NIGHT ONLY:",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "tribe_events"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": [
+        "discussion",
+        "comments",
+        "send-trackbacks"
+    ],
+    "active": 1,
+    "description": "",
+    "modified": 1498270723
+}

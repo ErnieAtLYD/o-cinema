@@ -1,0 +1,203 @@
+{
+    "key": "group_594d4f46413ea",
+    "title": "Venues Field Group",
+    "fields": [
+        {
+            "key": "field_54505d041c304",
+            "label": "Venue Logo",
+            "name": "venue_logo",
+            "type": "image",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "preview_size": "thumbnail",
+            "library": "all",
+            "return_format": "url",
+            "min_width": 0,
+            "min_height": 0,
+            "min_size": 0,
+            "max_width": 0,
+            "max_height": 0,
+            "max_size": 0,
+            "mime_types": ""
+        },
+        {
+            "key": "field_5084d6e34a53b",
+            "label": "Venue Metadata",
+            "name": "venue_metadata",
+            "type": "text",
+            "instructions": "Shown directly underneath the address in the venue page.\r\nExample: Wheelchair accessible",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "formatting": "html",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5084d6e34aac7",
+            "label": "Venue Banner",
+            "name": "venue_banner",
+            "type": "image",
+            "instructions": "Image should be in 1024x555 dimensions.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "preview_size": "thumbnail",
+            "library": "all",
+            "return_format": "url",
+            "min_width": 0,
+            "min_height": 0,
+            "min_size": 0,
+            "max_width": 0,
+            "max_height": 0,
+            "max_size": 0,
+            "mime_types": ""
+        },
+        {
+            "key": "field_5084d6e34af8e",
+            "label": "Venue Directions and Parking",
+            "name": "venue_directions",
+            "type": "wysiwyg",
+            "instructions": "Content shows underneath the Maps and Directions Tab on the Venue page.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "toolbar": "full",
+            "media_upload": 1,
+            "tabs": "all",
+            "delay": 0
+        },
+        {
+            "key": "field_5084d6e34e3e1",
+            "label": "Venue Tab",
+            "name": "venue_tab",
+            "type": "flexible_content",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layouts": {
+                "594d4f46463ff": {
+                    "key": "594d4f46463ff",
+                    "name": "tab_layout_content",
+                    "label": "Tab Layout Content",
+                    "display": "row",
+                    "sub_fields": [
+                        {
+                            "key": "field_5084d6e34e480",
+                            "label": "Tab Name",
+                            "name": "tab_name",
+                            "type": "text",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": "",
+                            "formatting": "html",
+                            "maxlength": ""
+                        },
+                        {
+                            "key": "field_5084d6e34e505",
+                            "label": "Tab Content",
+                            "name": "tab_content",
+                            "type": "wysiwyg",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "toolbar": "full",
+                            "media_upload": 1,
+                            "tabs": "all",
+                            "delay": 0
+                        },
+                        {
+                            "key": "field_5084d6e34e598",
+                            "label": "Tab Featured Image",
+                            "name": "tab_featured_image",
+                            "type": "image",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "preview_size": "thumbnail",
+                            "library": "all",
+                            "return_format": "url",
+                            "min_width": 0,
+                            "min_height": 0,
+                            "min_size": 0,
+                            "max_width": 0,
+                            "max_height": 0,
+                            "max_size": 0,
+                            "mime_types": ""
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
+                }
+            },
+            "button_label": "+ Add Tab",
+            "min": "",
+            "max": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "tribe_venue"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "seamless",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1498268527
+}

@@ -1,0 +1,7 @@
+table#event_url.eventtable,
+table#event_tribe_organizer.eventtable,
+table#event_cost.eventtable,
+tr#google_map_toggle.tribe-linked-type-venue-googlemap,
+tr#google_map_link_toggle.tribe-linked-type-venue-googlemap-link {
+	display: none;
+}

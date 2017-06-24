@@ -5,8 +5,8 @@
 require_once( 'library/multi-post-thumbnails.php' );
 
 add_action( 'after_setup_theme', 'woocommerce_support' );
-
 add_action( 'after_setup_theme', 'wpt_setup' );
+
 if ( ! function_exists( 'wpt_setup' ) ) :
 	function wpt_setup() {
 		register_nav_menu( 'primary', __( 'Primary Navigation', 'wptuts' ) );
@@ -20,7 +20,7 @@ if ( function_exists( 'add_theme_support' ) ) {
 		// additional image sizes
 		// delete the next line if you do not need additional image sizes
 		add_image_size( 'featured-thumb', 719, 303, true );
-		add_image_size( 'eventpage-thumb', 385, 9999 ); //300 pixels wide (and unlimited height)
+		add_image_size( 'eventpage-thumb', 385, 9999 ); // 300 pixels wide (and unlimited height)
 		add_image_size( 'eventlist-thumb', 300, 9999 );
 		add_image_size( 'poster-thumb', 260, 350, true );
 		add_image_size( 'poster-full', 260, 9999 );
@@ -84,24 +84,24 @@ function returnFancyHtmlForVenue( $id ) {
 // http://outlandish.com/blog/xml-to-json/
 function xmlToArray( $xml, $options = array() ) {
 	$defaults = array(
-		'namespaceSeparator' => ':', //you may want this to be something other than a colon
-		'attributePrefix' => '@',    //to distinguish between attributes and nodes with the same name
-		'alwaysArray' => array(),    //array of xml tag names which should always become arrays
-		'autoArray' => true,         //only create arrays for tags which appear more than once
-		'textContent' => '$',        //key used for the text content of elements
-		'autoText' => true,          //skip textContent key if node has no attributes or child nodes
-		'keySearch' => false,        //optional search and replace on tag and attribute names
-		'keyReplace' => false,      //replace values for above search values (as passed to str_replace())
+		'namespaceSeparator' => ':', // you may want this to be something other than a colon
+		'attributePrefix' => '@',    // to distinguish between attributes and nodes with the same name
+		'alwaysArray' => array(),    // array of xml tag names which should always become arrays
+		'autoArray' => true,         // only create arrays for tags which appear more than once
+		'textContent' => '$',        // key used for the text content of elements
+		'autoText' => true,          // skip textContent key if node has no attributes or child nodes
+		'keySearch' => false,        // optional search and replace on tag and attribute names
+		'keyReplace' => false,       // replace values for above search values (as passed to str_replace())
 	);
 	$options = array_merge( $defaults, $options );
 	$namespaces = $xml->getDocNamespaces();
-	$namespaces[''] = null; //add base (empty) namespace
+	$namespaces[''] = null; // add base (empty) namespace
 
-	//get attributes from all namespaces
+	// get attributes from all namespaces
 	$attributesArray = array();
 	foreach ( $namespaces as $prefix => $namespace ) {
 		foreach ( $xml->attributes( $namespace ) as $attributeName => $attribute ) {
-			//replace characters in attribute name
+			// replace characters in attribute name
 			if ( $options['keySearch'] ) { $attributeName =
 				str_replace( $options['keySearch'], $options['keyReplace'], $attributeName );
 			}
@@ -112,25 +112,25 @@ function xmlToArray( $xml, $options = array() ) {
 		}
 	}
 
-	//get child nodes from all namespaces
+	// get child nodes from all namespaces
 	$tagsArray = array();
 	foreach ( $namespaces as $prefix => $namespace ) {
 		foreach ( $xml->children( $namespace ) as $childXml ) {
-			//recurse into child nodes
+			// recurse into child nodes
 			$childArray = xmlToArray( $childXml, $options );
 			list($childTagName, $childProperties) = each( $childArray );
 
-			//replace characters in tag name
+			// replace characters in tag name
 			if ( $options['keySearch'] ) { $childTagName =
 				str_replace( $options['keySearch'], $options['keyReplace'], $childTagName );
 			}
-			//add namespace prefix, if any
+			// add namespace prefix, if any
 			if ( $prefix ) { $childTagName = $prefix . $options['namespaceSeparator'] . $childTagName;
 			}
 
 			if ( ! isset( $tagsArray[ $childTagName ] ) ) {
-				//only entry with this key
-				//test if tags of this type should always be arrays, no matter the element count
+				// only entry with this key
+				// test if tags of this type should always be arrays, no matter the element count
 				$tagsArray[ $childTagName ] =
 					in_array( $childTagName, $options['alwaysArray'] ) || ! $options['autoArray']
 					? array( $childProperties ) : $childProperties;
@@ -138,33 +138,34 @@ function xmlToArray( $xml, $options = array() ) {
 				is_array( $tagsArray[ $childTagName ] ) && array_keys( $tagsArray[ $childTagName ] )
 				=== range( 0, count( $tagsArray[ $childTagName ] ) - 1 )
 			) {
-				//key already exists and is integer indexed array
+				// key already exists and is integer indexed array
 				$tagsArray[ $childTagName ][] = $childProperties;
 			} else {
-				//key exists so convert to integer indexed array with previous value in position 0
+				// key exists so convert to integer indexed array with previous value in position 0
 				$tagsArray[ $childTagName ] = array( $tagsArray[ $childTagName ], $childProperties );
 			}
 		}
 	}
 
-	//get text content of node
+	// get text content of node
 	$textContentArray = array();
 	$plainText = trim( (string) $xml );
-	if ( $plainText !== '' ) {
+	if ( '' !== $plainText ) {
 		$textContentArray[ $options['textContent'] ] = $plainText;
 	}
 
-	//stick it all together
-	$propertiesArray = ! $options['autoText'] || $attributesArray || $tagsArray || ($plainText === '')
+	// stick it all together
+	$propertiesArray = ! $options['autoText'] || $attributesArray || $tagsArray || ( '' === $plainText )
 			? array_merge( $attributesArray, $tagsArray, $textContentArray ) : $plainText;
 
-	//return node as array
+	// return node as array
 	return array(
 		$xml->getName() => $propertiesArray,
 	);
 }
 
-/* Helper function.
+/*
+ * Helper function.
  * If there is at least one string key, $array will be regarded as an associative array.
  */
 function has_string_keys( array $array ) {
@@ -180,7 +181,8 @@ function get_sql_from_id_and_key( $id, $term ) {
 }
 
 
-/* Given a POST ID ($post->ID, usually)
+/*
+ * Given a POST ID ($post->ID, usually)
  * returns the agile ID of a show, usually a numeric string.
  * returns false if error
  */
@@ -202,7 +204,8 @@ function get_agiletix_from_wppostid( $id ) {
 
 }
 
-/* Given an AgileTix event ID number: evtinfo (NOT from WordPress)
+/*
+ * Given an AgileTix event ID number: evtinfo (NOT from WordPress)
  * Return a PHP structure (in JSON notation) of the XML returned
  */
 function get_json_from_agile_api( $evtinfo ) {
@@ -237,14 +240,15 @@ function convert_date_to_spoken( $hit ) {
 	$date = DateTime::createFromFormat( 'm/d', $hit[0] );
 
 	if ( ! $date ) {
-		//invalid date supplied, return original string
+		// invalid date supplied, return original string
 		return $hit[0];
 	}
 	return $date->format( 'l F jS' );
 }
 
 
-/* Print front dates: used in both venue pages, front page and twilio
+/*
+ * Print front dates: used in both venue pages, front page and twilio
  * Given a POST ID ($post->ID, usually)
  * - If no run date print "COMING SOON"
  * - If there is a show today, says "SHOWING TODAY"
@@ -267,7 +271,7 @@ function printFrontRunDates( $id, $is_audio = false ) {
 		$today_showing = array();
 
 		if ( isset( $json['StartDate'] ) ) {
-			echo 'ONE NIGHT ONLY: ';
+			echo ( get_field( 'override_desc' ) ) ? get_field( 'override_desc' ) : 'ONE NIGHT ONLY: ';
 			echo date( ( $is_audio ) ? 'l F jS \a\t g:iA' : 'n/j', strtotime( $json['StartDate'] ) );
 		} else {
 			foreach ( $json as $agile_event ) {
@@ -298,7 +302,6 @@ function printFrontRunDates( $id, $is_audio = false ) {
 
 		// If today falls in the range of the event,
 		// grep each line, see if todays date fit and display it if it does
-
 		date_default_timezone_set( 'America/New_York' );
 		$todays_date = strtotime( 'now' );
 		$start_date = strtotime( tribe_get_start_date( $id, true, 'Y-m-d' ) );
@@ -328,7 +331,7 @@ function printFrontRunDates( $id, $is_audio = false ) {
 				} else {
 					if ( $todays_date < $start_date ) {
 						// examples: Thu, Jun 9th @ 6pm
-						echo 'ONE NIGHT ONLY: ';
+						echo ( get_field( 'override_desc' ) ) ? get_field( 'override_desc' ) : 'ONE NIGHT ONLY: ';
 						echo tribe_get_start_date( $id, true, ( $is_audio ) ? 'l F jS \a\t g:iA' : 'n/j' );
 					} else {
 						echo 'SHOWING TODAY, ';
@@ -351,7 +354,6 @@ function printFrontRunDates( $id, $is_audio = false ) {
 // Show todays date if it has a start and end time that today is part of
 // The start and end dates if if hasn't begun yet
 // Or just coming soon if there are no dates period
-
 function printEventRunDates( $id ) {
 	// Get Custom values with key "Expansion"
 	$meta = get_sql_from_id_and_key( $id, 'showing' );
