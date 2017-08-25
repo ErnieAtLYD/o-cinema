@@ -1118,19 +1118,20 @@ if ( class_exists( 'Tribe__Events__Main' ) ) {
 				}
 
 				if ( function_exists( 'has_post_thumbnail' ) && has_post_thumbnail( $event->ID ) ) {
-					$has_image = true;
+					$has_image      = true;
+					$image_src      = tribe_event_featured_image( $event->ID, 'large', false, false );
 					$image_tool_src = tribe_event_featured_image( $event->ID, 'medium', false, false );
 				}
 
 				$category_classes = tribe_events_event_classes( $event->ID, false );
 
-				$json['eventId'] = $event->ID;
-				$json['title'] = wp_kses_post( $event->post_title );
-				$json['permalink'] = tribe_get_event_link( $event->ID );
-				$json['imageSrc'] = $image_src;
-				$json['dateDisplay'] = $date_display;
+				$json['eventId']         = $event->ID;
+				$json['title']           = wp_kses_post( $event->post_title );
+				$json['permalink']       = tribe_get_event_link( $event->ID );
+				$json['imageSrc']        = $image_src;
+				$json['dateDisplay']     = $date_display;
 				$json['imageTooltipSrc'] = $image_tool_src;
-				$json['excerpt'] = tribe_events_get_the_excerpt( $event );
+				$json['excerpt']         = tribe_events_get_the_excerpt( $event );
 				$json['categoryClasses'] = $category_classes;
 
 				/**
@@ -1427,10 +1428,26 @@ if ( class_exists( 'Tribe__Events__Main' ) ) {
 		$remove_shortcodes = apply_filters( 'tribe_events_excerpt_shortcode_removal', true );
 
 		// Get the Excerpt or content based on what is available
-		if ( has_excerpt( $post->ID ) ) {
-			$excerpt = $post->post_excerpt;
-		} else {
-			$excerpt = $post->post_content;
+		$excerpt = has_excerpt( $post->ID ) ? $post->post_excerpt : $post->post_content;
+
+		// If shortcode filter is enabled let's process them
+		if ( $allow_shortcodes ) {
+			$excerpt = do_shortcode( $excerpt );
+		}
+
+		// Remove all shortcode Content before removing HTML
+		if ( $remove_shortcodes ) {
+			$excerpt = preg_replace( '#\[.+\]#U', '', $excerpt );
+		}
+
+		// Remove "all" HTML based on what is allowed
+		$excerpt = wp_kses( $excerpt, $allowed_html );
+
+		if ( ! has_excerpt( $post->ID ) ) {
+			// Temporarily alter the global post in preparation for our filters.
+			$global_post     = $GLOBALS['post'];
+			$GLOBALS['post'] = $post;
+
 			// We will only trim Excerpt if it comes from Post Content
 
 			/**
@@ -1449,20 +1466,10 @@ if ( class_exists( 'Tribe__Events__Main' ) ) {
 
 			// Now we actually trim it
 			$excerpt = wp_trim_words( $excerpt, $excerpt_length, $excerpt_more );
-		}
 
-		// If shortcode filter is enabled lets process them
-		if ( $allow_shortcodes ) {
-			$excerpt = do_shortcode( $excerpt );
+			// Original post is back in action!
+			$GLOBALS['post'] = $global_post;
 		}
-
-		// Remove all shortcode Content before removing HTML
-		if ( $remove_shortcodes ) {
-			$excerpt = preg_replace( '#\[.+\]#U', '', $excerpt );
-		}
-
-		// Remove "all" HTML based on what is allowed
-		$excerpt = wp_kses( $excerpt, $allowed_html );
 
 		/**
 		 * Filter the event excerpt used in various views.

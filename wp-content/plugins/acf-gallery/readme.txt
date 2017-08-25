@@ -1,29 +1,13 @@
 === Advanced Custom Fields: Gallery Field ===
 Contributors: elliotcondon
-Author: Elliot Condon
-Author URI: http://www.elliotcondon.com
-Plugin URI: http://www.advancedcustomfields.com
-Requires at least: 3.5
-Tested up to: 3.5.1
-Stable tag: trunk
-Homepage: http://www.advancedcustomfields.com/add-ons/gallery-field/
-Version: 1.1.1
+Requires at least: 3.6.0
+Tested up to: 4.9.0
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-
-== Copyright ==
-Copyright 2011 - 2013 Elliot Condon
-
-This software is NOT to be distributed, but can be INCLUDED in WP themes and Plugins: Premium or Contracted.
-If you include this software within a premium theme or premium plugin, you MUST remove the acf-gallery-update.php file from the folder.
-
-This software is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
+Create beautiful image galleries, sliders and more at lightning speed!
 
 == Description ==
-
-= Create beautiful image galleries, sliders and more at lightning speed! =
 
 The Gallery field creates a simple and intuitive interface for managing a collection of images. The interface features 2 different views for clients to better manage the data
 
@@ -54,6 +38,9 @@ include_once('acf-gallery/acf-gallery.php');
 
 
 == Changelog ==
+
+= 2.0.0 =
+* Added support for ACF version 5
 
 = 1.1.1 =
 * Fixed Bug where upload popup would appear when editing an image

@@ -72,9 +72,9 @@ function email( $url ) {
 
 	$body = join( "\r\n", $body );
 
-	//send the email
+	// send the email
 	return @mail(
-		'miamibeach@o-cinema.org, ernie@littleyellowdifferent.com',
+		'miamibeach@o-cinema.org',
 		'New Voice Mail from ' . VENUE . " ({$_REQUEST['From']})",
 		$body,
 		$headers );

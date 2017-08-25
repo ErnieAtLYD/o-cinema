@@ -13,6 +13,15 @@ $delete_this_button = esc_html__( 'Delete', 'tribe-events-calendar-pro' );
 $label = __( 'Event Series:', 'tribe-events-calendar-pro' );
 ?>
 
+<?php
+/**
+ * Hook before recurring event meta fields
+ *
+ * @since 4.4.15
+ *
+ */
+do_action( 'tribe_events_pro_recurrence_before_metabox' );
+?>
 <div id="tribe-row-delete-dialog">
 	<p class="question rule-question"><?php esc_html_e( 'Are you sure you want to delete these events?', 'tribe-events-calendar-pro' ) ?></p>
 	<p class="question exclusion-question"><?php esc_html_e( 'Are you sure you want to delete this exclusion?', 'tribe-events-calendar-pro' ) ?></p>
@@ -474,3 +483,11 @@ $rule_prefix = 'exclusion';
 		</div>
 	</td>
 </tr>
+<?php
+/**
+ * Hook after recurring event meta fields
+ *
+ * @since 4.4.15
+ *
+ */
+do_action( 'tribe_events_pro_recurrence_after_metabox' );
