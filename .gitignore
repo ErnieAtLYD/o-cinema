@@ -6,6 +6,7 @@
 *.swp
 Thumbs.db
 vendor/*
+sftp-config.json
 
 # wordpress specific
 wp-config.php
