@@ -271,8 +271,8 @@ function printFrontRunDates( $id, $is_audio = false ) {
 		$today_showing = array();
 
 		if ( isset( $json['StartDate'] ) ) {
-			echo ( get_field( 'override_desc' ) ) ? get_field( 'override_desc' ) : 'ONE NIGHT ONLY: ';
-			echo date( ( $is_audio ) ? 'l F jS \a\t g:iA' : 'n/j', strtotime( $json['StartDate'] ) );
+			echo ( get_field( 'override_desc' ) ) ? get_field( 'override_desc' ) : 'ONE NIGHT ONLY:';
+			echo date( ( $is_audio ) ? ' l F jS \a\t g:iA' : ' n/j', strtotime( $json['StartDate'] ) );
 		} else {
 			foreach ( $json as $agile_event ) {
 				$timestamp = strtotime( $agile_event['StartDate'] );
