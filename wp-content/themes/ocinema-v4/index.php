@@ -17,7 +17,10 @@
 	<div class="body home container">
 
 		<div class="news-module" style="margin:2em auto;">
-			<a style="display:block; font-family: 'Carrois Gothic', sans-serif; border:1px solid #888; background-color:#eee; padding:1em; text-align:center; line-height:1.7rem;" href="/shop" target="_blank"><span style="font-size:20px; color:#888;" ><i class="fa fa-lg fa-gift" aria-hidden="true"></i> NEW: Our <span style="color:#ed008c">ONLINE STORE</span> is now&nbsp;open!</span></a>
+			<a style="display:block; font-family: 'Carrois Gothic', sans-serif; border:1px solid #888; background-color:#600; padding:1em; text-align:center; line-height:1.7rem;" href="/shop" target="_blank">
+				<span style="font-size:16px; color:#fff;" ><i class="fa fa-lg fa-exclamation-triangle" aria-hidden="true"></i> Monday 9/11: Due to Hurricane Irma and widespread power outages that have affected South Florida including our theaters, O Cinema is closed until further notice.  We are working hard to bring movies back to you ASAP.
+				</span>
+			</a>
 		</div>
 
 		<h4>Select a Location<br />
