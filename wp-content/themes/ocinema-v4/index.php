@@ -18,7 +18,7 @@
 
 		<div class="news-module" style="margin:2em auto;">
 			<a style="display:block; font-family: 'Carrois Gothic', sans-serif; border:1px solid #888; background-color:#600; padding:1em; text-align:center; line-height:1.7rem;" href="/shop" target="_blank">
-				<span style="font-size:16px; color:#fff;" ><i class="fa fa-lg fa-exclamation-triangle" aria-hidden="true"></i> Monday 9/11: Due to Hurricane Irma and widespread power outages that have affected South Florida including our theaters, O Cinema is closed until further notice.  We are working hard to bring movies back to you ASAP.
+				<span style="font-size:16px; color:#fff;" ><i class="fa fa-lg fa-exclamation-triangle" aria-hidden="true"></i> Thursday 9/14: O Cinema Miami Beach is now open! See schedule below.  O Cinema Wynwood is temporarily closed but will reopen soon.
 				</span>
 			</a>
 		</div>
