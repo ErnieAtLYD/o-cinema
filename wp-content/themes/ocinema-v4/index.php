@@ -16,12 +16,12 @@
 
 	<div class="body home container">
 
-		<div class="news-module" style="margin:2em auto;">
+<!-- 		<div class="news-module" style="margin:2em auto;">
 			<a style="display:block; font-family: 'Carrois Gothic', sans-serif; border:1px solid #888; background-color:#600; padding:1em; text-align:center; line-height:1.7rem;" href="/shop" target="_blank">
 				<span style="font-size:16px; color:#fff;" ><i class="fa fa-lg fa-exclamation-triangle" aria-hidden="true"></i> Thursday 9/14: O Cinema Miami Beach is now open! See schedule below.  O Cinema Wynwood is temporarily closed but will reopen soon.
 				</span>
 			</a>
-		</div>
+		</div> -->
 
 		<h4>Select a Location<br />
 		<span class="caption" style="text-transform:none; font-family: 'Carrois Gothic', sans-serif; font-size:14px; color:#888; line-height:0;">Choose what theater you're interested in, and we'll show you what's playing.</span></h4>
