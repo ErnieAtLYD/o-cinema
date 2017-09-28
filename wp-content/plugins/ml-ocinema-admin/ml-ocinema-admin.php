@@ -43,3 +43,8 @@ function load_acf_json( $paths ) {
 add_action( 'admin_enqueue_scripts', 'enqueue_admin_scripts' );
 add_filter( 'acf/settings/save_json', 'save_acf_json' );
 add_filter( 'acf/settings/load_json', 'load_acf_json' );
+
+/* Matt needs this to edit the Showing custom field post. When I move this to ACF I can move off this. */
+add_filter( 'acf/settings/remove_wp_meta_box', '__return_false' );
+
+
