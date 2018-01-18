@@ -156,8 +156,8 @@
 	echo "Creating a Git commit for the changes…"
 	# Add all the things! Even the deleted things!
 	cd $PACKAGE
-	git add -A .
-	git commit -am "$COMMIT_MSG"
+	# git add -A .
+	# git commit -am "$COMMIT_MSG"
 
 	# TIDY UP
 	# =======

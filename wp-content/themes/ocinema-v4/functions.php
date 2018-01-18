@@ -335,7 +335,7 @@ function printFrontRunDates( $id, $is_audio = false ) {
 						echo tribe_get_start_date( $id, true, ( $is_audio ) ? 'l F jS \a\t g:iA' : 'n/j' );
 					} else {
 						echo 'SHOWING TODAY, ';
-						echo date( ( $is_audio ) ? 'l F jS \a\t g:iA' : 'n/j', strtotime( $todays_date ) );
+						echo date( ( $is_audio ) ? 'l F jS \a\t g:iA' : 'n/j', $todays_date );
 						echo ': ';
 						echo substr( $key->meta_value, $pos );
 					}
