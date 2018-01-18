@@ -274,22 +274,25 @@ function printFrontRunDates( $id, $is_audio = false ) {
 			echo ( get_field( 'override_desc' ) ) ? get_field( 'override_desc' ) : 'ONE NIGHT ONLY:';
 			echo date( ( $is_audio ) ? ' l F jS \a\t g:iA' : ' n/j', strtotime( $json['StartDate'] ) );
 		} else {
-			foreach ( $json as $agile_event ) {
-				$timestamp = strtotime( $agile_event['StartDate'] );
-				$timestamp_date = date( 'Y-m-d', $timestamp );
+			if ( isset( $json ) ) {
+				foreach ( $json as $agile_event ) {
+					$timestamp = strtotime( $agile_event['StartDate'] );
+					$timestamp_date = date( 'Y-m-d', $timestamp );
 
-				if ( $todays_date == $timestamp_date ) {
-					$today_showing[] = date( 'g:iA', $timestamp );
-				} else {
-					// If branch 1 was never entered,
-					// This is a date that will open in the future.
-					if ( empty( $today_showing ) ) {
-						echo 'OPENS ';
-						echo date( ( $is_audio ) ? 'l F jS' : 'n/j', $timestamp );
+					if ( $todays_date == $timestamp_date ) {
+						$today_showing[] = date( 'g:iA', $timestamp );
+					} else {
+						// If branch 1 was never entered,
+						// This is a date that will open in the future.
+						if ( empty( $today_showing ) ) {
+							echo 'OPENS ';
+							echo date( ( $is_audio ) ? 'l F jS' : 'n/j', $timestamp );
+						}
+						break;
 					}
-					break;
 				}
 			}
+
 			if ( ! empty( $today_showing ) ) {
 				echo 'SHOWING TODAY, ';
 				echo date( ( $is_audio ) ? 'l F jS' : 'n/j', strtotime( $todays_date ) );
