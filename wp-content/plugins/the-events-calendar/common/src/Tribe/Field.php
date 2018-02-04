@@ -106,6 +106,7 @@ if ( ! class_exists( 'Tribe__Field' ) ) {
 				'dropdown_chosen', // Deprecated use `dropdown`
 				'license_key',
 				'wrapped_html',
+				'email',
 			);
 
 			$this->valid_field_types = apply_filters( 'tribe_valid_field_types', $this->valid_field_types );
@@ -154,16 +155,16 @@ if ( ! class_exists( 'Tribe__Field' ) ) {
 					'span'   => array(),
 				)
 			);
-			$fieldset_attributes = $args['fieldset_attributes'];
-			if ( is_array( $fieldset_attributes ) ) {
-				foreach ( $fieldset_attributes as $key => &$val ) {
-					$val = esc_attr( $val );
+			$fieldset_attributes = array();
+			if ( is_array( $args['fieldset_attributes'] ) ) {
+				foreach ( $args['fieldset_attributes'] as $key => $val ) {
+					$fieldset_attributes[ $key ] = esc_attr( $val );
 				}
 			}
-			$attributes = $args['attributes'];
-			if ( is_array( $attributes ) ) {
-				foreach ( $attributes as $key => &$val ) {
-					$val = esc_attr( $val );
+			$attributes = array();
+			if ( is_array( $args['attributes'] ) ) {
+				foreach ( $args['attributes'] as $key => $val ) {
+					$attributes[ $key ] = esc_attr( $val );
 				}
 			}
 			if ( is_array( $args['options'] ) ) {
@@ -596,6 +597,7 @@ if ( ! class_exists( 'Tribe__Field' ) ) {
 			if ( is_array( $this->options ) && ! empty( $this->options ) ) {
 				$field .= '<select';
 				$field .= $this->do_field_name();
+				$field .= " id='{$this->id}-select'";
 				$field .= " class='tribe-dropdown'";
 				$field .= '>';
 				foreach ( $this->options as $option_id => $title ) {
@@ -779,6 +781,18 @@ if ( ! class_exists( 'Tribe__Field' ) ) {
 			}
 
 			return implode( ' ', $concat );
+		}
+
+		/**
+		 * Generate an email address field
+		 *
+		 * @since 4.7.4
+		 *
+		 * @return string The field
+		 */
+		public function email() {
+			$this->value = trim( $this->value );
+			return $this->text();
 		}
 	} // end class
 } // endif class_exists

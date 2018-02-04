@@ -23,7 +23,6 @@
 				<ul>
 					<li><a href="/venue/o-cinema-wynwood/">O Cinema Wynwood</a></li>
 					<li><a href="/venue/o-cinema-miami-beach/">O Cinema Miami Beach</a></li>
-					<li><a href="/venue/o-cinema-miami-shores/">O Cinema Miami Shores @ MTC</a></li>
 				</ul>			
 			</div>
 

@@ -4,7 +4,7 @@ Plugin Name: Advanced Custom Fields: Gallery Field
 Plugin Slug: acf-gallery
 Plugin URI: http://www.advancedcustomfields.com/
 Description: This premium Add-on adds a gallery field type for the Advanced Custom Fields plugin
-Version: 2.0.0
+Version: 2.0.1
 Author: Elliot Condon
 Author URI: http://www.elliotcondon.com/
 License: GPL
@@ -41,7 +41,7 @@ class acf_plugin_gallery {
 			
 			// basic
 			'name'				=> __('Advanced Custom Fields: Gallery Field', 'acf'),
-			'version'			=> '2.0.0',
+			'version'			=> '2.0.1',
 						
 			// urls
 			'slug'				=> dirname(plugin_basename( __FILE__ )),

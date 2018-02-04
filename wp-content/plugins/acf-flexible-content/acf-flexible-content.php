@@ -4,7 +4,7 @@ Plugin Name: Advanced Custom Fields: Flexible Content Field
 Plugin Slug: acf-flexible-content
 Plugin URI: http://www.advancedcustomfields.com/
 Description: This premium Add-on adds a flexible content field type for the Advanced Custom Fields plugin
-Version: 2.0.0
+Version: 2.0.1
 Author: Elliot Condon
 Author URI: http://www.elliotcondon.com/
 License: GPL
@@ -39,7 +39,7 @@ class acf_plugin_flexible_content {
 			
 			// basic
 			'name'				=> __('Advanced Custom Fields: Flexible Content Field', 'acf'),
-			'version'			=> '2.0.0',
+			'version'			=> '2.0.1',
 						
 			// urls
 			'slug'				=> dirname(plugin_basename( __FILE__ )),

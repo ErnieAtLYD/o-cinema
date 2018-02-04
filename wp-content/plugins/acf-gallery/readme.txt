@@ -39,6 +39,9 @@ include_once('acf-gallery/acf-gallery.php');
 
 == Changelog ==
 
+= 2.0.1 =
+* Minor fixes and improvements
+
 = 2.0.0 =
 * Added support for ACF version 5
 

@@ -9,7 +9,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">  
 	<meta name="apple-mobile-web-app-capable" content="yes">
-  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 	<link href="//fonts.googleapis.com/css?family=Carrois+Gothic|Courgette|Lato:700" rel="stylesheet" type='text/css'>
 	<link rel="shortcut icon" href="<?php bloginfo( 'template_directory' ); ?>/images/ocinema3_favicon.png" />
 	<link rel="stylesheet" type="text/css" media="all" href="<?php bloginfo( 'stylesheet_url' ); ?>?v=7" />
@@ -83,7 +83,7 @@ var addToHomeConfig = {
 		  <ul style="padding-left:10px;" class="nav pull-right">
 		  	<?php if ( function_exists( 'WC' ) ) : ?>
 			<li>
-			  <a class="logo cart-contents" href="<?php echo WC()->cart->get_cart_url(); ?>" title="<?php _e( 'View your shopping cart' ); ?>" target="_blank">
+			  <a class="logo cart-contents" href="<?php wc_get_cart_url(); ?>" title="View your shopping cart" target="_blank">
 				<i class="fa fa-shopping-cart fa-lg"></i> <?php echo WC()->cart->cart_contents_count; ?>
 			  </a>
 			</li>

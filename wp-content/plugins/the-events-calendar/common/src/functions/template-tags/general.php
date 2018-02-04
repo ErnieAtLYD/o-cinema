@@ -434,20 +434,20 @@ if ( ! function_exists( 'tribe_format_currency' ) ) {
 	 * @return string
 	 */
 	function tribe_format_currency( $cost, $post_id = null, $currency_symbol = null, $reverse_position = null ) {
-
 		$post_id = Tribe__Main::post_id_helper( $post_id );
 
 		$currency_symbol = apply_filters( 'tribe_currency_symbol', $currency_symbol, $post_id );
 
-		// if no currency symbol was passed, or we're not looking at a particular event,
-		// let's get the default currency symbol
-		if ( ! $post_id || ! $currency_symbol ) {
+		// if no currency symbol was passed let's get the default currency symbol
+		if ( ! $currency_symbol ) {
 			$currency_symbol = tribe_get_option( 'defaultCurrencySymbol', '$' );
 		}
 
 		$reverse_position = apply_filters( 'tribe_reverse_currency_position', $reverse_position, $post_id );
 
-		if ( ! $reverse_position || ! $post_id ) {
+		// if no currency position was passed and we're not looking at a particular event,
+		// let's get the default currency position
+		if ( null === $reverse_position && ! $post_id ) {
 			$reverse_position = tribe_get_option( 'reverseCurrencyPosition', false );
 		}
 
@@ -520,6 +520,8 @@ function tribe_register_error( $indexes, $message ) {
 /**
  * Shortcut for Tribe__Assets::register(), include a single asset
  *
+ * @since 4.3
+ *
  * @param  object   $origin     The main Object for the plugin you are enqueueing the script/style for
  * @param  string   $slug       Slug to save the asset
  * @param  string   $file       Which file will be loaded, either CSS or JS
@@ -530,7 +532,33 @@ function tribe_register_error( $indexes, $message ) {
  * @return array             Which Assets was registered
  */
 function tribe_asset( $origin, $slug, $file, $deps = array(), $action = null, $arguments = array() ) {
-	return Tribe__Assets::instance()->register( $origin, $slug, $file, $deps, $action, $arguments );
+	return tribe( 'assets' )->register( $origin, $slug, $file, $deps, $action, $arguments );
+}
+
+/**
+ * Shortcut for Tribe__Assets::enqueue(), include assets
+ *
+ * @since  4.7
+ *
+ * @param  string|array  $slug  Slug to enqueue
+ *
+ * @return string
+ */
+function tribe_asset_enqueue( $slug ) {
+	return tribe( 'assets' )->enqueue( $slug );
+}
+
+/**
+ * Shortcut for Tribe__Assets::enqueue_group() include assets by groups
+ *
+ * @since  4.7
+ *
+ * @param  string|array  $group  Which group(s) should be enqueued
+ *
+ * @return string
+ */
+function tribe_asset_enqueue_group( $group ) {
+	return tribe( 'assets' )->enqueue_group( $group );
 }
 
 /**
@@ -572,4 +600,41 @@ function tribe_assets( $origin, $assets, $action = null, $arguments = array() ) 
 	}
 
 	return $registered;
+}
+
+if ( ! function_exists( 'tribe_doing_frontend' ) ) {
+	/**
+	 * Registers truthy or falsy callbacks on the filters used to detect if
+	 * any frontend operation is being done for logged in users or not.
+	 *
+	 * @since 4.7.4
+	 *
+	 * @param bool $doing_frontend Whether what is being done happens in the
+	 *                             context of the frontend or not.
+	 */
+	function tribe_doing_frontend( $doing_frontend ) {
+		$callback = $doing_frontend ? '__return_true' : '__return_false';
+
+		add_filter( 'tribe_doing_frontend', $callback );
+	}
+}
+
+if ( ! function_exists( 'tribe_is_frontend' ) ) {
+	/**
+	 * Whether we are currently performing a frontend operation or not.
+	 *
+	 * @since 4.6.2
+	 *
+	 * @return bool
+	 */
+	function tribe_is_frontend() {
+		/**
+		 * Whether we are currently performing a frontend operation or not.
+		 *
+		 * @since 4.6.2
+		 *
+		 * @param bool $is_frontend
+		 */
+		return (bool) apply_filters( 'tribe_doing_frontend', false );
+	}
 }
