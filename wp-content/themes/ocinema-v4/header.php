@@ -59,7 +59,7 @@ var addToHomeConfig = {
 	js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=191681557518904";
 	fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
-	<div class="navbar navbar-inverse navbar-fixed-top">
+	<nav class="navbar navbar-inverse fixed-top">
 	  <div class="navbar-inner">
 		<div class="container">
 		  <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -116,4 +116,4 @@ var addToHomeConfig = {
 		  </form>		
 		</div>
 	  </div>
-	</div>	
+	</nav>	
