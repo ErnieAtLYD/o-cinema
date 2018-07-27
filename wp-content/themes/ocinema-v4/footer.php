@@ -7,7 +7,7 @@
 				<h5>Navigation</h5>
 				<ul>
 					<li><a href="/about-o-cinema">About O Cinema</a></li>
-					<li><a href="/miami-event-rental-space-information">Venue Rental</a></li>
+					<!-- li><a href="/miami-event-rental-space-information">Venue Rental</a></li -->
 					<li><a href="/on-screen-advertising/">On-Screen Advertising</a></li>
 
 					<li><a href="/contact">Contact Us</a></li>					
