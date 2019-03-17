@@ -1,3 +1,8 @@
+<?php
+// Until we have more than one theater, redirect front page to the remaing location
+header("Location: https://www.o-cinema.org/venue/o-cinema-miami-beach/");
+die();
+?>
 <?php get_header(); ?>
 <?php
 /**

@@ -21,7 +21,6 @@
 			<div class="span2">
 				<h5>Locations</h5>
 				<ul>
-					<li><a href="/venue/o-cinema-wynwood/">O Cinema Wynwood</a></li>
 					<li><a href="/venue/o-cinema-miami-beach/">O Cinema Miami Beach</a></li>
 				</ul>			
 			</div>
