@@ -10,12 +10,10 @@ Template Name: Twilio Script - Miami Beach
 define( 'VENUE', 'Miami Beach' );
 define( 'VENUE_SLUG', 'miamibeach' );
 define( 'VENUE_ID', 4202 );
-define( 'BASE_URL', '//www.o-cinema.org/wp-content/themes/ocinema-v3/mp3/' );
+define( 'BASE_URL', '//s3.amazonaws.com/mangrove-labs-o-cinema/phone-tree/' );
 define( 'MP3_INTRO', BASE_URL . 'OMB-INTRO.mp3' );
-define( 'MP3_BASEMENU', BASE_URL . 'OMB-PRESS-MENU.mp3' );
+define( 'MP3_BASEMENU', BASE_URL . 'omb-phone-menu-edited.mp3' );
 define( 'MP3_NOWSHOWING', BASE_URL . 'OMB-NOW-SHOWING.mp3' );
-define( 'MP3_COMINGSOON', BASE_URL . 'ms-coming-soon.mp3' );
-define( 'MP3_LOCATION', BASE_URL . 'Wyn-Location.mp3' );
 define( 'MP3_PARKING', BASE_URL . 'OMB-PARKING.mp3' );
 define( 'MP3_PRICES', BASE_URL . 'OMB-TICKET-PRICES.mp3' );
 define( 'MP3_CONTACTUS', BASE_URL . 'thank-you-for-contacting-us.mp3' );
@@ -99,7 +97,8 @@ $alreadyshowed = false;
 /* Check to make sure index is valid */
 if ( isset( $web[ $node ] ) || count( $web[ $node ] ) >= $index && ! is_null( $_REQUEST['Digits'] ) ) {
 	$destination = $web[ $node ][ $index ];
-} else { $destination = null;
+} else {
+	$destination = null;
 }
 // @end snippet
 
@@ -151,27 +150,19 @@ switch ( $destination ) {
 		<Play><?php echo MP3_PARKING; ?></Play>
 		<Play><?php echo MP3_PRICES; ?></Play>
 		<?php break;
-	case 'miamishores'; ?>
-		<Say>Please wait while we connect you to O Cinema Miami Shores.</Say>
-		<Dial>+17865653456</Dial>
-		<?php break;
-	case 'wynwood'; ?>
-		<Say>Please wait while we connect you to O Cinema Wynwood.</Say>
-		<Dial>+13055719970</Dial>
-		<?php break;
 	case 'voicemail'; ?>
 		<Play><?php echo MP3_VOICEMAIL; ?></Play>
-		<Record 
+		<Record
 			transcribeCallback="<?php echo $url . '?node=voicemail'; ?>"
-			timeout="10" 
-			maxLength="120" 
-			action="<?php echo $url . '?node=bye'; ?>" 
-			method="POST" 
+			timeout="10"
+			maxLength="120"
+			action="<?php echo $url . '?node=bye'; ?>"
+			method="POST"
 			finishOnKey="#"/>
 		<?php break;
 	default: ?>
 		<Gather timeout="10" action="<?php echo $url . '?node=default'; ?>" method="POST" numDigits="1">
-			<Play><?php echo MP3_INTRO; ?></Play>      
+			<Play><?php echo MP3_INTRO; ?></Play>
 			<Play><?php echo MP3_BASEMENU; ?></Play>
 		</Gather>
 		<Pause/>
