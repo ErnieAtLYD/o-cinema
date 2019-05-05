@@ -1,18 +1,51 @@
 <?php
 
+// If Gravity Forms isn't loaded, bail.
 if ( ! class_exists( 'GFForms' ) ) {
 	die();
 }
 
-
+/**
+ * Class GF_Field_List
+ *
+ * Handles the behavior of List fields.
+ *
+ * @since Unknown
+ */
 class GF_Field_List extends GF_Field {
 
+	/**
+	 * Sets the field type for the List field.
+	 *
+	 * @since  Unknown
+	 * @access public
+	 *
+	 * @var string The field type.
+	 */
 	public $type = 'list';
 
+	/**
+	 * Sets the field title to be displayed in the form editor.
+	 *
+	 * @since  Unknown
+	 * @access public
+	 *
+	 * @return string The field title. Escaped and translatable.
+	 */
 	public function get_form_editor_field_title() {
 		return esc_attr__( 'List', 'gravityforms' );
 	}
 
+	/**
+	 * Defines the field settings available in the form editor.
+	 *
+	 * @since  Unknown
+	 * @access public
+	 *
+	 * @used-by GFFormDetail::inline_scripts()
+	 *
+	 * @return array The settings available.
+	 */
 	function get_form_editor_field_settings() {
 		return array(
 			'columns_setting',
@@ -32,37 +65,101 @@ class GF_Field_List extends GF_Field {
 		);
 	}
 
+	/**
+	 * Gets the ID of the first input.
+	 *
+	 * @since Unknown
+	 * @access public
+	 *
+	 * @uses GF_Field::is_form_editor()
+	 * @uses GF_Field_List::$id
+	 *
+	 * @param array $form The Form Object.
+	 *
+	 * @return string The ID of the first input. Empty string if not found.
+	 */
 	public function get_first_input_id( $form ) {
-		return ! $this->is_form_editor() ? sprintf( 'input_%s_%s_shim', $form['id'], $this->id ) : '';
+		return '';
 	}
 
+	/**
+	 * Defines if the inline style block has been printed.
+	 *
+	 * @since  Unknown
+	 * @access private
+	 *
+	 * @var bool false
+	 */
+	private static $_style_block_printed = false;
+
+	/**
+	 * Builds the field input HTML markup.
+	 *
+	 * @since  Unknown
+	 * @access public
+	 *
+	 * @param array      $form  The Form Object.
+	 * @param string     $value The field value. Defaults to empty string.
+	 * @param null|array $entry The Entry Object. Defaults to null.
+	 *
+	 * @return string The List field HTML markup.
+	 */
 	public function get_field_input( $form, $value = '', $entry = null ) {
 
-		$form_id         = $form['id'];
-		$is_entry_detail = $this->is_entry_detail();
-		$is_form_editor  = $this->is_form_editor();
-
-		$disabled_text = $is_form_editor ? 'disabled="disabled"' : '';
+		$form_id        = $form['id'];
+		$is_form_editor = $this->is_form_editor();
 
 		if ( ! empty( $value ) ) {
 			$value = maybe_unserialize( $value );
 		}
 
-		if ( ! is_array( $value ) ) {
+		if ( is_array( $value ) ) {
+			if ( ! is_array( $value[0] ) ) {
+				$value = $this->create_list_array( $value );
+			}
+		} else {
 			$value = array( array() );
 		}
 
 		$has_columns = is_array( $this->choices );
 		$columns     = $has_columns ? $this->choices : array( array() );
 
-		$shim_style  = is_rtl() ? 'position:absolute;left:999em;' : 'position:absolute;left:-999em;';
-		$label_target_shim = sprintf( '<input type=\'text\' id=\'input_%1$s_%2$s_shim\' style=\'%3$s\' onfocus=\'jQuery( "#field_%1$s_%2$s table tr td:first-child input" ).focus();\' />', $form_id, $this->id, $shim_style );
+		$list = '';
+		if ( ! self::$_style_block_printed ){
+			// This style block needs to be inline so that the list field continues to work even if the option to turn off CSS output is activated.
+			$list .= '<style type="text/css">
 
-		$list = "<div class='ginput_container ginput_list'>" .
-			$label_target_shim .
-			"<table class='gfield_list'>";
+						body .ginput_container_list table.gfield_list tbody tr td.gfield_list_icons {
+							vertical-align: middle !important;
+						}
 
-		$class_attr = '';
+						body .ginput_container_list table.gfield_list tbody tr td.gfield_list_icons img {
+							background-color: transparent !important;
+							background-position: 0 0;
+							background-size: 16px 16px !important;
+							background-repeat: no-repeat;
+							border: none !important;
+							width: 16px !important;
+							height: 16px !important;
+							opacity: 0.5;
+							transition: opacity .5s ease-out;
+						    -moz-transition: opacity .5s ease-out;
+						    -webkit-transition: opacity .5s ease-out;
+						    -o-transition: opacity .5s ease-out;
+						}
+
+						body .ginput_container_list table.gfield_list tbody tr td.gfield_list_icons a:hover img {
+							opacity: 1.0;
+						}
+
+						</style>';
+
+			self::$_style_block_printed = true;
+		}
+
+		$list .= "<div class='ginput_container ginput_container_list ginput_list'>" .
+			"<table class='gfield_list gfield_list_container'>";
+
 		if ( $has_columns ) {
 
 			$list .= '<colgroup>';
@@ -74,9 +171,16 @@ class GF_Field_List extends GF_Field {
 
 			$list .= '<thead><tr>';
 			foreach ( $columns as $column ) {
-				$list .= '<th>' . esc_html( $column['text'] ) . '</th>';
+				// a11y: scope="col"
+				$list .= '<th scope="col">' . esc_html( $column['text'] ) . '</th>';
 			}
-			$list .= '<th>&nbsp;</th></tr></thead>';
+
+			if ( $this->maxRows != 1 ) {
+				// Using td instead of th because empty th tags break a11y.
+				$list .= '<td>&nbsp;</td>';
+			}
+
+			$list .= '</tr></thead>';
 		} else {
 			$list .=
 				'<colgroup>' .
@@ -85,9 +189,15 @@ class GF_Field_List extends GF_Field {
 				'</colgroup>';
 		}
 
-		$delete_display      = count( $value ) == 1 ? 'visibility:hidden;' : '';
+		$delete_display      = count( $value ) == 1 ? 'style="visibility:hidden;"' : '';
 		$maxRow              = intval( $this->maxRows );
 		$disabled_icon_class = ! empty( $maxRow ) && count( $value ) >= $maxRow ? 'gfield_icon_disabled' : '';
+
+		$add_icon    = ! empty( $this->addIconUrl ) ? $this->addIconUrl : GFCommon::get_base_url() . '/images/list-add.svg';
+		$delete_icon = ! empty( $this->deleteIconUrl ) ? $this->deleteIconUrl : GFCommon::get_base_url() . '/images/list-remove.svg';
+
+		$add_events    = $is_form_editor ? '' : "onclick='gformAddListItem(this, {$maxRow})' onkeypress='gformAddListItem(this, {$maxRow})'";
+		$delete_events = $is_form_editor ? '' : "onclick='gformDeleteListItem(this, {$maxRow})' onkeypress='gformDeleteListItem(this, {$maxRow})'";
 
 		$list .= '<tbody>';
 		$rownum = 1;
@@ -95,14 +205,16 @@ class GF_Field_List extends GF_Field {
 
 			$odd_even = ( $rownum % 2 ) == 0 ? 'even' : 'odd';
 
-			$list .= "<tr class='gfield_list_row_{$odd_even}'>";
+			$list .= "<tr class='gfield_list_row_{$odd_even} gfield_list_group'>";
 			$colnum = 1;
 			foreach ( $columns as $column ) {
+				$data_label = '';
 
-				//getting value. taking into account columns being added/removed from form meta
+				// Getting value. Taking into account columns being added/removed from form meta.
 				if ( is_array( $item ) ) {
 					if ( $has_columns ) {
 						$val = rgar( $item, $column['text'] );
+						$data_label = "data-label='" . esc_attr( $column['text'] ) . "'";
 					} else {
 						$vals = array_values( $item );
 						$val  = rgar( $vals, 0 );
@@ -111,22 +223,17 @@ class GF_Field_List extends GF_Field {
 					$val = $colnum == 1 ? $item : '';
 				}
 
-				$list .= "<td class='gfield_list_cell gfield_list_{$this->id}_cell{$colnum}'>" . $this->get_list_input( $has_columns, $column, $val, $form_id ) . '</td>';
+				$list .= "<td class='gfield_list_cell gfield_list_{$this->id}_cell{$colnum}' {$data_label}>" . $this->get_list_input( $has_columns, $column, $val, $form_id ) . '</td>';
 				$colnum ++;
 			}
 
-			$add_icon    = ! empty( $this->addIconUrl ) ? $this->addIconUrl : GFCommon::get_base_url() . '/images/blankspace.png';
-			$delete_icon = ! empty( $this->deleteIconUrl) ? $this->deleteIconUrl : GFCommon::get_base_url() . '/images/blankspace.png';
-
-			$on_click = $is_form_editor ? '' : "onclick='gformAddListItem(this, {$maxRow})'";
-
 			if ( $this->maxRows != 1 ) {
 
-				// can't replace these icons with the webfont versions since they appear on the front end.
+				// Can't replace these icons with the webfont versions since they appear on the front end.
 
 				$list .= "<td class='gfield_list_icons'>";
-				$list .= "   <img src='{$add_icon}' class='add_list_item {$disabled_icon_class}' {$disabled_text} title='" . esc_attr__( 'Add another row', 'gravityforms' ) . "' alt='" . esc_attr__( 'Add a row', 'gravityforms' ) . "' {$on_click} style='cursor:pointer; margin:0 3px;' />" .
-					"   <img src='{$delete_icon}' {$disabled_text} title='" . esc_attr__( 'Remove this row', 'gravityforms' ) . "' alt='" . esc_attr__( 'Remove this row', 'gravityforms' ) . "' class='delete_list_item' style='cursor:pointer; {$delete_display}' onclick='gformDeleteListItem(this, {$maxRow})' />";
+				$list .= "   <a href='javascript:void(0);' class='add_list_item {$disabled_icon_class}' aria-label='" . esc_attr__( 'Add another row', 'gravityforms' ) . "' {$add_events}><img src='{$add_icon}' alt='' title='" . esc_attr__( 'Add a new row', 'gravityforms' ) . "' /></a>" .
+				         "   <a href='javascript:void(0);' class='delete_list_item' aria-label='" . esc_attr__( 'Remove this row', 'gravityforms' ) . "' {$delete_events} {$delete_display}><img src='{$delete_icon}' alt='' title='" . esc_attr__( 'Remove this row', 'gravityforms' ) . "' /></a>";
 				$list .= '</td>';
 
 			}
@@ -141,58 +248,28 @@ class GF_Field_List extends GF_Field {
 		}
 
 		$list .= '</tbody>';
-		$list .= $this->maxRows != 1 ? $this->get_svg_image_block() : '';
 		$list .= '</table></div>';
 
 		return $list;
 
 	}
 
-	public function get_svg_image_block() {
-		global $_has_image_block;
-
-		//return image block once per page load
-		if ( ! $_has_image_block ) {
-
-			$_has_image_block = true;
-			return '
-					<style type="text/css">
-
-					/* add SVG background image support for retina devices -------------------------------*/
-
-					img.add_list_item {
-						background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPjxzdmcgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDUxMiA1MTIiPjxnIGlkPSJpY29tb29uLWlnbm9yZSI+PC9nPjxwYXRoIGQ9Ik0yNTYgNTEyYy0xNDEuMzc1IDAtMjU2LTExNC42MDktMjU2LTI1NnMxMTQuNjI1LTI1NiAyNTYtMjU2YzE0MS4zOTEgMCAyNTYgMTE0LjYwOSAyNTYgMjU2cy0xMTQuNjA5IDI1Ni0yNTYgMjU2ek0yNTYgNjRjLTEwNi4wMzEgMC0xOTIgODUuOTY5LTE5MiAxOTJzODUuOTY5IDE5MiAxOTIgMTkyYzEwNi4wNDcgMCAxOTItODUuOTY5IDE5Mi0xOTJzLTg1Ljk1My0xOTItMTkyLTE5MnpNMjg4IDM4NGgtNjR2LTk2aC05NnYtNjRoOTZ2LTk2aDY0djk2aDk2djY0aC05NnY5NnoiPjwvcGF0aD48L3N2Zz4=);
-					}
-
-					img.delete_list_item {
-						background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPjxzdmcgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDUxMiA1MTIiPjxnIGlkPSJpY29tb29uLWlnbm9yZSI+PC9nPjxwYXRoIGQ9Ik0yNTYgMGMtMTQxLjM3NSAwLTI1NiAxMTQuNjI1LTI1NiAyNTYgMCAxNDEuMzkxIDExNC42MjUgMjU2IDI1NiAyNTYgMTQxLjM5MSAwIDI1Ni0xMTQuNjA5IDI1Ni0yNTYgMC0xNDEuMzc1LTExNC42MDktMjU2LTI1Ni0yNTZ6TTI1NiA0NDhjLTEwNi4wMzEgMC0xOTItODUuOTY5LTE5Mi0xOTJzODUuOTY5LTE5MiAxOTItMTkyYzEwNi4wNDcgMCAxOTIgODUuOTY5IDE5MiAxOTJzLTg1Ljk1MyAxOTItMTkyIDE5MnpNMTI4IDI4OGgyNTZ2LTY0aC0yNTZ2NjR6Ij48L3BhdGg+PC9zdmc+);
-					}
-
-					img.add_list_item,
-					img.delete_list_item {
-						width: 1em;
-						height: 1em;
-						background-size: 1em 1em;
-						opacity: 0.5;
-					}
-
-					img.add_list_item:hover,
-					img.add_list_item:active,
-					img.delete_list_item:hover,
-					img.delete_list_item:active {
-						opacity: 1.0;
-					}
-
-					</style>
-				';
-		}
-
-		return '';
-	}
-
+	/**
+	 * Builds the input that will be inside the List field.
+	 *
+	 * @since  Unknown
+	 * @access public
+	 *
+	 * @param bool   $has_columns If the input has columns.
+	 * @param array  $column      The column details.
+	 * @param string $value       The existing value of the input.
+	 * @param int    $form_id     The form ID.
+	 *
+	 * @return string The input HTML markup.
+	 */
 	public function get_list_input( $has_columns, $column, $value, $form_id ) {
 
-		$tabindex = GFCommon::get_tabindex();
+		$tabindex = $this->get_tabindex();
 		$disabled = $this->is_form_editor() ? 'disabled' : '';
 
 		$column_index = 1;
@@ -207,18 +284,33 @@ class GF_Field_List extends GF_Field {
 		}
 		$input_info = array( 'type' => 'text' );
 
-		$input_info = gf_apply_filters( 'gform_column_input', array(
+		$column_text = rgar( $column, 'text' );
+
+		$aria_label = isset( $column['text'] ) ? $column_text : $this->label;
+
+		/**
+		 * Filters the column input.
+		 *
+		 * @since Unknown
+		 *
+		 * @param array  $input_info     Information about the input. Contains the input type.
+		 * @param object GF_Field_List   Field object for this field type.
+		 * @param string $column['text'] The column text value.
+		 * @param int    $form_id        The form ID.
+		 */
+		$input_info = gf_apply_filters( array(
+			'gform_column_input',
 			$form_id,
 			$this->id,
 			$column_index
-		), $input_info, $this, rgar( $column, 'text' ), $value, $form_id );
+		), $input_info, $this, $column_text, $value, $form_id );
 
 		switch ( $input_info['type'] ) {
 
 			case 'select' :
 				$input = "<select name='input_{$this->id}[]' {$tabindex} {$disabled} >";
 				if ( ! is_array( $input_info['choices'] ) ) {
-					$input_info['choices'] = explode( ',', $input_info['choices'] );
+					$input_info['choices'] = array_map( 'trim', explode( ',', $input_info['choices'] ) );
 				}
 
 				foreach ( $input_info['choices'] as $choice ) {
@@ -240,11 +332,24 @@ class GF_Field_List extends GF_Field {
 				break;
 
 			default :
-				$input = "<input type='text' name='input_{$this->id}[]' value='" . esc_attr( $value ) . "' {$tabindex} {$disabled}/>";
+				// a11y: inputs without a label must have the aria-label attribute set.
+				$input = "<input aria-label='" . esc_attr( $aria_label ) . "' type='text' name='input_{$this->id}[]' value='" . esc_attr( $value ) . "' {$tabindex} {$disabled}/>";
 				break;
 		}
 
-		return gf_apply_filters( 'gform_column_input_content', array(
+		/**
+		 * Filters the column input HTML markup.
+		 *
+		 * @since Unknown
+		 *
+		 * @param string $input          The input markup.
+		 * @param array  $input_info     The information that was used to build the input.
+		 * @param object GF_Field_List   An instance of the List field object.
+		 * @param string $column['text'] The column text value.
+		 * @param int    $form_id        The form ID.
+		 */
+		return gf_apply_filters( array(
+			'gform_column_input_content',
 			$form_id,
 			$this->id,
 			$column_index
@@ -252,42 +357,86 @@ class GF_Field_List extends GF_Field {
 
 	}
 
+	/**
+	 * Gets the CSS class to be used in the field label.
+	 *
+	 * @since  Unknown
+	 * @access public
+	 *
+	 * @used-by GF_Field::get_field_content()
+	 *
+	 * @return string String containing the CSS class names.
+	 */
+	public function get_field_label_class(){
+
+		$has_columns = is_array( $this->choices );
+
+		return $has_columns ? 'gfield_label gfield_label_before_complex' : 'gfield_label';
+	}
+
+	/**
+	 * Whether this field expects an array during submission.
+	 *
+	 * @since 2.4
+	 *
+	 * @return bool
+	 */
+	public function is_value_submission_array() {
+		return true;
+	}
+
+	/**
+	 * Gets the value of te field from the form submission.
+	 *
+	 * @since  Unknown
+	 * @access public
+	 *
+	 * @param array $field_values             The properties to search for.
+	 * @param bool  $get_from_post_global_var If the global GET variable should be used to obtain the value. Defaults to true.
+	 *
+	 * @return array The submission value.
+	 */
 	public function get_value_submission( $field_values, $get_from_post_global_var = true ) {
 		$value = $this->get_input_value_submission( 'input_' . $this->id, $this->inputName, $field_values, $get_from_post_global_var );
-		//allow the value to be an array of row arrays in addition to the array of rows
-		//EX: new format allowed for pre-populating list field with hook - format generated by create_list_array
-		//array(
-			//array(
-				//'Column 1' => 'row1col1',
-				//'Column 2' => 'row1col2',
-				//'Column 3' => 'row1col3',
-			//),
-			//array(
-			//	'Column 1' => 'row2col1',
-			//	'Column 2' => 'row2col2',
-			//	'Column 3' => 'row2col3'
-			//),
-		//old format still checked for and re-formatted in create_list_array:
-			//array(
-				//'row 1 - col1', 'row 1 - col2', 'row 1 - col3',
-				//'row 2 - col1', 'row 2 - col2', 'row 2 - col3',
-				//'row 3 - col1', 'row 3 - col2', 'row 3 - col3'
-			//);
-		if ( is_array( rgar( $value, 0 ) ) ){
-			//already in correct format, return value unchanged
-			return $value;
-		}
-
-		//not already in the correct format
-		$value = $this->create_list_array( $value );
 
 		return $value;
 	}
 
+	/**
+	 * Creates an array from the list items. Recurses if the field is inside a Repeater.
+	 *
+	 * @since 2.4
+	 *
+	 * @param $value
+	 *
+	 * @return array
+	 */
+	public function create_list_array_recursive( $value ) {
+		if ( isset( $value[0] ) && is_array( $value[0] ) ) {
+			$new_value = array();
+			foreach ( $value  as $k => $v ) {
+				$new_value[ $k ] = $this->create_list_array_recursive( $v );
+			}
+		} else {
+			$new_value = $this->create_list_array( $value );
+		}
+		return $new_value;
+	}
+
+	/**
+	 * Check if the submission value is empty.
+	 *
+	 * @since  Unknown
+	 * @access public
+	 *
+	 * @param int $form_id The form ID to check.
+	 *
+	 * @return bool True if empty. False otherwise.
+	 */
 	public function is_value_submission_empty( $form_id ) {
 		$value = rgpost( 'input_' . $this->id );
 		if ( is_array( $value ) ) {
-			//empty if all inputs are empty (for inputs with the same name)
+			// Empty if all inputs are empty (for inputs with the same name).
 			foreach ( $value as $input ) {
 				if ( strlen( trim( $input ) ) > 0 ) {
 					return false;
@@ -297,11 +446,32 @@ class GF_Field_List extends GF_Field {
 		return true;
 	}
 
+	/**
+	 * Gets the field value HTML markup to be used on the entry detail page.
+	 *
+	 * @since  Unknown
+	 * @access public
+	 *
+	 * @param array  $value    The submitted entry value.
+	 * @param string $currency Not used.
+	 * @param bool   $use_text Not used.
+	 * @param string $format   The format to be used when building the items.
+	 *                         Accepted values are text, url, or html. Defaults to html.
+	 * @param string $media    Defines how the content will be output.
+	 *                         Accepted values are screen or email. Defaults to screen.
+	 *
+	 * @return string The HTML markup to be displayed.
+	 */
 	public function get_value_entry_detail( $value, $currency = '', $use_text = false, $format = 'html', $media = 'screen' ) {
 		if ( empty( $value ) ) {
 			return '';
 		}
-		$value = unserialize( $value );
+
+		$value = maybe_unserialize( $value );
+
+		if( ! is_array( $value ) || ! isset( $value[0] ) ) {
+			return '';
+		}
 
 		$has_columns = is_array( $value[0] );
 
@@ -331,9 +501,9 @@ class GF_Field_List extends GF_Field {
 			if ( empty( $items ) ) {
 				return '';
 			} elseif ( $format == 'text' ) {
-				return substr( $items, 0, strlen( $items ) - 2 ); //removing last comma
+				return substr( $items, 0, strlen( $items ) - 2 ); // Removing last comma.
 			} elseif ( $format == 'url' ) {
-				return substr( $items, 0, strlen( $items ) - 1 ); //removing last comma
+				return substr( $items, 0, strlen( $items ) - 1 ); // Removing last comma.
 			} elseif ( $media == 'email' ) {
 				return "<ul class='bulleted'>{$items}</ul>";
 			} else {
@@ -397,9 +567,9 @@ class GF_Field_List extends GF_Field {
 					} else {
 						$list = "<table class='gfield_list'><thead><tr>";
 
-						//reading columns from entry data
+						// Reading columns from entry data.
 						foreach ( $columns as $column ) {
-							$list .= '<th>' . esc_html( $column ) . '</th>' . "\n";
+							$list .= '<th scope="col">' . esc_html( $column ) . '</th>' . "\n";
 						}
 						$list .= '</tr></thead>' . "\n";
 
@@ -426,9 +596,23 @@ class GF_Field_List extends GF_Field {
 		return '';
 	}
 
+	/**
+	 * Gets the value of the field when the entry is saved.
+	 *
+	 * @since  Unknown
+	 * @access public
+	 *
+	 * @param string $value      The value to use.
+	 * @param array  $form       The form that the entry is associated with.
+	 * @param string $input_name The name of the input containing the value.
+	 * @param int    $lead_id    The entry ID.
+	 * @param array  $lead       The Entry Object.
+	 *
+	 * @return string The entry value. Escaped.
+	 */
 	public function get_value_save_entry( $value, $form, $input_name, $lead_id, $lead ) {
 
-		if ( $this->adminOnly && $this->allowsPrepopulate ) {
+		if ( $this->is_administrative() && $this->allowsPrepopulate ) {
 			$value = json_decode( $value );
 		}
 
@@ -439,20 +623,81 @@ class GF_Field_List extends GF_Field {
 			$value = serialize( $value );
 		}
 
-		return $value;
+		$value_safe = $this->sanitize_entry_value( $value, $form['id'] );
+
+		return $value_safe;
 	}
 
+	/**
+	 * Gets merge tag values.
+	 *
+	 * @since  Unknown
+	 * @access public
+	 *
+	 * @param array|string $value      The value of the input.
+	 * @param string       $input_id   The input ID to use.
+	 * @param array        $entry      The Entry Object.
+	 * @param array        $form       The Form Object
+	 * @param string       $modifier   The modifier passed.
+	 * @param array|string $raw_value  The raw value of the input.
+	 * @param bool         $url_encode If the result should be URL encoded.
+	 * @param bool         $esc_html   If the HTML should be escaped.
+	 * @param string       $format     The format that the value should be.
+	 * @param bool         $nl2br      If the nl2br function should be used.
+	 *
+	 * @return string The processed merge tag.
+	 */
 	public function get_value_merge_tag( $value, $input_id, $entry, $form, $modifier, $raw_value, $url_encode, $esc_html, $format, $nl2br ) {
-		$output_format = in_array( $modifier, array( 'text', 'html', 'url' ) ) ? $modifier : $format;
+
+		$modifiers = $this->get_modifiers();
+
+		$allowed_modifiers = array( 'text', 'html', 'url' );
+
+		if( $found_modifiers = array_intersect( $modifiers, $allowed_modifiers ) ) {
+			$output_format = $found_modifiers[0];
+		} else {
+			$output_format = $format;
+		}
 
 		return GFCommon::get_lead_field_display( $this, $raw_value, $entry['currency'], true, $output_format );
 	}
 
+	/**
+	 * Format the entry value for display on the entries list page.
+	 *
+	 * By default, the List field will not be available for selection on the entry list.
+	 * Use the gform_display_field_select_columns_entry_list filter to make the list field available.
+	 *
+	 *
+	 * @since 2.4
+	 *
+	 * @param string|array $value    The field value.
+	 * @param array        $entry    The Entry Object currently being processed.
+	 * @param string       $field_id The field or input ID currently being processed.
+	 * @param array        $columns  The properties for the columns being displayed on the entry list page.
+	 * @param array        $form     The Form Object currently being processed.
+	 *
+	 * @return string
+	 */
+	public function get_value_entry_list( $value, $entry, $field_id, $columns, $form ) {
+		return GFCommon::get_lead_field_display( $this, $value, $entry['currency'], true, 'html' );
+	}
 
+	/**
+	 * Creates an array from the list items.
+	 *
+	 * @since  Unknown
+	 * @access public
+	 *
+	 * @param array $value The pre-formatted list.
+	 *
+	 * @return array The list rows.
+	 */
 	function create_list_array( $value ) {
 		if ( ! $this->enableColumns ) {
 			return $value;
 		} else {
+			$value     = empty( $value ) ? array() : $value;
 			$col_count = count( $this->choices );
 			$rows      = array();
 
@@ -472,11 +717,38 @@ class GF_Field_List extends GF_Field {
 		}
 	}
 
+	/**
+	 * Sanitizes the field settings.
+	 *
+	 * @since  Unknown
+	 * @access public
+	 */
 	public function sanitize_settings() {
 		parent::sanitize_settings();
-		$this->maxRows = absint( $this->maxRows );
+		$this->maxRows       = absint( $this->maxRows );
+		$this->enableColumns = (bool) $this->enableColumns;
 	}
 
+	/**
+	 * Gets the field value, formatted for exports. For CSV export return an array.
+	 *
+	 * @since  Unknown
+	 * @access public
+	 *
+	 * @used-by GFExport::start_export()
+	 * @used-by GFAddOn::get_field_value()
+	 * @uses    GF_Field_List::$id
+	 * @uses    GF_Field_List::$enableColumns
+	 * @uses    GF_Field_List::$choices
+	 * @uses    GFCommon::implode_non_blank()
+	 *
+	 * @param array  $entry    The Entry Object.
+	 * @param string $input_id Input ID to export. If not defined, uses the current input ID. Defaults to empty string.
+	 * @param bool   $use_text Not used. Defaults to false.
+	 * @param bool   $is_csv   Is the value going to be used in the CSV export? Defaults to false.
+	 *
+	 * @return string|array
+	 */
 	public function get_value_export( $entry, $input_id = '', $use_text = false, $is_csv = false ) {
 		if ( empty( $input_id ) ) {
 			$input_id = $this->id;
@@ -487,14 +759,15 @@ class GF_Field_List extends GF_Field {
 		}
 
 		$value = rgar( $entry, $input_id );
-		if ( empty( $value ) || $is_csv ) {
+		$value = maybe_unserialize( $value );
 
+		if ( empty( $value ) || $is_csv ) {
 			return $value;
 		}
 
-		$list_values = $column_values = unserialize( $value );
+		$list_values = $column_values = $value;
 
-		if ( ! empty( $column_num ) && $this->enableColumns ) {
+		if ( isset( $column_num ) && is_numeric( $column_num ) && $this->enableColumns ) {
 			$column        = rgars( $this->choices, "{$column_num}/text" );
 			$column_values = array();
 			foreach ( $list_values as $value ) {
@@ -508,6 +781,20 @@ class GF_Field_List extends GF_Field {
 		return GFCommon::implode_non_blank( ', ', $column_values );
 	}
 
+	// # FIELD FILTER UI HELPERS ---------------------------------------------------------------------------------------
+
+	/**
+	 * Returns the filter operators for the current field.
+	 *
+	 * @since 2.4
+	 *
+	 * @return array
+	 */
+	public function get_filter_operators() {
+		return array( 'contains' );
+	}
+
 }
 
+// Register the list field.
 GF_Fields::register( new GF_Field_List() );

@@ -4,7 +4,9 @@ if ( ! class_exists( 'GFForms' ) ) {
 	die();
 }
 
-class GF_Field_Post_Content extends GF_Field {
+require_once( plugin_dir_path( __FILE__ ) . 'class-gf-field-textarea.php' );
+
+class GF_Field_Post_Content extends GF_Field_Textarea {
 
 	public $type = 'post_content';
 
@@ -33,48 +35,27 @@ class GF_Field_Post_Content extends GF_Field {
 			'placeholder_textarea_setting',
 			'description_setting',
 			'css_class_setting',
+			'rich_text_editor_setting',
 		);
-	}
-
-	public function is_conditional_logic_supported() {
-		return true;
-	}
-
-	public function get_field_input( $form, $value = '', $entry = null ) {
-
-		$form_id         = absint( $form['id'] );
-		$is_entry_detail = $this->is_entry_detail();
-		$is_form_editor  = $this->is_form_editor();
-
-		$id       = (int) $this->id;
-		$field_id = $is_entry_detail || $is_form_editor || $form_id == 0 ? "input_$id" : 'input_' . $form_id . "_$id";
-
-		$value        = esc_textarea( $value );
-		$size         = $this->size;
-		$class_suffix = $is_entry_detail ? '_admin' : '';
-		$class        = $size . $class_suffix;
-		$class        = esc_attr( $class );
-
-		$disabled_text = $is_form_editor ? 'disabled="disabled"' : '';
-
-		$tabindex = $this->get_tabindex();
-
-		$logic_event           = $this->get_conditional_logic_event( 'keyup' );
-		$placeholder_attribute = $this->get_field_placeholder_attribute();
-
-		return "<div class='ginput_container'>
-					<textarea name='input_{$id}' id='{$field_id}' class='textarea {$class}' {$tabindex} {$logic_event} {$placeholder_attribute} {$disabled_text} rows='10' cols='50'>{$value}</textarea>
-				</div>";
 	}
 
 	public function allow_html() {
 		return true;
 	}
 
-	public function get_value_merge_tag( $value, $input_id, $entry, $form, $modifier, $raw_value, $url_encode, $esc_html, $format, $nl2br ) {
-
-		return $format == 'html' && ! $nl2br ? nl2br( $value ) : $value;
+	/**
+	 * Filter the rich_editing option for the current user.
+	 *
+	 * @since 2.2.5.14
+	 *
+	 * @param string $value The value of the rich_editing option for the current user.
+	 *
+	 * @return string
+	 */
+	public function filter_user_option_rich_editing( $value ) {
+		return is_user_logged_in() ? $value : 'true';
 	}
+
 }
 
 GF_Fields::register( new GF_Field_Post_Content() );

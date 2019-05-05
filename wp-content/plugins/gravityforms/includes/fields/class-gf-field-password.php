@@ -103,35 +103,37 @@ class GF_Field_Password extends GF_Field {
 		$confirm_password_field_input = GFFormsModel::get_input( $this, $this->id . '.2' );
 
 		$enter_password_label = rgar( $enter_password_field_input, 'customLabel' ) != '' ? $enter_password_field_input['customLabel'] : esc_html__( 'Enter Password', 'gravityforms' );
-		$enter_password_label = gf_apply_filters( 'gform_password', $form_id, $enter_password_label, $form_id );
+		$enter_password_label = gf_apply_filters( array( 'gform_password', $form_id ), $enter_password_label, $form_id );
 
 		$confirm_password_label = rgar( $confirm_password_field_input, 'customLabel' ) != '' ? $confirm_password_field_input['customLabel'] : esc_html__( 'Confirm Password', 'gravityforms' );
-		$confirm_password_label = gf_apply_filters( 'gform_password_confirm', $form_id, $confirm_password_label, $form_id );
-
+		$confirm_password_label = gf_apply_filters( array( 'gform_password_confirm', $form_id ), $confirm_password_label, $form_id );
+	
+		$required_attribute    = $this->isRequired ? 'aria-required="true"' : '';
+		$invalid_attribute     = $this->failed_validation ? 'aria-invalid="true"' : 'aria-invalid="false"';
 
 		$enter_password_placeholder_attribute   = GFCommon::get_input_placeholder_attribute( $enter_password_field_input );
 		$confirm_password_placeholder_attribute = GFCommon::get_input_placeholder_attribute( $confirm_password_field_input );
 
 		if ( $is_sub_label_above ) {
-			return "<div class='ginput_complex$class_suffix ginput_container' id='{$field_id}_container'>
+			return "<div class='ginput_complex$class_suffix ginput_container ginput_container_password' id='{$field_id}_container'>
 					<span id='{$field_id}_1_container' class='ginput_left'>
 						<label for='{$field_id}' {$sub_label_class_attribute}>{$enter_password_label}</label>
-						<input type='password' name='input_{$id}' id='{$field_id}' {$onkeyup} {$onchange} value='{$password_value}' {$first_tabindex} {$enter_password_placeholder_attribute} {$disabled_text}/>
+						<input type='password' name='input_{$id}' id='{$field_id}' {$onkeyup} {$onchange} value='{$password_value}' {$first_tabindex} {$enter_password_placeholder_attribute} {$required_attribute} {$invalid_attribute} {$disabled_text}/>
 					</span>
 					<span id='{$field_id}_2_container' class='ginput_right'>
 						<label for='{$field_id}_2' {$sub_label_class_attribute}>{$confirm_password_label}</label>
-						<input type='password' name='input_{$id}_2' id='{$field_id}_2' {$onkeyup} {$onchange} value='{$confirmation_value}' {$last_tabindex} {$confirm_password_placeholder_attribute} {$disabled_text}/>
+						<input type='password' name='input_{$id}_2' id='{$field_id}_2' {$onkeyup} {$onchange} value='{$confirmation_value}' {$last_tabindex} {$confirm_password_placeholder_attribute} {$required_attribute} {$invalid_attribute} {$disabled_text}/>
 					</span>
 					<div class='gf_clear gf_clear_complex'></div>
 				</div>{$strength}";
 		} else {
-			return "<div class='ginput_complex$class_suffix ginput_container' id='{$field_id}_container'>
+			return "<div class='ginput_complex$class_suffix ginput_container ginput_container_password' id='{$field_id}_container'>
 					<span id='{$field_id}_1_container' class='ginput_left'>
-						<input type='password' name='input_{$id}' id='{$field_id}' {$onkeyup} {$onchange} value='{$password_value}' {$first_tabindex} {$enter_password_placeholder_attribute} {$disabled_text}/>
+						<input type='password' name='input_{$id}' id='{$field_id}' {$onkeyup} {$onchange} value='{$password_value}' {$first_tabindex} {$enter_password_placeholder_attribute} {$required_attribute} {$invalid_attribute} {$disabled_text}/>
 						<label for='{$field_id}' {$sub_label_class_attribute}>{$enter_password_label}</label>
 					</span>
 					<span id='{$field_id}_2_container' class='ginput_right'>
-						<input type='password' name='input_{$id}_2' id='{$field_id}_2' {$onkeyup} {$onchange} value='{$confirmation_value}' {$last_tabindex} {$confirm_password_placeholder_attribute} {$disabled_text}/>
+						<input type='password' name='input_{$id}_2' id='{$field_id}_2' {$onkeyup} {$onchange} value='{$confirmation_value}' {$last_tabindex} {$confirm_password_placeholder_attribute} {$required_attribute} {$invalid_attribute} {$disabled_text}/>
 						<label for='{$field_id}_2' {$sub_label_class_attribute}>{$confirm_password_label}</label>
 					</span>
 					<div class='gf_clear gf_clear_complex'></div>
@@ -140,11 +142,22 @@ class GF_Field_Password extends GF_Field {
 
 	}
 
+	public function get_field_label_class(){
+		return 'gfield_label gfield_label_before_complex';
+	}
+
 	public function get_value_save_entry( $value, $form, $input_name, $lead_id, $lead ) {
+
+		/**
+		 * A filter to allow the password to be encrypted (default set to false)
+		 *
+		 * @param bool Whether to encrypt the Password field with true or false
+		 * @param array $form The Current Form Object
+		 */
 		$encrypt_password = apply_filters( 'gform_encrypt_password', false, $this, $form );
 		if ( $encrypt_password ) {
-			$value = GFCommon::encrypt( $value );
-			GFFormsModel::set_encrypted_fields( $lead_id, $this->id );
+			$value = GFCommon::openssl_encrypt( $value );
+			GFFormsModel::set_openssl_encrypted_fields( $lead_id, $this->id );
 		}
 
 		return $value;
@@ -152,12 +165,43 @@ class GF_Field_Password extends GF_Field {
 
 
 	public static function delete_passwords( $entry, $form ) {
-
 		$password_fields = GFAPI::get_fields_by_type( $form, array( 'password' ) );
 
+		$field_ids = array();
+
+		$encrypted_fields = GFFormsModel::get_openssl_encrypted_fields( $entry['id'] );
+
 		foreach ( $password_fields as $password_field ) {
-			GFAPI::update_entry_field( $entry['id'], $password_field['id'], '' );
+			$field_ids[] = $password_field->id;
+			GFAPI::update_entry_field( $entry['id'], $password_field->id, '' );
+
+			$key = array_search( $password_field->id, $encrypted_fields );
+			if ( $key !== false ) {
+				unset( $encrypted_fields[ $key ] );
+			}
 		}
+
+		if ( empty( $encrypted_fields ) ) {
+			gform_delete_meta( $entry['id'], '_openssl_encrypted_fields' );
+		} else {
+			gform_update_meta( $entry['id'], '_openssl_encrypted_fields', $encrypted_fields );
+		}
+
+	}
+
+	/**
+	 * Removes the "for" attribute in the field label.
+	 * Inputs are only allowed one label (a11y) and the inputs already have labels.
+	 *
+	 * @since  2.4
+	 * @access public
+	 *
+	 * @param array $form The Form Object currently being processed.
+	 *
+	 * @return string
+	 */
+	public function get_first_input_id( $form ) {
+		return '';
 	}
 }
 

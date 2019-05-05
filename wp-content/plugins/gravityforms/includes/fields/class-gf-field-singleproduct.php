@@ -16,6 +16,7 @@ class GF_Field_SingleProduct extends GF_Field {
 			'conditional_logic_field_setting',
 			'error_message_setting',
 			'label_setting',
+			'admin_label_setting',
 			'rules_setting',
 			'duplicate_setting',
 		);
@@ -38,6 +39,19 @@ class GF_Field_SingleProduct extends GF_Field {
 		}
 	}
 
+	public function get_value_default() {
+		$value = array();
+		if ( is_array( $this->inputs ) ) {
+			foreach ( $this->inputs as $index => $input ) {
+				$input_value = $this->is_form_editor() ? rgar( $input, 'defaultValue' ) : GFCommon::replace_variables_prepopulate( rgar( $input, 'defaultValue' ) );
+				if ( rgblank( $input_value ) && $input['id'] == "{$this->id}.2" ) {
+					$input_value = $this->basePrice;
+				}
+				$value[ strval( $input['id'] ) ] = $input_value;
+			}
+		}
+		return $value;
+	}
 
 	public function get_field_input( $form, $value = '', $entry = null ) {
 		$form_id         = $form['id'];
@@ -63,20 +77,20 @@ class GF_Field_SingleProduct extends GF_Field {
 		$currency = $is_entry_detail && ! empty( $entry ) ? $entry['currency'] : '';
 
 		$quantity_field = '';
+		$disabled_text  = $is_form_editor ? 'disabled="disabled"' : '';
 
 		$qty_input_type = GFFormsModel::is_html5_enabled() ? 'number' : 'text';
 
 		$qty_min_attr = GFFormsModel::is_html5_enabled() ? "min='0'" : '';
 
-		$product_quantity_sub_label = gf_apply_filters( 'gform_product_quantity', $form_id, esc_html__( 'Quantity:', 'gravityforms' ), $form_id );
+		$product_quantity_sub_label = gf_apply_filters( array( 'gform_product_quantity', $form_id, $this->id ), esc_html__( 'Quantity:', 'gravityforms' ), $form_id );
 
 		if ( $is_entry_detail || $is_form_editor  ) {
-			$disabled_text  = $is_form_editor ? 'disabled="disabled"' : '';
 			$style          = $this->disableQuantity ? "style='display:none;'" : '';
-			$quantity_field = " <span class='ginput_quantity_label' {$style}>{$product_quantity_sub_label}</span> <input type='{$qty_input_type}' name='input_{$id}.3' value='{$quantity}' id='ginput_quantity_{$form_id}_{$this->id}' class='ginput_quantity' size='10' {$disabled_text}/>";
+			$quantity_field = " <span class='ginput_quantity_label' {$style}>{$product_quantity_sub_label}</span> <input type='{$qty_input_type}' name='input_{$id}.3' value='{$quantity}' id='ginput_quantity_{$form_id}_{$this->id}' class='ginput_quantity' size='10' {$disabled_text} {$style} />";
 		} else if ( ! $this->disableQuantity ) {
 			$tabindex  = $this->get_tabindex();
-			$quantity_field .= " <span class='ginput_quantity_label'>" . $product_quantity_sub_label . "</span> <input type='{$qty_input_type}' name='input_{$id}.3' value='{$quantity}' id='ginput_quantity_{$form_id}_{$this->id}' class='ginput_quantity' size='10' {$qty_min_attr} {$tabindex}/>";
+			$quantity_field .= " <span class='ginput_quantity_label'>" . $product_quantity_sub_label . "</span> <input type='{$qty_input_type}' name='input_{$id}.3' value='{$quantity}' id='ginput_quantity_{$form_id}_{$this->id}' class='ginput_quantity' size='10' {$qty_min_attr} {$tabindex} {$disabled_text}/>";
 		} else {
 			if ( ! is_numeric( $quantity ) ) {
 				$quantity = 1;
@@ -87,9 +101,9 @@ class GF_Field_SingleProduct extends GF_Field {
 			}
 		}
 
-		return "<div class='ginput_container'>
+		return "<div class='ginput_container ginput_container_singleproduct'>
 					<input type='hidden' name='input_{$id}.1' value='{$product_name}' class='gform_hidden' />
-					<span class='ginput_product_price_label'>" . gf_apply_filters( 'gform_product_price', $form_id, esc_html__( 'Price', 'gravityforms' ), $form_id ) . ":</span> <span class='ginput_product_price' id='{$field_id}'>" . esc_html( GFCommon::to_money( $price, $currency ) ) . "</span>
+					<span class='ginput_product_price_label'>" . gf_apply_filters( array( 'gform_product_price', $form_id, $this->id ), esc_html__( 'Price', 'gravityforms' ), $form_id ) . ":</span> <span class='ginput_product_price' id='{$field_id}'>" . esc_html( GFCommon::to_money( $price, $currency ) ) . "</span>
 					<input type='hidden' name='input_{$id}.2' id='ginput_base_price_{$form_id}_{$this->id}' class='gform_hidden' value='" . esc_attr( $price ) . "'/>
 					{$quantity_field}
 				</div>";
@@ -101,9 +115,17 @@ class GF_Field_SingleProduct extends GF_Field {
 			$price        = trim( $value[ $this->id . '.2' ] );
 			$quantity     = trim( $value[ $this->id . '.3' ] );
 
-			$product = $product_name . ', ' . esc_html__( 'Qty: ', 'gravityforms' ) . $quantity . ', ' . esc_html__( 'Price: ', 'gravityforms' ) . $price;
+			$product_details = $product_name;
 
-			return $product;
+			if ( ! rgblank( $quantity ) ) {
+				$product_details .= ', ' . esc_html__( 'Qty: ', 'gravityforms' ) . $quantity;
+			}
+
+			if ( ! rgblank( $price ) ) {
+				$product_details .= ', ' . esc_html__( 'Price: ', 'gravityforms' ) . GFCommon::format_number( $price, 'currency', $currency );
+			}
+
+			return $product_details;
 		} else {
 			return '';
 		}

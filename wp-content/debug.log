@@ -1,0 +1,282 @@
+[04-May-2019 20:03:59 UTC] 1
+[04-May-2019 20:04:02 UTC] 1
+[04-May-2019 20:04:29 UTC] Array
+(
+    [0] => WP_Post Object
+        (
+            [ID] => 8762
+            [post_author] => 8
+            [post_date] => 2019-05-02 20:01:04
+            [post_date_gmt] => 2019-05-03 00:01:04
+            [post_content] => <strong>ASK DR. RUTH</strong> chronicles the incredible life of Dr. Ruth Westheimer, a Holocaust survivor who became America's most famous sex therapist.
+
+Don’t let her small stature fool you. Standing at under five feet tall, Dr. Ruth Westheimer is a force. A pioneer in the field of sex therapy, she became a household name in the ’80s and ’90s. At 90 years old, she hasn’t stopped working—and still promises the best sex you’ve ever had if you listen to her.
+
+Filmmaker Ryan White captures Dr. Ruth’s exuberant and snappy personality as she hopscotches from speaking engagements to TV and radio appearances. Her infectious energy is colored with an almost arresting openness that is joyous and nonjudgmental, and the affable rapport between filmmaker and subject is a welcome source of laughter. Alongside her optimism, however, are storybook-like animations that bring Dr. Ruth’s childhood as an orphan of the Holocaust to life. The tragic loss of being separated from her parents and never seeing them again shaped how she would embrace the world. The film is an inspiring and entertaining portrait of a trailblazer that reveals the darkness Dr. Ruth emerged from to bring light to so many people.
+
+<img class="alignnone size-medium" src="https://pmcvariety.files.wordpress.com/2019/02/ask-dr-ruth.jpg?w=1000&amp;h=563&amp;crop=1" width="1000" height="563" />
+            [post_title] => Ask Dr. Ruth
+            [post_excerpt] => 
+            [post_status] => publish
+            [comment_status] => closed
+            [ping_status] => closed
+            [post_password] => 
+            [post_name] => ask-dr-ruth
+            [to_ping] => 
+            [pinged] => 
+            [post_modified] => 2019-05-02 20:01:04
+            [post_modified_gmt] => 2019-05-03 00:01:04
+            [post_content_filtered] => 
+            [post_parent] => 0
+            [guid] => http://ocinema.test/?post_type=tribe_events&#038;p=8762
+            [menu_order] => 0
+            [post_type] => tribe_events
+            [post_mime_type] => 
+            [comment_count] => 0
+            [filter] => raw
+            [event_date] => 2019-05-10 00:00:00
+        )
+
+    [1] => WP_Post Object
+        (
+            [ID] => 8747
+            [post_author] => 8
+            [post_date] => 2019-04-21 22:42:22
+            [post_date_gmt] => 2019-04-22 02:42:22
+            [post_content] => A look at the final days in the life of renowned playwright William Shakespeare.
+
+The year is 1613, and Shakespeare is acknowledged as the greatest writer of the age. But disaster strikes when his renowned Globe Theatre burns to the ground. Devastated, Shakespeare returns to Stratford, where he must face a troubled past and a neglected family. Haunted by the death of his only son<span class="yZlgBd">, Hamnet, he struggles to mend the broken relationship with his wife and daughters. In so doing, he is ruthlessly forced to examine his own failings as a husband and father.</span>
+
+<img class="alignnone size-full" src="https://invisioncommunity.co.uk/wp-content/uploads/2018/12/anglo_2000x1125_allistrue.jpg" width="1920" height="1080" />
+            [post_title] => All Is True
+            [post_excerpt] => 
+            [post_status] => publish
+            [comment_status] => closed
+            [ping_status] => closed
+            [post_password] => 
+            [post_name] => all-is-true
+            [to_ping] => 
+            [pinged] => 
+            [post_modified] => 2019-04-21 22:42:22
+            [post_modified_gmt] => 2019-04-22 02:42:22
+            [post_content_filtered] => 
+            [post_parent] => 0
+            [guid] => http://ocinema.test/?post_type=tribe_events&#038;p=8747
+            [menu_order] => 0
+            [post_type] => tribe_events
+            [post_mime_type] => 
+            [comment_count] => 0
+            [filter] => raw
+            [event_date] => 2019-05-24 00:00:00
+        )
+
+    [2] => WP_Post Object
+        (
+            [ID] => 8754
+            [post_author] => 8
+            [post_date] => 2019-04-26 01:41:03
+            [post_date_gmt] => 2019-04-26 05:41:03
+            [post_content] => Prodigiously talented, Halston reigned over fashion in the 1970s and became a household name. But everything changed in the Wall Street era. With his empire under threat, Halston took the biggest gamble of his life.
+
+Fashion designer Halston combined talent, notoriety, and sheer fabulousness to become a legend. From humble beginnings in Des Moines, Iowa, his first brush with fame came when he designed Jackie Onassis’s famous pink pillbox hat. Whether he was popularizing hot pants, creating elegant but comfortable women's wear, launching a perfume line, traveling with a gaggle of models to China, or having hedonistic fun with Liza Minnelli at Studio 54, Halston built a reputation and an empire—and was responsible for many iconic moments in American fashion and culture in the ’70s and ’80s.
+
+<strong>HALSTON</strong> tells the story of a complicated man—in both his craft and his business decisions—from the mouths of those who knew the man best. Frédéric Tcheng, a great documentarian of fashion luminaries like Valentino, Diana Vreeland, and Raf Simons, takes an unconventional approach to the bio-doc by creating a narrative (starring Tavi Gevinson, a fashion icon of a different generation) through which to frame the story of this enigmatic designer, which allows Tcheng to delve deeper into this comprehensive exploration of the designer’s rise, fall, and enduring influence.
+
+<img class="alignnone size-full" src="https://pmcwwd.files.wordpress.com/2019/01/bb708_berryberensonperkins.jpg" width="2370" height="3523" />
+            [post_title] => Halston
+            [post_excerpt] => 
+            [post_status] => publish
+            [comment_status] => closed
+            [ping_status] => closed
+            [post_password] => 
+            [post_name] => halston
+            [to_ping] => 
+            [pinged] => 
+            [post_modified] => 2019-04-26 01:41:03
+            [post_modified_gmt] => 2019-04-26 05:41:03
+            [post_content_filtered] => 
+            [post_parent] => 0
+            [guid] => http://ocinema.test/?post_type=tribe_events&#038;p=8754
+            [menu_order] => 0
+            [post_type] => tribe_events
+            [post_mime_type] => 
+            [comment_count] => 0
+            [filter] => raw
+            [event_date] => 2019-06-07 00:00:00
+        )
+
+    [3] => WP_Post Object
+        (
+            [ID] => 8764
+            [post_author] => 8
+            [post_date] => 2019-05-02 20:37:49
+            [post_date_gmt] => 2019-05-03 00:37:49
+            [post_content] => Truth and myth are blurred in Martin Scorsese's film experience about Bob Dylan's Rolling Thunder Revue tour in the fall of 1975.
+
+<strong>ROLLING THUNDER REVUE: A BOB DYLAN STORY</strong> by Martin Scorsese captures the troubled spirit of America in 1975 and the joyous music that Dylan performed during the fall of that year. Part documentary, part concert film, part fever dream, Rolling Thunder is a one of a kind experience, from master filmmaker Martin Scorsese.
+
+<img class="alignnone size-medium" src="https://www.rollingstone.com/wp-content/uploads/2018/06/rs-225603-18-with-cup-and-bucket.jpg?crop=900:600&amp;width=440" width="2000" height="1271" />
+            [post_title] => Rolling Thunder Revue: A Bob Dylan Story
+            [post_excerpt] => 
+            [post_status] => publish
+            [comment_status] => closed
+            [ping_status] => closed
+            [post_password] => 
+            [post_name] => rolling-thunder-revue-a-bob-dylan-story
+            [to_ping] => 
+            [pinged] => 
+            [post_modified] => 2019-05-02 20:41:36
+            [post_modified_gmt] => 2019-05-03 00:41:36
+            [post_content_filtered] => 
+            [post_parent] => 0
+            [guid] => http://ocinema.test/?post_type=tribe_events&#038;p=8764
+            [menu_order] => 0
+            [post_type] => tribe_events
+            [post_mime_type] => 
+            [comment_count] => 0
+            [filter] => raw
+            [event_date] => 2019-06-11 00:00:00
+        )
+
+)
+
+[04-May-2019 20:04:31 UTC] Array
+(
+    [0] => WP_Post Object
+        (
+            [ID] => 8762
+            [post_author] => 8
+            [post_date] => 2019-05-02 20:01:04
+            [post_date_gmt] => 2019-05-03 00:01:04
+            [post_content] => <strong>ASK DR. RUTH</strong> chronicles the incredible life of Dr. Ruth Westheimer, a Holocaust survivor who became America's most famous sex therapist.
+
+Don’t let her small stature fool you. Standing at under five feet tall, Dr. Ruth Westheimer is a force. A pioneer in the field of sex therapy, she became a household name in the ’80s and ’90s. At 90 years old, she hasn’t stopped working—and still promises the best sex you’ve ever had if you listen to her.
+
+Filmmaker Ryan White captures Dr. Ruth’s exuberant and snappy personality as she hopscotches from speaking engagements to TV and radio appearances. Her infectious energy is colored with an almost arresting openness that is joyous and nonjudgmental, and the affable rapport between filmmaker and subject is a welcome source of laughter. Alongside her optimism, however, are storybook-like animations that bring Dr. Ruth’s childhood as an orphan of the Holocaust to life. The tragic loss of being separated from her parents and never seeing them again shaped how she would embrace the world. The film is an inspiring and entertaining portrait of a trailblazer that reveals the darkness Dr. Ruth emerged from to bring light to so many people.
+
+<img class="alignnone size-medium" src="https://pmcvariety.files.wordpress.com/2019/02/ask-dr-ruth.jpg?w=1000&amp;h=563&amp;crop=1" width="1000" height="563" />
+            [post_title] => Ask Dr. Ruth
+            [post_excerpt] => 
+            [post_status] => publish
+            [comment_status] => closed
+            [ping_status] => closed
+            [post_password] => 
+            [post_name] => ask-dr-ruth
+            [to_ping] => 
+            [pinged] => 
+            [post_modified] => 2019-05-02 20:01:04
+            [post_modified_gmt] => 2019-05-03 00:01:04
+            [post_content_filtered] => 
+            [post_parent] => 0
+            [guid] => http://ocinema.test/?post_type=tribe_events&#038;p=8762
+            [menu_order] => 0
+            [post_type] => tribe_events
+            [post_mime_type] => 
+            [comment_count] => 0
+            [filter] => raw
+            [event_date] => 2019-05-10 00:00:00
+        )
+
+    [1] => WP_Post Object
+        (
+            [ID] => 8747
+            [post_author] => 8
+            [post_date] => 2019-04-21 22:42:22
+            [post_date_gmt] => 2019-04-22 02:42:22
+            [post_content] => A look at the final days in the life of renowned playwright William Shakespeare.
+
+The year is 1613, and Shakespeare is acknowledged as the greatest writer of the age. But disaster strikes when his renowned Globe Theatre burns to the ground. Devastated, Shakespeare returns to Stratford, where he must face a troubled past and a neglected family. Haunted by the death of his only son<span class="yZlgBd">, Hamnet, he struggles to mend the broken relationship with his wife and daughters. In so doing, he is ruthlessly forced to examine his own failings as a husband and father.</span>
+
+<img class="alignnone size-full" src="https://invisioncommunity.co.uk/wp-content/uploads/2018/12/anglo_2000x1125_allistrue.jpg" width="1920" height="1080" />
+            [post_title] => All Is True
+            [post_excerpt] => 
+            [post_status] => publish
+            [comment_status] => closed
+            [ping_status] => closed
+            [post_password] => 
+            [post_name] => all-is-true
+            [to_ping] => 
+            [pinged] => 
+            [post_modified] => 2019-04-21 22:42:22
+            [post_modified_gmt] => 2019-04-22 02:42:22
+            [post_content_filtered] => 
+            [post_parent] => 0
+            [guid] => http://ocinema.test/?post_type=tribe_events&#038;p=8747
+            [menu_order] => 0
+            [post_type] => tribe_events
+            [post_mime_type] => 
+            [comment_count] => 0
+            [filter] => raw
+            [event_date] => 2019-05-24 00:00:00
+        )
+
+    [2] => WP_Post Object
+        (
+            [ID] => 8754
+            [post_author] => 8
+            [post_date] => 2019-04-26 01:41:03
+            [post_date_gmt] => 2019-04-26 05:41:03
+            [post_content] => Prodigiously talented, Halston reigned over fashion in the 1970s and became a household name. But everything changed in the Wall Street era. With his empire under threat, Halston took the biggest gamble of his life.
+
+Fashion designer Halston combined talent, notoriety, and sheer fabulousness to become a legend. From humble beginnings in Des Moines, Iowa, his first brush with fame came when he designed Jackie Onassis’s famous pink pillbox hat. Whether he was popularizing hot pants, creating elegant but comfortable women's wear, launching a perfume line, traveling with a gaggle of models to China, or having hedonistic fun with Liza Minnelli at Studio 54, Halston built a reputation and an empire—and was responsible for many iconic moments in American fashion and culture in the ’70s and ’80s.
+
+<strong>HALSTON</strong> tells the story of a complicated man—in both his craft and his business decisions—from the mouths of those who knew the man best. Frédéric Tcheng, a great documentarian of fashion luminaries like Valentino, Diana Vreeland, and Raf Simons, takes an unconventional approach to the bio-doc by creating a narrative (starring Tavi Gevinson, a fashion icon of a different generation) through which to frame the story of this enigmatic designer, which allows Tcheng to delve deeper into this comprehensive exploration of the designer’s rise, fall, and enduring influence.
+
+<img class="alignnone size-full" src="https://pmcwwd.files.wordpress.com/2019/01/bb708_berryberensonperkins.jpg" width="2370" height="3523" />
+            [post_title] => Halston
+            [post_excerpt] => 
+            [post_status] => publish
+            [comment_status] => closed
+            [ping_status] => closed
+            [post_password] => 
+            [post_name] => halston
+            [to_ping] => 
+            [pinged] => 
+            [post_modified] => 2019-04-26 01:41:03
+            [post_modified_gmt] => 2019-04-26 05:41:03
+            [post_content_filtered] => 
+            [post_parent] => 0
+            [guid] => http://ocinema.test/?post_type=tribe_events&#038;p=8754
+            [menu_order] => 0
+            [post_type] => tribe_events
+            [post_mime_type] => 
+            [comment_count] => 0
+            [filter] => raw
+            [event_date] => 2019-06-07 00:00:00
+        )
+
+    [3] => WP_Post Object
+        (
+            [ID] => 8764
+            [post_author] => 8
+            [post_date] => 2019-05-02 20:37:49
+            [post_date_gmt] => 2019-05-03 00:37:49
+            [post_content] => Truth and myth are blurred in Martin Scorsese's film experience about Bob Dylan's Rolling Thunder Revue tour in the fall of 1975.
+
+<strong>ROLLING THUNDER REVUE: A BOB DYLAN STORY</strong> by Martin Scorsese captures the troubled spirit of America in 1975 and the joyous music that Dylan performed during the fall of that year. Part documentary, part concert film, part fever dream, Rolling Thunder is a one of a kind experience, from master filmmaker Martin Scorsese.
+
+<img class="alignnone size-medium" src="https://www.rollingstone.com/wp-content/uploads/2018/06/rs-225603-18-with-cup-and-bucket.jpg?crop=900:600&amp;width=440" width="2000" height="1271" />
+            [post_title] => Rolling Thunder Revue: A Bob Dylan Story
+            [post_excerpt] => 
+            [post_status] => publish
+            [comment_status] => closed
+            [ping_status] => closed
+            [post_password] => 
+            [post_name] => rolling-thunder-revue-a-bob-dylan-story
+            [to_ping] => 
+            [pinged] => 
+            [post_modified] => 2019-05-02 20:41:36
+            [post_modified_gmt] => 2019-05-03 00:41:36
+            [post_content_filtered] => 
+            [post_parent] => 0
+            [guid] => http://ocinema.test/?post_type=tribe_events&#038;p=8764
+            [menu_order] => 0
+            [post_type] => tribe_events
+            [post_mime_type] => 
+            [comment_count] => 0
+            [filter] => raw
+            [event_date] => 2019-06-11 00:00:00
+        )
+
+)
+

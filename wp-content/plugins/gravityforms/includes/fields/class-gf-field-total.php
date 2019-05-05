@@ -33,12 +33,12 @@ class GF_Field_Total extends GF_Field {
 		$field_id    = $is_entry_detail || $is_form_editor || $form_id == 0 ? "input_$id" : 'input_' . $form_id . "_$id";
 
 		if ( $is_entry_detail ) {
-			return "<div class='ginput_container'>
+			return "<div class='ginput_container ginput_container_total'>
 						<input type='text' name='input_{$id}' value='{$value}' />
 					</div>";
 		} else {
-			return "<div class='ginput_container'>
-						<span class='ginput_total ginput_total_{$form_id}'>" . GFCommon::to_money( '0' ) . "</span>
+			return "<div class='ginput_container ginput_container_total'>
+						<span class='ginput_total ginput_total_{$form_id}' aria-live='polite'>" . GFCommon::to_money( '0' ) . "</span>
 						<input type='hidden' name='input_{$id}' id='{$field_id}' class='gform_hidden'/>
 					</div>";
 		}
@@ -60,8 +60,31 @@ class GF_Field_Total extends GF_Field {
 		return GFCommon::to_money( $value, $entry['currency'] );
 	}
 
+	/**
+	 * Gets merge tag values.
+	 *
+	 * @since  Unknown
+	 * @access public
+	 *
+	 * @uses GFCommon::to_number()
+	 * @uses GFCommon::to_money()
+	 * @uses GFCommon::format_variable_value()
+	 *
+	 * @param array|string $value      The value of the input.
+	 * @param string       $input_id   The input ID to use.
+	 * @param array        $entry      The Entry Object.
+	 * @param array        $form       The Form Object
+	 * @param string       $modifier   The modifier passed.
+	 * @param array|string $raw_value  The raw value of the input.
+	 * @param bool         $url_encode If the result should be URL encoded.
+	 * @param bool         $esc_html   If the HTML should be escaped.
+	 * @param string       $format     The format that the value should be.
+	 * @param bool         $nl2br      If the nl2br function should be used.
+	 *
+	 * @return string The processed merge tag.
+	 */
 	public function get_value_merge_tag( $value, $input_id, $entry, $form, $modifier, $raw_value, $url_encode, $esc_html, $format, $nl2br ) {
-		$format_numeric = $modifier == 'price';
+		$format_numeric = in_array( 'price', $this->get_modifiers() );
 
 		$value = $format_numeric ? GFCommon::to_number( $value ) : GFCommon::to_money( $value );
 

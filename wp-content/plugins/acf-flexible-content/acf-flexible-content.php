@@ -4,7 +4,7 @@ Plugin Name: Advanced Custom Fields: Flexible Content Field
 Plugin Slug: acf-flexible-content
 Plugin URI: http://www.advancedcustomfields.com/
 Description: This premium Add-on adds a flexible content field type for the Advanced Custom Fields plugin
-Version: 2.0.1
+Version: 2.1.0
 Author: Elliot Condon
 Author URI: http://www.elliotcondon.com/
 License: GPL
@@ -39,7 +39,7 @@ class acf_plugin_flexible_content {
 			
 			// basic
 			'name'				=> __('Advanced Custom Fields: Flexible Content Field', 'acf'),
-			'version'			=> '2.0.1',
+			'version'			=> '2.1.0',
 						
 			// urls
 			'slug'				=> dirname(plugin_basename( __FILE__ )),
@@ -49,20 +49,15 @@ class acf_plugin_flexible_content {
 			
 		);
 		
-		
 		// include v5 field
 		add_action('acf/include_field_types', array($this, 'include_field_types'));
 		
-		
 		// include v4 field
-		add_action('acf/register_fields', array($this, 'register_fields'));
-		
+		add_action('acf/register_fields', array($this, 'include_field_types'));
 		
 		// include updates
 		if( is_admin() ) {
-			
 			$this->include_file('acf-flexible-content-update.php');
-			
 		}
 		
 	}
@@ -82,11 +77,8 @@ class acf_plugin_flexible_content {
 	*/
 	
 	function include_file( $file = '' ) {
-		
 		$file = dirname(__FILE__) . '/'. $file;
-		
 		if( file_exists($file) ) include_once( $file );
-		
 	}
 	
 	
@@ -105,28 +97,28 @@ class acf_plugin_flexible_content {
 	
 	function include_field_types() {
 		
-		$this->include_file('5/flexible-content.php');
+		// vars
+		$version = '';
 		
-	}
-	
-	
-	/*
-	*  register_fields
-	*
-	*  This function will include the v4 field type
-	*
-	*  @type	function
-	*  @date	12/06/2015
-	*  @since	5.2.3
-	*
-	*  @param	n/a
-	*  @return	n/a
-	*/
-	
-	function register_fields() {
+		// version 5
+		if( defined('ACF_VERSION') ) {
+			
+			// version 5.7+
+			if( version_compare(ACF_VERSION, '5.7.0', '>=') ) {
+				$version = '5-7';
+			
+			//  version 5.0
+			} else {
+				$version = '5-0';
+			}
 		
-		$this->include_file('4/flexible-content.php');
+		// version 4
+		} else {
+			$version = '4-0';
+		}
 		
+		// include
+		$this->include_file( "includes/$version/acf-flexible-content-field.php" );
 	}
 	
 }

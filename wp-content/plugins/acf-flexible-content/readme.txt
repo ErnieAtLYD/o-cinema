@@ -41,6 +41,9 @@ include_once('acf-flexible-content/acf-flexible-content.php');
 
 == Changelog ==
 
+= 2.1.0 =
+* Added support for ACF version 5.7.0
+
 = 2.0.1 =
 * Minor fixes and improvements
 

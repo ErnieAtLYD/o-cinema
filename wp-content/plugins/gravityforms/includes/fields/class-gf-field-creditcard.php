@@ -80,9 +80,9 @@ class GF_Field_CreditCard extends GF_Field {
 		if ( $get_from_post_global_var ) {
 			$value[ $this->id . '.1' ] = $this->get_input_value_submission( 'input_' . $this->id . '_1', rgar( $this->inputs[0], 'name' ), $field_values, true );
 			$value[ $this->id . '.2' ] = $this->get_input_value_submission( 'input_' . $this->id . '_2', rgar( $this->inputs[1], 'name' ), $field_values, true );
-			$value[ $this->id . '.3' ] = $this->get_input_value_submission( 'input_' . $this->id . '_3', rgar( $this->inputs[2], 'name' ), $field_values, true );
-			$value[ $this->id . '.4' ] = $this->get_input_value_submission( 'input_' . $this->id . '_4', rgar( $this->inputs[3], 'name' ), $field_values, true );
-			$value[ $this->id . '.5' ] = $this->get_input_value_submission( 'input_' . $this->id . '_5', rgar( $this->inputs[4], 'name' ), $field_values, true );
+			$value[ $this->id . '.3' ] = $this->get_input_value_submission( 'input_' . $this->id . '_3', rgar( $this->inputs[3], 'name' ), $field_values, true );
+			$value[ $this->id . '.4' ] = $this->get_input_value_submission( 'input_' . $this->id . '_4', rgar( $this->inputs[4], 'name' ), $field_values, true );
+			$value[ $this->id . '.5' ] = $this->get_input_value_submission( 'input_' . $this->id . '_5', rgar( $this->inputs[5], 'name' ), $field_values, true );
 		} else {
 			$value = $this->get_input_value_submission( 'input_' . $this->id, $this->inputName, $field_values, $get_from_post_global_var );
 		}
@@ -162,11 +162,11 @@ class GF_Field_CreditCard extends GF_Field {
 		if ( is_array( $payment_methods ) ) {
 			foreach ( $payment_methods as $payment_method ) {
 				$checked = rgpost( 'gform_payment_method' ) == $payment_method['key'] ? "checked='checked'" : '';
-				$payment_options .= "<div class='gform_payment_option gform_payment_{$payment_method['key']}'><input type='radio' name='gform_payment_method' value='{$payment_method['key']}' id='gform_payment_method_{$payment_method['key']}' onclick='gformToggleCreditCard();' {$checked}/> {$payment_method['label']}</div>";
+				$payment_options .= "<div class='gform_payment_option gform_payment_{$payment_method['key']}'><input type='radio' name='gform_payment_method' value='{$payment_method['key']}' id='gform_payment_method_{$payment_method['key']}' onclick='gformToggleCreditCard();' onkeypress='gformToggleCreditCard();' {$checked}/> {$payment_method['label']}</div>";
 			}
 		}
 		$checked           = rgpost( 'gform_payment_method' ) == 'creditcard' || rgempty( 'gform_payment_method' ) ? "checked='checked'" : '';
-		$card_radio_button = empty( $payment_options ) ? '' : "<input type='radio' name='gform_payment_method' id='gform_payment_method_creditcard' value='creditcard' onclick='gformToggleCreditCard();'   {$checked}/>";
+		$card_radio_button = empty( $payment_options ) ? '' : "<input type='radio' name='gform_payment_method' id='gform_payment_method_creditcard' value='creditcard' onclick='gformToggleCreditCard();' onkeypress='gformToggleCreditCard();' {$checked}/>";
 		$card_icons        = "{$payment_options}<div class='gform_card_icon_container gform_card_icon_{$card_style}'>{$card_radio_button}{$card_icons}</div>";
 
 		//card number fields
@@ -174,7 +174,7 @@ class GF_Field_CreditCard extends GF_Field {
 		$card_number_field_input = GFFormsModel::get_input( $this, $this->id . '.1' );
 		$html5_output            = ! is_admin() && GFFormsModel::is_html5_enabled() ? "pattern='[0-9]*' title='" . esc_attr__( 'Only digits are allowed', 'gravityforms' ) . "'" : '';
 		$card_number_label       = rgar( $card_number_field_input, 'customLabel' ) != '' ? $card_number_field_input['customLabel'] : esc_html__( 'Card Number', 'gravityforms' );
-		$card_number_label       = gf_apply_filters( 'gform_card_number', $form_id, $card_number_label, $form_id );
+		$card_number_label       = gf_apply_filters( array( 'gform_card_number', $form_id ), $card_number_label, $form_id );
 
 		$card_number_placeholder = $this->get_input_placeholder_attribute( $card_number_field_input );
 		if ( $is_sub_label_above ) {
@@ -201,7 +201,7 @@ class GF_Field_CreditCard extends GF_Field {
 		$expiration_months            = $this->get_expiration_months( $expiration_month, $expiration_month_placeholder );
 		$expiration_years             = $this->get_expiration_years( $expiration_year, $expiration_year_placeholder );
 		$expiration_label             = rgar( $expiration_month_input, 'customLabel' ) != '' ? $expiration_month_input['customLabel'] : esc_html__( 'Expiration Date', 'gravityforms' );
-		$expiration_label             = gf_apply_filters( 'gform_card_expiration', $form_id, $expiration_label, $form_id );
+		$expiration_label             = gf_apply_filters( array( 'gform_card_expiration', $form_id ), $expiration_label, $form_id );
 		if ( $is_sub_label_above ) {
 			$expiration_field = "<span class='ginput_full{$class_suffix} ginput_cardextras' id='{$field_id}_2_container'>
                                             <span class='ginput_cardinfo_left{$class_suffix}' id='{$field_id}_2_cardinfo_left'>
@@ -234,7 +234,7 @@ class GF_Field_CreditCard extends GF_Field {
 		$tabindex                  = $this->get_tabindex();
 		$security_code_field_input = GFFormsModel::get_input( $this, $this->id . '.3' );
 		$security_code_label       = rgar( $security_code_field_input, 'customLabel' ) != '' ? $security_code_field_input['customLabel'] : esc_html__( 'Security Code', 'gravityforms' );
-		$security_code_label       = gf_apply_filters( 'gform_card_security_code', $form_id, $security_code_label, $form_id );
+		$security_code_label       = gf_apply_filters( array( 'gform_card_security_code', $form_id ), $security_code_label, $form_id );
 		$html5_output              = GFFormsModel::is_html5_enabled() ? "pattern='[0-9]*' title='" . esc_attr__( 'Only digits are allowed', 'gravityforms' ) . "'" : '';
 		$security_code_placeholder = $this->get_input_placeholder_attribute( $security_code_field_input );
 		if ( $is_sub_label_above ) {
@@ -256,7 +256,7 @@ class GF_Field_CreditCard extends GF_Field {
 		$tabindex              = $this->get_tabindex();
 		$card_name_field_input = GFFormsModel::get_input( $this, $this->id . '.5' );
 		$card_name_label       = rgar( $card_name_field_input, 'customLabel' ) != '' ? $card_name_field_input['customLabel'] : esc_html__( 'Cardholder Name', 'gravityforms' );
-		$card_name_label       = gf_apply_filters( 'gform_card_name', $form_id, $card_name_label, $form_id );
+		$card_name_label       = gf_apply_filters( array( 'gform_card_name', $form_id ), $card_name_label, $form_id );
 
 		$card_name_placeholder = $this->get_input_placeholder_attribute( $card_name_field_input );
 		if ( $is_sub_label_above ) {
@@ -271,8 +271,12 @@ class GF_Field_CreditCard extends GF_Field {
                                         </span>";
 		}
 
-		return "<div class='ginput_complex{$class_suffix} ginput_container' id='{$field_id}'>" . $card_field . $expiration_field . $security_field . $card_name_field . ' </div>';
+		return "<div class='ginput_complex{$class_suffix} ginput_container ginput_container_creditcard' id='{$field_id}'>" . $card_field . $expiration_field . $security_field . $card_name_field . ' </div>';
 
+	}
+
+	public function get_field_label_class(){
+		return 'gfield_label gfield_label_before_complex';
 	}
 
 	private function get_expiration_months( $selected_month, $placeholder ) {
@@ -382,9 +386,51 @@ class GF_Field_CreditCard extends GF_Field {
 			$value = '';
 		}
 
-		return $value;
+		return $this->sanitize_entry_value( $value, $form['id'] );
 	}
 
+	/**
+	 * Upgrades inputs, if needed.
+	 *
+	 * @since  2.1.2.7
+	 * @access public
+	 * @see    GF_Field::post_convert_field()
+	 *
+	 * @uses GF_Field::post_convert_field()
+	 * @uses GF_Field_CreditCard::maybe_upgrade_inputs()
+	 *
+	 * @return void
+	 */
+	public function post_convert_field() {
+		parent::post_convert_field();
+		$this->maybe_upgrade_inputs();
+	}
+
+	/**
+	 * GF1.8 and earlier used 5 inputs (1 input for the expiration date); GF1.9 changed to 6 inputs (the expiration month and year now separate); upgrade those fields still using the older configuration.
+	 */
+	public function maybe_upgrade_inputs() {
+		$inputs    = $this->inputs;
+		$exp_input = $inputs[1];
+		$exp_id    = $this->id . '.2';
+
+		if ( count( $inputs ) == 5 && $exp_input['id'] == $exp_id ) {
+			$new_inputs = array(
+				array(
+					'id'           => $exp_id . '_month',
+					'label'        => esc_html__( 'Expiration Month', 'gravityforms' ),
+					'defaultLabel' => $exp_input['label']
+				),
+				array(
+					'id'    => $exp_id . '_year',
+					'label' => esc_html__( 'Expiration Year', 'gravityforms' ),
+				)
+			);
+
+			array_splice( $inputs, 1, 1, $new_inputs );
+			$this->inputs = $inputs;
+		}
+	}
 }
 
 GF_Fields::register( new GF_Field_CreditCard() );

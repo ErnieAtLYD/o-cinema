@@ -36,13 +36,11 @@ class GF_Field_Radio extends GF_Field {
 	}
 
 	public function validate( $value, $form ) {
-		if ( $this->enableOtherChoice && $value == 'gf_other_choice' ) {
-			$value = rgpost( "input_{$this->id}_other" );
-		}
-
-		if ( $this->isRequired && $this->enableOtherChoice && $value == GFCommon::get_other_choice_value() ) {
-			$this->failed_validation  = true;
-			$this->validation_message = empty( $this->errorMessage ) ? esc_html__( 'This field is required.', 'gravityforms' ) : $this->errorMessage;
+		if ( $this->isRequired && $this->enableOtherChoice && rgpost( "input_{$this->id}" ) == 'gf_other_choice' ) {
+			if ( empty( $value ) || strtolower( $value ) == strtolower( GFCommon::get_other_choice_value( $this ) ) ) {
+				$this->failed_validation  = true;
+				$this->validation_message = empty( $this->errorMessage ) ? esc_html__( 'This field is required.', 'gravityforms' ) : $this->errorMessage;
+			}
 		}
 	}
 
@@ -60,7 +58,7 @@ class GF_Field_Radio extends GF_Field {
 		$field_id      = $is_entry_detail || $is_form_editor || $form_id == 0 ? "input_$id" : 'input_' . $form_id . "_$id";
 		$disabled_text = $is_form_editor ? 'disabled="disabled"' : '';
 
-		return sprintf( "<div class='ginput_container'><ul class='gfield_radio' id='%s'>%s</ul></div>", $field_id, $this->get_radio_choices( $value, $disabled_text, $form_id ) );
+		return sprintf( "<div class='ginput_container ginput_container_radio'><ul class='gfield_radio' id='%s'>%s</ul></div>", $field_id, $this->get_radio_choices( $value, $disabled_text, $form_id ) );
 
 	}
 
@@ -77,12 +75,11 @@ class GF_Field_Radio extends GF_Field {
 
 			// add 'other' choice to choices if enabled
 			if ( $this->enableOtherChoice ) {
-				$other_default_value = GFCommon::get_other_choice_value();
+				$other_default_value = GFCommon::get_other_choice_value( $this );
 				$this->choices[]     = array( 'text' => $other_default_value, 'value' => 'gf_other_choice', 'isSelected' => false, 'isOtherChoice' => true );
 			}
 
-			$logic_event = $this->get_conditional_logic_event( 'click' );
-			$count       = 1;
+			$count = 1;
 
 			foreach ( $this->choices as $choice ) {
 
@@ -99,7 +96,7 @@ class GF_Field_Radio extends GF_Field {
 					$field_value .= '|' . $price;
 				}
 
-				if ( rgblank( $value ) && RG_CURRENT_VIEW != 'entry' ) {
+				if ( rgblank( $value ) && rgget('view') != 'entry' ) {
 					$checked = rgar( $choice, 'isSelected' ) ? "checked='checked'" : '';
 				} else {
 					$checked = RGFormsModel::choice_value_match( $this, $choice, $value ) ? "checked='checked'" : '';
@@ -114,7 +111,6 @@ class GF_Field_Radio extends GF_Field {
 
 					$onfocus = ! $is_admin ? 'jQuery(this).prev("input")[0].click(); if(jQuery(this).val() == "' . $other_default_value . '") { jQuery(this).val(""); }' : '';
 					$onblur  = ! $is_admin ? 'if(jQuery(this).val().replace(" ", "") == "") { jQuery(this).val("' . $other_default_value . '"); }' : '';
-					$onkeyup = $this->get_conditional_logic_event( 'keyup' );
 
 					$input_focus  = ! $is_admin ? "onfocus=\"jQuery(this).next('input').focus();\"" : '';
 					$value_exists = RGFormsModel::choices_value_match( $this, $this->choices, $value );
@@ -129,12 +125,13 @@ class GF_Field_Radio extends GF_Field {
 						$other_value = $other_default_value;
 					}
 
-					$label = "<input id='input_{$this->formId}_{$this->id}_other' name='input_{$this->id}_other' type='text' value='" . esc_attr( $other_value ) . "' aria-label='" . esc_attr__( 'Other', 'gravityforms' ) . "' onfocus='$onfocus' onblur='$onblur' $tabindex $onkeyup $disabled_text />";
+					$label = "<input id='input_{$this->formId}_{$this->id}_other' name='input_{$this->id}_other' type='text' value='" . esc_attr( $other_value ) . "' aria-label='" . esc_attr__( 'Other', 'gravityforms' ) . "' onfocus='$onfocus' onblur='$onblur' $tabindex $disabled_text />";
 				}
 
-				$choice_markup = sprintf( "<li class='gchoice_$id'><input name='input_%d' type='radio' value='%s' %s id='choice_%s' $tabindex %s $logic_event %s />%s</li>", $this->id, esc_attr( $field_value ), $checked, $id, $disabled_text, $input_focus, $label );
+				$choice_markup = sprintf( "<li class='gchoice_$id'><input name='input_%d' type='radio' value='%s' %s id='choice_%s' $tabindex %s %s />%s</li>", $this->id, esc_attr( $field_value ), $checked, $id, $disabled_text, $input_focus, $label );
 
-				$choices .= gf_apply_filters( 'gform_field_choice_markup_pre_render', array(
+				$choices .= gf_apply_filters( array(
+					'gform_field_choice_markup_pre_render',
 					$this->formId,
 					$this->id
 				), $choice_markup, $choice, $this, $value );
@@ -152,7 +149,7 @@ class GF_Field_Radio extends GF_Field {
 			}
 		}
 
-		return gf_apply_filters( 'gform_field_choices', $this->formId, $choices, $this );
+		return gf_apply_filters( array( 'gform_field_choices', $this->formId ), $choices, $this );
 	}
 
 	public function get_value_default() {
@@ -179,13 +176,40 @@ class GF_Field_Radio extends GF_Field {
 		return GFCommon::selection_display( $value, $this, $currency, $use_text );
 	}
 
+	/**
+	 * Gets merge tag values.
+	 *
+	 * @since  Unknown
+	 * @access public
+	 *
+	 * @uses GFCommon::to_money()
+	 * @uses GFCommon::format_post_category()
+	 * @uses GFFormsModel::is_field_hidden()
+	 * @uses GFFormsModel::get_choice_text()
+	 * @uses GFCommon::format_variable_value()
+	 * @uses GFCommon::implode_non_blank()
+	 *
+	 * @param array|string $value      The value of the input.
+	 * @param string       $input_id   The input ID to use.
+	 * @param array        $entry      The Entry Object.
+	 * @param array        $form       The Form Object
+	 * @param string       $modifier   The modifier passed.
+	 * @param array|string $raw_value  The raw value of the input.
+	 * @param bool         $url_encode If the result should be URL encoded.
+	 * @param bool         $esc_html   If the HTML should be escaped.
+	 * @param string       $format     The format that the value should be.
+	 * @param bool         $nl2br      If the nl2br function should be used.
+	 *
+	 * @return string The processed merge tag.
+	 */
 	public function get_value_merge_tag( $value, $input_id, $entry, $form, $modifier, $raw_value, $url_encode, $esc_html, $format, $nl2br ) {
-		$use_value       = $modifier == 'value';
-		$use_price       = in_array( $modifier, array( 'price', 'currency' ) );
-		$format_currency = $modifier == 'currency';
+		$modifiers       = $this->get_modifiers();
+		$use_value       = in_array( 'value', $modifiers );
+		$format_currency = ! $use_value && in_array( 'currency', $modifiers );
+		$use_price       = $format_currency || ( ! $use_value && in_array( 'price', $modifiers ) );
 
 		if ( is_array( $raw_value ) && (string) intval( $input_id ) != $input_id ) {
-			$items = array( $input_id => $value ); //float input Ids. (i.e. 4.1 ). Used when targeting specific checkbox items
+			$items = array( $input_id => $value ); // Float input Ids. (i.e. 4.1 ). Used when targeting specific checkbox items.
 		} elseif ( is_array( $raw_value ) ) {
 			$items = $raw_value;
 		} else {
@@ -241,6 +265,50 @@ class GF_Field_Radio extends GF_Field {
 
 		return $is_csv ? $value : GFCommon::selection_display( $value, $this, rgar( $entry, 'currency' ), $use_text );
 	}
+
+	/**
+	 * Strip scripts and some HTML tags.
+	 *
+	 * @param string $value The field value to be processed.
+	 * @param int $form_id The ID of the form currently being processed.
+	 *
+	 * @return string
+	 */
+	public function sanitize_entry_value( $value, $form_id ) {
+
+		if ( is_array( $value ) ) {
+			return '';
+		}
+
+		$allowable_tags = $this->get_allowable_tags( $form_id );
+
+		if ( $allowable_tags !== true ) {
+			$value = strip_tags( $value, $allowable_tags );
+		}
+
+		$allowed_protocols = wp_allowed_protocols();
+		$value             = wp_kses_no_null( $value, array( 'slash_zero' => 'keep' ) );
+		$value             = wp_kses_hook( $value, 'post', $allowed_protocols );
+		$value             = wp_kses_split( $value, 'post', $allowed_protocols );
+
+		return $value;
+	}
+
+	// # FIELD FILTER UI HELPERS ---------------------------------------------------------------------------------------
+
+	/**
+	 * Returns the filter operators for the current field.
+	 *
+	 * @since 2.4
+	 *
+	 * @return array
+	 */
+	public function get_filter_operators() {
+		$operators = $this->type == 'product' ? array( 'is' ) : array( 'is', 'isnot', '>', '<' );
+
+		return $operators;
+	}
+
 }
 
 GF_Fields::register( new GF_Field_Radio() );

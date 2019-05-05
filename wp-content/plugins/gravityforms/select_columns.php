@@ -1,7 +1,7 @@
 <?php
 
-//For backwards compatibility, load wordpress if it hasn't been loaded yet
-//Will be used if this file is being called directly
+// For backwards compatibility, load WordPress if it hasn't been loaded yet
+// Will be used if this file is being called directly
 if ( ! class_exists( 'RGForms' ) ) {
 	for ( $i = 0; $i < $depth = 10; $i ++ ) {
 		$wp_root_path = str_repeat( '../', $i );
@@ -16,18 +16,38 @@ if ( ! class_exists( 'RGForms' ) ) {
 	auth_redirect();
 }
 
+/**
+ * Class GFSelectColumns
+ *
+ * Handles the changing of what columns are shown on the Entry page
+ *
+ * @since Unknown
+ */
 class GFSelectColumns {
+
+	/**
+	 * Renders the column selection page.
+	 *
+	 * @since  Unknown
+	 * @access public
+	 *
+	 * @uses GFFormsModel::get_form_meta()
+	 * @uses GFFormsModel::get_grid_columns()
+	 * @uses GFSelectColumns::get_selectable_entry_meta()
+	 * @uses GFFormsModel::convert_field_objects()
+	 * @uses GFFormsModel::get_input_type()
+	 * @uses GF_Field::get_entry_inputs()
+	 * @uses GFCommon::get_label()
+	 *
+	 * @return void
+	 */
 	public static function select_columns_page() {
 
-		$form_id = $_GET['id'];
+		$form_id = absint( $_GET['id'] );
 		if ( empty( $form_id ) ) {
 			echo __( 'Oops! We could not locate your form. Please try again.', 'gravityforms' );
 			exit;
 		}
-
-		//reading form metadata
-		$form = RGFormsModel::get_form_meta( $form_id );
-
 		?>
 		<html>
 		<head>
@@ -205,15 +225,34 @@ class GFSelectColumns {
 
 					$inputs = $field->get_entry_inputs();
 
+					$input_type = GFFormsModel::get_input_type( $field );
+
+					$display = ! in_array( $input_type, array( 'list', 'repeater' ) );
+
+					/**
+					 * Allows fields to be added or removed from the select columns UI on the entry list.
+					 *
+					 * @since 2.4
+					 *
+					 * @param bool     $display Whether the field will be available for selection.
+					 * @param GF_Field $field
+					 * @param array    $form
+					 */
+					$display = gf_apply_filters( array( 'gform_display_field_select_columns_entry_list', $form_id, $field->id ), $display, $field, $form );
+
 					if ( is_array( $inputs ) ) {
 						foreach ( $inputs as $input ) {
+							if ( rgar( $input, 'isHidden' ) ) {
+								continue;
+							}
+
 							if ( ! in_array( $input['id'], $field_ids ) && ! ( $field->type == 'creditcard' && in_array( $input['id'], array( floatval( "{$field->id}.2" ), floatval( "{$field->id}.3" ), floatval( "{$field->id}.5" ) ) ) ) ) {
 								?>
 								<li id="<?php echo esc_attr( $input['id'] ); ?>"><?php echo esc_html( GFCommon::get_label( $field, $input['id'] ) ); ?></li>
 							<?php
 							}
 						}
-					} else if ( ! $field->displayOnly && ! in_array( $field->id, $field_ids ) && RGFormsModel::get_input_type( $field ) != 'list' ) {
+					} else if ( ! $field->displayOnly && ! in_array( $field->id, $field_ids ) && $display ) {
 						?>
 						<li id="<?php echo $field->id ?>"><?php echo esc_html( GFCommon::get_label( $field ) ); ?></li>
 					<?php
@@ -225,8 +264,8 @@ class GFSelectColumns {
 		</div>
 
 		<div class="panel-buttons">
-			<input type="button" value="  <?php esc_attr_e( 'Save', 'gravityforms' ); ?>  " class="button-primary" onclick="SelectColumns();" />&nbsp;
-			<input type="button" value="<?php esc_attr_e( 'Cancel', 'gravityforms' ); ?>" class="button" onclick="self.parent.tb_remove();" />
+			<input type="button" value="  <?php esc_attr_e( 'Save', 'gravityforms' ); ?>  " class="button-primary" onclick="SelectColumns();" onkeypress="SelectColumns();" />&nbsp;
+			<input type="button" value="<?php esc_attr_e( 'Cancel', 'gravityforms' ); ?>" class="button" onclick="self.parent.tb_remove();" onkeypress="self.parent.tb_remove();" />
 		</div>
 
 		</body>
@@ -235,6 +274,18 @@ class GFSelectColumns {
 	<?php
 	}
 
+	/**
+	 * Adds the entry meta to the Form object.
+	 *
+	 * @since  Unknown
+	 * @access public
+	 *
+	 * @uses GFFormsModel::get_entry_meta()
+	 *
+	 * @param array $form The Form object.
+	 *
+	 * @return array $form The Form object.
+	 */
 	public static function get_selectable_entry_meta( $form ) {
 		$entry_meta = GFFormsModel::get_entry_meta( $form['id'] );
 		$keys       = array_keys( $entry_meta );
@@ -244,8 +295,6 @@ class GFSelectColumns {
 
 		return $form;
 	}
-
-
 }
 
 GFSelectColumns::select_columns_page();
