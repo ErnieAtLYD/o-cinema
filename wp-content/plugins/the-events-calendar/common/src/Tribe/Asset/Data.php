@@ -30,10 +30,20 @@ class Tribe__Asset__Data {
 	 * Adds the provided data to the list of objects that should be available
 	 * to other scripts.
 	 *
-	 * @param string $object_name
-	 * @param mixed  $data
+	 * @param string $object_name Object name.
+	 * @param array  $data        Object data.
 	 */
 	public function add( $object_name, $data ) {
+		/**
+		 * Allow plugins to filter data for a specific object.
+		 *
+		 * @since 4.8.4
+		 *
+		 * @param array  $data        Object data.
+		 * @param string $object_name Object name.
+		 */
+		$data = apply_filters( "tribe_asset_data_add_object_{$object_name}", $data, $object_name );
+
 		$this->objects[ $object_name ] = $data;
 	}
 
@@ -46,7 +56,7 @@ class Tribe__Asset__Data {
 			return;
 		}
 
-		echo '<script type=\'text/javascript\'> /* <![CDATA[ */';
+		echo '<script> /* <![CDATA[ */';
 
 		foreach ( $this->objects as $object_name => $data ) {
 			echo 'var ' . esc_html( $object_name ) . ' = ' . wp_json_encode( $data ) . ';';

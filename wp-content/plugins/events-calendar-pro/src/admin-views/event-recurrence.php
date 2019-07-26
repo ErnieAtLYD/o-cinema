@@ -22,10 +22,14 @@ $label = __( 'Event Series:', 'tribe-events-calendar-pro' );
  */
 do_action( 'tribe_events_pro_recurrence_before_metabox' );
 ?>
-<div id="tribe-row-delete-dialog">
-	<p class="question rule-question"><?php esc_html_e( 'Are you sure you want to delete these events?', 'tribe-events-calendar-pro' ) ?></p>
-	<p class="question exclusion-question"><?php esc_html_e( 'Are you sure you want to delete this exclusion?', 'tribe-events-calendar-pro' ) ?></p>
-</div>
+<tr>
+	<td>
+		<div id="tribe-row-delete-dialog">
+			<p class="question rule-question"><?php esc_html_e( 'Are you sure you want to delete these events?', 'tribe-events-calendar-pro' ) ?></p>
+			<p class="question exclusion-question"><?php esc_html_e( 'Are you sure you want to delete this exclusion?', 'tribe-events-calendar-pro' ) ?></p>
+		</div>
+	</td>
+</tr>
 
 <tr class="recurrence-row tribe-datetime-block">
 	<td class="recurrence-rules-header">
@@ -255,6 +259,7 @@ do_action( 'tribe_events_pro_recurrence_before_metabox' );
 			</div>
 
 		</script>
+
 		<button id="tribe-add-recurrence" class="tribe-add-recurrence button tribe-button tribe-button-secondary">
 			<span class="has-no-recurrence">
 				<?php esc_html_e( 'Schedule multiple events', 'tribe-events-calendar-pro' ); ?>
@@ -263,6 +268,33 @@ do_action( 'tribe_events_pro_recurrence_before_metabox' );
 				<?php esc_html_e( 'Add more events', 'tribe-events-calendar-pro' ); ?>
 			</span>
 		</button>
+
+		<?php
+		// check input if recurring, new recurring events will check box with jQuery
+		$event_id     = get_the_ID();
+		$is_recurring = '';
+
+		if ( ! empty( $event_id ) ) {
+			$is_recurring = tribe_is_recurring_event( $event_id );
+		}
+
+		?>
+
+		<?php
+		// This should only show in the admin, not on the front-end (e.g. the Community Events submission form).
+		if ( ! tribe_is_frontend() ) : ?>
+		<label for="tribe-recurrence-active" class="tribe-recurrence-active-label">
+			<?php esc_html_e( 'Recurring Events Active', 'tribe-events-calendar-pro' ); ?>
+		</label>
+		<?php endif; ?>
+
+		<input
+			id="tribe-recurrence-active"
+			type="checkbox"
+			class="tribe-recurrence-active tribe-dependency <?php echo ! $is_recurring ? 'inactive' : ''; ?>"
+			value="1"
+			<?php checked( $is_recurring ); ?>
+		/>
 	</td>
 </tr>
 

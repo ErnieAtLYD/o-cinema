@@ -266,9 +266,11 @@ if ( ! function_exists( 'tribe_prepare_for_json' ) ) {
 	 * @return string
 	 */
 	function tribe_prepare_for_json( $string ) {
-
 		$value = trim( htmlspecialchars( $string, ENT_QUOTES, 'UTF-8' ) );
 		$value = str_replace( '&quot;', '"', $value );
+		// &amp;#013; is same as \r and JSON strings should be a single line not multiple lines.
+		$removable_values = array( '\r', '\n', '\t', '&amp;#013;' );
+		$value = str_replace( $removable_values, '', $value );
 
 		return $value;
 	}
@@ -436,14 +438,37 @@ if ( ! function_exists( 'tribe_format_currency' ) ) {
 	function tribe_format_currency( $cost, $post_id = null, $currency_symbol = null, $reverse_position = null ) {
 		$post_id = Tribe__Main::post_id_helper( $post_id );
 
-		$currency_symbol = apply_filters( 'tribe_currency_symbol', $currency_symbol, $post_id );
-
-		// if no currency symbol was passed let's get the default currency symbol
-		if ( ! $currency_symbol ) {
+		if ( empty( $currency_symbol ) ) {
 			$currency_symbol = tribe_get_option( 'defaultCurrencySymbol', '$' );
+
+			/**
+			 * Filters the currency symbol that will be used to format the price, defaults
+			 * to the one set in the options.
+			 *
+			 * This will only apply if the currency symbol was not passed as a parameter.
+			 *
+			 * @since 4.7.7
+			 *
+			 * @param string $currency_symbol
+			 * @param int $post_id
+			 */
+			$currency_symbol = apply_filters( 'tribe_currency_symbol', $currency_symbol, $post_id );
 		}
 
-		$reverse_position = apply_filters( 'tribe_reverse_currency_position', $reverse_position, $post_id );
+		if ( null === $reverse_position ) {
+			/**
+			 * Filters whether the currency symbol that will be used to format the price should be
+			 * prefixed (`false`) or appended (`true`) to the price value.
+			 *
+			 * This will only apply if the currency symbol reverse position not passed as a parameter.
+			 *
+			 * @since 4.7.7
+			 *
+			 * @param bool $reverse_position
+			 * @param int  $post_id
+			 */
+			$reverse_position = apply_filters( 'tribe_reverse_currency_position', (bool) $reverse_position, $post_id );
+		}
 
 		// if no currency position was passed and we're not looking at a particular event,
 		// let's get the default currency position
@@ -451,10 +476,21 @@ if ( ! function_exists( 'tribe_format_currency' ) ) {
 			$reverse_position = tribe_get_option( 'reverseCurrencyPosition', false );
 		}
 
-		$cost = $reverse_position ? $cost . $currency_symbol : $currency_symbol . $cost;
+		/**
+		 * Add option to filter the cost value before is returned, allowing other providers to hook into it.
+		 *
+		 * @since 4.7.10
+		 *
+		 * @param string $cost
+		 * @param int $post_id
+		 */
+		$cost = apply_filters( 'tribe_currency_cost', $cost, $post_id );
+
+		$cost = $reverse_position
+			? $cost . $currency_symbol
+			: $currency_symbol . $cost;
 
 		return $cost;
-
 	}
 }//end if
 
@@ -490,6 +526,36 @@ if ( ! function_exists( 'tribe_get_date_option' ) ) {
  */
 function tribe_notice( $slug, $callback, $arguments = array(), $active_callback = null ) {
 	return Tribe__Admin__Notices::instance()->register( $slug, $callback, $arguments, $active_callback );
+}
+
+/**
+ * Shortcut for Tribe__Admin__Notices::register_transient(), create a transient Admin Notice easily.
+ *
+ * A transient admin notice is a "fire-and-forget" admin notice that will display once registered and
+ * until dismissed (if dismissible) without need, on the side of the source code, to register it on each request.
+ *
+ * @param  string $slug      Slug to save the notice
+ * @param  string $html      The notice output HTML code
+ * @param  array  $arguments Arguments to Setup a notice
+ * @param int     $expire    After how much time (in seconds) the notice will stop showing.
+ *
+ * @return stdClass Which notice was registered
+ */
+function tribe_transient_notice( $slug, $html, $arguments = array(), $expire = null ) {
+	$expire = null !== $expire ? (int) $expire : WEEK_IN_SECONDS;
+
+	return Tribe__Admin__Notices::instance()->register_transient( $slug, $html, $arguments, $expire );
+}
+
+/**
+ * Removes a transient notice based on its slug.
+ *
+ * @since 4.7.7
+ *
+ * @param string $slug
+ */
+function tribe_transient_notice_remove( $slug ) {
+	Tribe__Admin__Notices::instance()->remove_transient( $slug );
 }
 
 /**
@@ -636,5 +702,53 @@ if ( ! function_exists( 'tribe_is_frontend' ) ) {
 		 * @param bool $is_frontend
 		 */
 		return (bool) apply_filters( 'tribe_doing_frontend', false );
+	}
+}
+
+if ( ! function_exists( 'tribe_set_time_limit' ) ) {
+	/**
+	 * Wrapper for set_time_limit to suppress errors
+	 *
+	 * @since 4.7.12
+	 *
+	 * @param int $limit Time limit.
+	 */
+	function tribe_set_time_limit( $limit = 0 ) {
+		if (
+			! function_exists( 'set_time_limit' )
+			&& false !== strpos( ini_get( 'disable_functions' ), 'set_time_limit' )
+			&& ini_get( 'safe_mode' )
+		) {
+			return false;
+		}
+
+		return @set_time_limit( $limit );
+	}
+}
+
+if ( ! function_exists( 'tribe_context' ) ) {
+	/**
+	 * A wrapper function to get the singleton, immutable, global context object.
+	 *
+	 * Due to its immutable nature any method that would modify the context will return
+	 * a clone of the context, not the original one.
+	 *
+	 * @since 4.9.5
+	 *
+	 * @return Tribe__Context The singleton, immutable, global object instance.
+	 */
+	function tribe_context() {
+		$context = tribe( 'context' );
+
+		/**
+		 * Filters the global context object.
+		 *
+		 * @since 4.9.5
+		 *
+		 * @param Tribe__Context $context The singleton, immutable, global object instance.
+		 */
+		$context = apply_filters( 'tribe_global_context', $context );
+
+		return $context;
 	}
 }

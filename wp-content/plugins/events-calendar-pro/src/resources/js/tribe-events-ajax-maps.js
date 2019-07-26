@@ -36,6 +36,10 @@
 		 */
 
 		map_add_marker: function( lat, lng, title, address, link ) {
+			if ( 'undefined' == typeof google ) {
+				return;
+			}
+
 			var myLatlng = new google.maps.LatLng( lat, lng );
 
 			var marker = {
@@ -80,8 +84,10 @@
 		}
 	} );
 
-	tg.geocoder = new google.maps.Geocoder();
-	tg.bounds = new google.maps.LatLngBounds();
+	try {
+		tg.geocoder = new google.maps.Geocoder();
+		tg.bounds = new google.maps.LatLngBounds();
+	} catch( e ) {};
 
 	$( document ).ready( function() {
 
@@ -89,14 +95,14 @@
 		 * @function tribe_test_location
 		 * @desc tribe_test_location clears the lat and lng values in event bar if needed. Also hides or shows the geofence filter if present.
 		 */
+		var $tribeBar = $( '#tribe-bar-geoloc' );
+		var $fence = $( '#tribe_events_filter_item_geofence' );
+		var $latlng = $( '#tribe-bar-geoloc-lat, #tribe-bar-geoloc-lng' );
 
 		function tribe_test_location() {
 
-			if ( $( '#tribe-bar-geoloc' ).length ) {
-				var val = $( '#tribe-bar-geoloc' ).val(),
-					$fence = $( "#tribe_events_filter_item_geofence" ),
-					$latlng = $( '#tribe-bar-geoloc-lat, #tribe-bar-geoloc-lng' );
-				if ( val.length ) {
+			if ( $tribeBar.length ) {
+				if ( $tribeBar.val() ) {
 					$fence.show();
 				}
 				else {
@@ -108,22 +114,50 @@
 			}
 		}
 
+		/**
+		 * Listen for either a key DOWN or UP to see if we have a value on the location field if the field is not empty
+		 * we display the $fence field which is the field with the distance dropdown so is available as son as there's
+		 * something to be displayed.
+		 *
+		 * @since 4.4.22
+		 */
+		$( '#tribe-bar-geoloc' ).on( 'keydown keyup', function( e ) {
+			$fence.toggle( this.value.trim() !== '' );
+		} );
+
+
 		tribe_test_location();
 
-		var $tribe_container = $( '#tribe-events' ),
-			$geo_bar_input = $( '#tribe-bar-geoloc' ),
-			$geo_options = $( "#tribe-geo-options" ),
-			invalid_date = false;
+		var $tribe_container = $( '#tribe-events' );
+		var $geo_bar_input   = $( '#tribe-bar-geoloc' );
+		var $geo_options     = $( '#tribe-geo-options' );
+		var invalid_date     = false;
 
-		var options = {
-			zoom     : 5,
-			center   : new google.maps.LatLng( TribeEventsPro.geocenter.max_lat, TribeEventsPro.geocenter.max_lng ),
-			mapTypeId: google.maps.MapTypeId.ROADMAP
-		};
+		var mapEl = document.getElementById( 'tribe-geo-map' );
 
-		if ( document.getElementById( 'tribe-geo-map' ) ) {
-			tg.map = new google.maps.Map( document.getElementById( 'tribe-geo-map' ), options );
+		if ( mapEl && 'undefined' !== typeof google ) {
+
+			var options = {
+				zoom     : 5,
+				center   : new google.maps.LatLng( TribeEventsPro.geocenter.max_lat, TribeEventsPro.geocenter.max_lng ),
+				mapTypeId: google.maps.MapTypeId.ROADMAP
+			};
+
+			tg.map = new google.maps.Map( mapEl, options );
 			tg.bounds = new google.maps.LatLngBounds();
+
+			/**
+			 * Trigger a new event when the Map is created in order to allow Users option to customize the map by listening
+			 * to the correct event and having an instance of the Map variable avialable to modify if required.
+			 *
+			 * @param {Object} map An instance of the Google Map.
+			 * @param {Element} el The DOM Element where the map is attached.
+			 * @param {Object} options The initial set of options for the map.
+			 * @param {Object} bounds An instance with the bounds of the Map.
+			 *
+			 * @since 4.4.22
+			 */
+			$( 'body' ).trigger( 'map-created.tribe', [ tg.map, mapEl, options, tg.bounds ] );
 
 			var minLatlng = new google.maps.LatLng( TribeEventsPro.geocenter.min_lat, TribeEventsPro.geocenter.min_lng );
 			tg.bounds.extend( minLatlng );
@@ -377,7 +411,13 @@
 					if ( tt.pushstate ) {
 
 						ts.page_title = $( '#tribe-events-header' ).data( 'title' );
-						document.title = ts.page_title;
+						ts.view_title = $( '#tribe-events-header' ).data( 'viewtitle' );
+
+						if ( ts.page_title ) {
+							document.title = ts.page_title;
+						}
+
+						$( '.tribe-events-page-title' ).html( ts.view_title );
 
 						if ( ts.do_string ) {
 							// strip the baseurl from the push state URL
@@ -539,7 +579,7 @@
 		 */
 
 		function deleteMarkers() {
-			if ( tg.markers ) {
+			if ( tg.markers && 'undefined' !== typeof google ) {
 				for ( i in tg.markers ) {
 					tg.markers[i].setMap( null );
 				}
@@ -554,7 +594,13 @@
 		 */
 
 		function centerMap() {
+
+			if ( 'undefined' == typeof google ) {
+				return;
+			}
+
 			tg.map.fitBounds( tg.bounds );
+
 			if ( tg.map.getZoom() > 13 ) {
 				tg.map.setZoom( 13 );
 			}
@@ -660,12 +706,12 @@
 				}
 			} );
 			// @ifdef DEBUG
-			ts.view && dbug && debug.timeEnd( 'Tribe JS Init Timer' );
+			ts.view && dbug && tec_debug.timeEnd( 'Tribe JS Init Timer' );
 			// @endif
 		}
 
 		// @ifdef DEBUG
-		dbug && debug.info( 'TEC Debug: tribe-events-ajax-maps.js successfully loaded' );
+		dbug && tec_debug.info( 'TEC Debug: tribe-events-ajax-maps.js successfully loaded' );
 		// @endif
 
 	} );

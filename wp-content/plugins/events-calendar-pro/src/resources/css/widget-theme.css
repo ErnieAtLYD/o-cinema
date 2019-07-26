@@ -404,9 +404,6 @@ div.tribe-countdown-text {
 /* = The Events Calendar List Widget
    @ Template: pro/widgets/list-widget.php
 =============================================*/
-:root {
-	--featured-event-bg: #0ea0d7;
-}
 .tribe-mini-calendar-event {
 	border-bottom: 1px dotted #2f2f2f;
 	margin-bottom: 5px;
@@ -584,7 +581,6 @@ div.tribe-countdown-text {
 		}
 .tribe-mini-calendar-list-wrapper .tribe-event-featured .tribe-mini-calendar-event, .tribe-events-adv-list-widget .tribe-event-featured .tribe-mini-calendar-event {
 			background: #0ea0d7;
-			background: var(--featured-event-bg);
 			border: 0;
 			margin-bottom: 0;
 			padding-bottom: 16px;

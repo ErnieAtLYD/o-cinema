@@ -52,6 +52,11 @@
 	color: #fff;
 }
 
+label.tribe-recurrence-active-label,
+input[type="checkbox"].tribe-recurrence-active {
+	display: none;
+}
+
 .tribe-divider-bottom {
 	border-bottom: 1px solid #dfdfdf;
 	padding: 0 5px 10px 0;
@@ -175,6 +180,12 @@ input[data-field="custom-interval"] {
 
 .tribe-has-recurrence-rule .tribe-recurrence-exclusion-row {
 	display: table-row;
+	transition: opacity 0.35s ease-in;
+}
+
+.recurrence-row.tribe-recurrence-exclusion-row--idle {
+	opacity: 0.25;
+	pointer-events: none;
 }
 
 .tribe-event-recurrence-description {
