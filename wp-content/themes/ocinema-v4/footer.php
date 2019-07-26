@@ -12,7 +12,7 @@
 
 					<li><a href="/contact">Contact Us</a></li>					
 					<li><a href="/membership">Membership</a></li>
-					<li><a href="http://prod3.agileticketing.net/WebSales/pages/list.aspx?epguid=910fed20-ca0b-44d4-a0c8-ff325b16b92e&">Calendar</a></li>
+					<li><a href="https://prod3.agileticketing.net/WebSales/pages/list.aspx?epguid=910fed20-ca0b-44d4-a0c8-ff325b16b92e&">Calendar</a></li>
 					<li><a href="/privacy-policy">Privacy Policy</a></br><br></li>
 					</li>
 				</ul>			
@@ -29,9 +29,10 @@
 				<h5>Upcoming Events</h5>
 				<ul>
 	  			<?php global $post;
-	  			if ( function_exists( 'get_events' ) ) {
+	  			if ( function_exists( 'tribe_get_events' ) ) {
 					$posts = tribe_get_events( array(
 						'eventDisplay' => 'list',
+						'ends_after' => 'now',
 						'post_per_page' => -1,
 					));
 				}

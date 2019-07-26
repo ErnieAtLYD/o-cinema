@@ -119,8 +119,9 @@ switch ( $destination ) {
 		$venue_events = tribe_get_events(
 			array(
 				'venue' => VENUE_ID,
-				'eventDisplay' => 'upcoming',
-				'posts_per_page' => -1,
+				'eventDisplay' => 'list',
+				'ends_after' => 'now',
+				'post_per_page' => -1,
 			)
 		);
 

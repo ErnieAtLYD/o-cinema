@@ -47,6 +47,7 @@ $venue_events = tribe_get_events(
 	array(
 		'venue' => get_the_ID(),
 		'eventDisplay' => 'list',
+		'ends_after' => 'now',
 		'posts_per_page' => -1,
 	)
 );
