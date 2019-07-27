@@ -33,6 +33,7 @@ $evtinfo = get_agiletix_from_wppostid( $post->ID );
 if ( isset( $evtinfo ) ) {
 	// Parse AgileTix
 	$json = get_json_from_agile_api( $evtinfo );
+
 	if ( isset( $json ) ) {
 		$is_agile          = true;
 		$show              = $json['ArrayOfShows']['Show'];
@@ -80,7 +81,7 @@ get_header();
 				$dow_map     = [ 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' ];
 				echo '<table class="timetable table table-striped">';
 
-				if ( isset( $show['CurrentShowings'][' Showing'] ) ) {
+				if ( isset( $show['CurrentShowings']['Showing'] ) ) {
 
 					$showing_arr = $show['CurrentShowings']['Showing'];
 
