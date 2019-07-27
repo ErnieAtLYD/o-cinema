@@ -3,7 +3,7 @@
 /**
 * The main page of the O Cinema front page
 */
-	// In order: Wynwood, Miami Beach
+	// In order: Wynwood, North Beach
 	$venue_arrays = array( 2118, 4202 );
 ?>
 	<div class="container home">
@@ -93,7 +93,7 @@
 								<?php printFrontRunDates( get_the_ID() ); ?><br>
 								<?php switch ( $venue ) {
 									case '4202':
-										echo '<span class="venue-fg-4202">Miami Beach</span>';
+										echo '<span class="venue-fg-4202">North Beach</span>';
 									break;
 } ?>
 							</span>

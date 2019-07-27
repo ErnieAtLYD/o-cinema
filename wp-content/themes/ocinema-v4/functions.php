@@ -2,9 +2,8 @@
 
 // http://lifeonlars.com/wordpress/how-to-add-multiple-featured-images-in-wordpress/
 // Load external file to add support for MultiPostThumbnails. Allows you to set more than one "feature image" per post.
-require_once( 'library/multi-post-thumbnails.php' );
+require_once 'library/multi-post-thumbnails.php';
 
-add_action( 'after_setup_theme', 'woocommerce_support' );
 add_action( 'after_setup_theme', 'wpt_setup' );
 
 if ( ! function_exists( 'wpt_setup' ) ) :
@@ -30,36 +29,14 @@ if ( function_exists( 'add_theme_support' ) ) {
 
 // Define additional "post thumbnails". Relies on MultiPostThumbnails to work
 if ( class_exists( 'MultiPostThumbnails' ) ) {
-	new MultiPostThumbnails(array(
-		'label' => 'Banner Image',
-		'id' => 'banner-image',
-		'post_type' => 'tribe_events',
+	new MultiPostThumbnails(
+		array(
+			'label'     => 'Banner Image',
+			'id'        => 'banner-image',
+			'post_type' => 'tribe_events',
 		)
 	);
 };
-
-
-function my_custom_add_to_cart_redirect( $url ) {
-	$url = wc_get_checkout_url();
-	return $url;
-}
-add_filter( 'woocommerce_add_to_cart_redirect', 'my_custom_add_to_cart_redirect' );
-
-add_filter( 'add_to_cart_fragments', 'woocommerce_header_add_to_cart_fragment' );
-
-function woocommerce_header_add_to_cart_fragment( $fragments ) {
-	global $woocommerce;
-	ob_start();
-	?>
-
-	<a class="cart-contents" href="<?php echo WC()->cart->get_cart_url(); ?>" title="<?php _e( 'View your shopping cart' ); ?>">
-		<i class="fa fa-shopping-cart fa-lg"></i> <?php echo sprintf( _n( '%d', '%d', WC()->cart->cart_contents_count ), WC()->cart->cart_contents_count ); ?>
-	</a>
-
-	<?php
-		$fragments['a.cart-contents'] = ob_get_clean();
-	return $fragments;
-}
 
 /* --- */
 
@@ -70,99 +47,17 @@ function form_submit_button( $button, $form ) {
 function returnFancyHtmlForVenue( $id ) {
 	switch ( $id ) {
 		case '2118':
-			echo'O Cinema <span class="venue-fg-2118">Wynwood</span>';
-		break;
+			echo 'O Cinema <span class="venue-fg-2118">Wynwood</span>';
+			break;
 		case '2119':
 			echo 'O Cinema <span class="venue-fg-2119">Miami Shores @ MTC</span>';
-		break;
+			break;
 		case '4202':
-			echo 'O Cinema <span class="venue-fg-4202">Miami Beach</span>';
-		break;
+			echo 'O Cinema <span class="venue-fg-4202">North Beach</span>';
+			break;
 	}
 };
 
-// http://outlandish.com/blog/xml-to-json/
-function xmlToArray( $xml, $options = array() ) {
-	$defaults = array(
-		'namespaceSeparator' => ':', // you may want this to be something other than a colon
-		'attributePrefix' => '@',    // to distinguish between attributes and nodes with the same name
-		'alwaysArray' => array(),    // array of xml tag names which should always become arrays
-		'autoArray' => true,         // only create arrays for tags which appear more than once
-		'textContent' => '$',        // key used for the text content of elements
-		'autoText' => true,          // skip textContent key if node has no attributes or child nodes
-		'keySearch' => false,        // optional search and replace on tag and attribute names
-		'keyReplace' => false,       // replace values for above search values (as passed to str_replace())
-	);
-	$options = array_merge( $defaults, $options );
-	$namespaces = $xml->getDocNamespaces();
-	$namespaces[''] = null; // add base (empty) namespace
-
-	// get attributes from all namespaces
-	$attributesArray = array();
-	foreach ( $namespaces as $prefix => $namespace ) {
-		foreach ( $xml->attributes( $namespace ) as $attributeName => $attribute ) {
-			// replace characters in attribute name
-			if ( $options['keySearch'] ) { $attributeName =
-				str_replace( $options['keySearch'], $options['keyReplace'], $attributeName );
-			}
-			$attributeKey = $options['attributePrefix']
-				. ($prefix ? $prefix . $options['namespaceSeparator'] : '')
-				. $attributeName;
-			$attributesArray[ $attributeKey ] = (string) $attribute;
-		}
-	}
-
-	// get child nodes from all namespaces
-	$tagsArray = array();
-	foreach ( $namespaces as $prefix => $namespace ) {
-		foreach ( $xml->children( $namespace ) as $childXml ) {
-			// recurse into child nodes
-			$childArray = xmlToArray( $childXml, $options );
-			list($childTagName, $childProperties) = each( $childArray );
-
-			// replace characters in tag name
-			if ( $options['keySearch'] ) { $childTagName =
-				str_replace( $options['keySearch'], $options['keyReplace'], $childTagName );
-			}
-			// add namespace prefix, if any
-			if ( $prefix ) { $childTagName = $prefix . $options['namespaceSeparator'] . $childTagName;
-			}
-
-			if ( ! isset( $tagsArray[ $childTagName ] ) ) {
-				// only entry with this key
-				// test if tags of this type should always be arrays, no matter the element count
-				$tagsArray[ $childTagName ] =
-					in_array( $childTagName, $options['alwaysArray'] ) || ! $options['autoArray']
-					? array( $childProperties ) : $childProperties;
-			} elseif (
-				is_array( $tagsArray[ $childTagName ] ) && array_keys( $tagsArray[ $childTagName ] )
-				=== range( 0, count( $tagsArray[ $childTagName ] ) - 1 )
-			) {
-				// key already exists and is integer indexed array
-				$tagsArray[ $childTagName ][] = $childProperties;
-			} else {
-				// key exists so convert to integer indexed array with previous value in position 0
-				$tagsArray[ $childTagName ] = array( $tagsArray[ $childTagName ], $childProperties );
-			}
-		}
-	}
-
-	// get text content of node
-	$textContentArray = array();
-	$plainText = trim( (string) $xml );
-	if ( '' !== $plainText ) {
-		$textContentArray[ $options['textContent'] ] = $plainText;
-	}
-
-	// stick it all together
-	$propertiesArray = ! $options['autoText'] || $attributesArray || $tagsArray || ( '' === $plainText )
-			? array_merge( $attributesArray, $tagsArray, $textContentArray ) : $plainText;
-
-	// return node as array
-	return array(
-		$xml->getName() => $propertiesArray,
-	);
-}
 
 /*
  * Helper function.
@@ -209,26 +104,31 @@ function get_agiletix_from_wppostid( $id ) {
  * Return a PHP structure (in JSON notation) of the XML returned
  */
 function get_json_from_agile_api( $evtinfo ) {
-	if ( isset( $evtinfo ) && ( ! empty( trim( $evtinfo ) )) ) {
-		$params = array(
-			'guid' => 'f0495d17-0bdf-4bae-a6c9-33aeed2425f2',
+	if ( isset( $evtinfo ) && ( ! empty( trim( $evtinfo ) ) ) ) {
+		$params    = array(
+			'guid'            => 'f0495d17-0bdf-4bae-a6c9-33aeed2425f2',
 			'fulldescription' => 'true',
-			'showslist' => 'true',
-			'withmedia' => 'true',
-			'cphide' => 'false',
-			'showid' => $evtinfo,
+			'showslist'       => 'true',
+			'withmedia'       => 'true',
+			'cphide'          => 'false',
+			'showid'          => $evtinfo,
 		);
 		$agile_url = 'http://prod3.agileticketing.net/websales/feed.ashx';
 		$agile_url = add_query_arg( $params, esc_url_raw( $agile_url ) );
-		$response = wp_remote_get( $agile_url );
+		$response  = wp_remote_get( $agile_url );
 
 		// Is the API up?
 		if ( ! 200 == wp_remote_retrieve_response_code( $response ) ) {
 			return false;
 		} else {
 			$xmlstr = wp_remote_retrieve_body( $response );
-			$data = simplexml_load_string( $xmlstr, 'SimpleXMLElement', LIBXML_NOCDATA );
-			$data_arr = xmlToarray( $data );
+			$data   = simplexml_load_string( $xmlstr, 'SimpleXMLElement', LIBXML_NOCDATA );
+			// $data_arr = xmlToarray( $data );
+
+			$json     = json_encode( $data ); // convert the XML string to JSON
+			$data_arr = json_decode( $json, true ); // convert the JSON-encoded string to a PHP variable
+
+			// error_log( print_r( $data_arr, true ) );
 			return $data_arr;
 		}
 	} else {
@@ -257,15 +157,16 @@ function convert_date_to_spoken( $hit ) {
  */
 function printFrontRunDates( $id, $is_audio = false ) {
 
-	$evtinfo = get_agiletix_from_wppostid( $id );
+	$evtinfo  = get_agiletix_from_wppostid( $id );
 	$data_arr = get_json_from_agile_api( $evtinfo );
 
 	if ( isset( $data_arr ) && ! empty( $data_arr ) ) {
-		$json = $data_arr['ATSFeed']['ArrayOfShows']['Show']['CurrentShowings']['Showing'];
+		$json = $data_arr['ArrayOfShows']['Show']['CurrentShowings']['Showing'];
 
-		$tz = new DateTimeZone( 'America/New_York' );
+		// $tz = new DateTimeZone( 'America/New_York' );
+		date_default_timezone_set( 'America/New_York' );
 		$todays_date = new DateTime( 'now' );
-		$todays_date->setTimezone( $tz );
+		// $todays_date->setTimezone( $tz );
 		$todays_date = $todays_date->format( 'Y-m-d' );
 
 		$today_showing = array();
@@ -276,8 +177,12 @@ function printFrontRunDates( $id, $is_audio = false ) {
 		} else {
 			if ( isset( $json ) ) {
 				foreach ( $json as $agile_event ) {
-					$timestamp = strtotime( $agile_event['StartDate'] );
+					error_log( print_r( $agile_event, true ) );
+					$timestamp      = strtotime( $agile_event['StartDate'] );
 					$timestamp_date = date( 'Y-m-d', $timestamp );
+
+					// error_log( $todays_date );
+					// error_log( $timestamp_date );
 
 					if ( $todays_date == $timestamp_date ) {
 						$today_showing[] = date( 'g:iA', $timestamp );
@@ -307,8 +212,8 @@ function printFrontRunDates( $id, $is_audio = false ) {
 		// grep each line, see if todays date fit and display it if it does
 		date_default_timezone_set( 'America/New_York' );
 		$todays_date = strtotime( 'now' );
-		$start_date = strtotime( tribe_get_start_date( $id, true, 'Y-m-d' ) );
-		$end_date = strtotime( tribe_get_end_date( $id, true, 'Y-m-d' ) );
+		$start_date  = strtotime( tribe_get_start_date( $id, true, 'Y-m-d' ) );
+		$end_date    = strtotime( tribe_get_end_date( $id, true, 'Y-m-d' ) );
 
 		switch ( count( $meta ) ) {
 			case 0:
@@ -326,7 +231,7 @@ function printFrontRunDates( $id, $is_audio = false ) {
 					// example: Opening May 26th!
 					if ( $is_audio ) {
 						$pattern = '~(\d{1,2}/\d{1,2})~';
-						$string = preg_replace_callback( $pattern, 'convert_date_to_spoken', $string );
+						$string  = preg_replace_callback( $pattern, 'convert_date_to_spoken', $string );
 					}
 
 					echo $string;
@@ -365,7 +270,7 @@ function printEventRunDates( $id ) {
 	// grep each line, see if todays date fit and display it if it does
 	date_default_timezone_set( 'America/New_York' );
 	$todays_date = strtotime( 'now' );
-	$start_date = strtotime( tribe_get_start_date( $id, true, 'Y-m-d' ) );
+	$start_date  = strtotime( tribe_get_start_date( $id, true, 'Y-m-d' ) );
 
 	if ( count( $meta ) == 1 ) {
 		if ( $todays_date > $start_date ) {
@@ -401,10 +306,6 @@ function printEventRunDates( $id ) {
 
 add_filter( 'gform_submit_button', 'form_submit_button', 10, 2 );
 
-require_once( 'wp_bootstrap_navwalker.php' );
+require_once 'wp_bootstrap_navwalker.php';
 
-function woocommerce_support() {
-    add_theme_support( 'woocommerce' );
-}
 
-?>

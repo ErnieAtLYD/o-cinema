@@ -8,7 +8,9 @@
  */
 
 // Don't load directly
-if ( ! defined( 'ABSPATH' ) ) { die( '-1' ); }
+if ( ! defined( 'ABSPATH' ) ) {
+	die( '-1' );
+}
 global $post;
 
 $is_agile = false;
@@ -17,12 +19,12 @@ $is_agile = false;
 // Example: the_field('venue_logo', $queried_venue);
 $args = array(
 	'numberposts' => -1,
-	'post_type' => 'tribe_venue',
-	'p' => tribe_get_venue_id(),
+	'post_type'   => 'tribe_venue',
+	'p'           => tribe_get_venue_id(),
 );
 
-$the_query = new WP_Query( $args );
-$query_venues = $the_query->get_posts();
+$the_query     = new WP_Query( $args );
+$query_venues  = $the_query->get_posts();
 $queried_venue = $query_venues[0];
 
 wp_reset_query();  // Restore global post data stomped by the_post().
@@ -32,9 +34,9 @@ if ( isset( $evtinfo ) ) {
 	// Parse AgileTix
 	$json = get_json_from_agile_api( $evtinfo );
 	if ( isset( $json ) ) {
-		$is_agile = true;
-		$show = $json['ATSFeed']['ArrayOfShows']['Show'];
-		$xml_content_lead = $show['ShortDescription'];
+		$is_agile          = true;
+		$show              = $json['ArrayOfShows']['Show'];
+		$xml_content_lead  = $show['ShortDescription'];
 		$xml_content_entry = strip_tags( $show['FullDescription'] );
 
 		$media = $show['AdditionalMedia']['Media'];
@@ -74,28 +76,28 @@ get_header();
 			<div class="purchase-tix thumbnail">
 				
 				<?php
-				$sorted_data = array();
-				$dow_map = array( 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
+				$sorted_data = [];
+				$dow_map     = [ 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' ];
 				echo '<table class="timetable table table-striped">';
 
-				if ( isset( $show['CurrentShowings']['Showing'] ) ) {
+				if ( isset( $show['CurrentShowings'][' Showing'] ) ) {
 
 					$showing_arr = $show['CurrentShowings']['Showing'];
 
 					if ( has_string_keys( $showing_arr ) ) {
-						$temp = [];
-						$temp[0] = $showing_arr;
+						$temp        = [];
+						$temp[0]     = $showing_arr;
 						$showing_arr = $temp;
 					}
 
-					foreach ( $showing_arr as $agile_event ){
-						$timestamp = strtotime($agile_event['StartDate']);
-						$date = $dow_map[date('w', $timestamp)] . date(', M jS', $timestamp);
-						if ( ! isSet($sorted_data[$date]) ) { //first entry of that day
-							$sorted_data[$date] = array( $agile_event );
+					foreach ( $showing_arr as $agile_event ) {
+						$timestamp = strtotime( $agile_event['StartDate'] );
+						$date      = $dow_map[ date( 'w', $timestamp ) ] . date( ', M jS', $timestamp );
+						if ( ! isset( $sorted_data[ $date ] ) ) { //first entry of that day
+							$sorted_data[ $date ] = [ $agile_event ];
 						} else {
 							//just push current element onto existing array
-							$sorted_data[$date][] = $agile_event;
+							$sorted_data[ $date ][] = $agile_event;
 						}
 					}
 
@@ -157,7 +159,7 @@ get_header();
 			</a>
 
 			<?php
-			if ( get_field( 'event_details' ) != '' ) {
+			if ( get_field( 'event_details' ) !== '' ) {
 				echo '<h3 class="hidden-print" style="text-transform:uppercase;">Additional information';
 				echo '</h3>';
 				echo '<div class="details muted" style="font-family: \'Carrois Gothic\', sans-serif;">';
@@ -165,7 +167,7 @@ get_header();
 				echo '</div>';
 			}
 
-			if ( get_field( 'event_sponsor' ) != '' ) {
+			if ( get_field( 'event_sponsor' ) !== '' ) {
 				echo '<h3 style="text-transform:uppercase;">With the Support Of</h3><div class="event-sponsor">';
 				the_field( 'event_sponsor' );
 				echo '</div>';
@@ -194,7 +196,8 @@ get_header();
 				}
 				echo '</div>';
 			}
-			?>	
+			?>
+				
 
 			<div class="row">
 				<div class="span5">
@@ -208,17 +211,18 @@ get_header();
 
 					$images = get_field( 'event_slideshow' );
 
-					if ( $images ) : ?>
-					    <div id="slider" class="flexslider">
-					        <ul class="slides">
-					            <?php foreach ( $images as $image ) : ?>
-					                <li>
-					                    <img src="<?php echo $image['sizes']['slideshow']; ?>" alt="<?php echo $image['alt']; ?>" />
-					                    <p><?php echo $image['caption']; ?></p>
-					                </li>
-					            <?php endforeach; ?>
-					        </ul>
-					    </div>
+					if ( $images ) :
+						?>
+						<div id="slider" class="flexslider">
+							<ul class="slides">
+								<?php foreach ( $images as $image ) : ?>
+									<li>
+										<img src="<?php echo $image['sizes']['slideshow']; ?>" alt="<?php echo $image['alt']; ?>" />
+										<p><?php echo $image['caption']; ?></p>
+									</li>
+								<?php endforeach; ?>
+							</ul>
+						</div>
 					<?php endif; ?>					
 				</div>
 				<div class="span3">
@@ -227,12 +231,14 @@ get_header();
 				</div>                 
 
 				<div class="thumbnail poster" style="margin:2em 0;">
-					<?php if ( function_exists( 'the_post_thumbnail' ) ) {
+					<?php
+					if ( function_exists( 'the_post_thumbnail' ) ) {
 						$attr = array(
 							'style' => 'width:90%; margin:13px;',
 						);
 						the_post_thumbnail( 'poster-full' );
-					} ?>
+					}
+					?>
 				</div>
 
 				<div class="print-only"><?php the_field( 'event_details' ); ?></div>
@@ -260,4 +266,5 @@ $(document).ready(function(){
 });
 </script>
 
-<?php get_footer();
+<?php
+get_footer();
