@@ -21,7 +21,7 @@
 			<div class="span2">
 				<h5>Locations</h5>
 				<ul>
-					<li><a href="/venue/o-cinema-miami-beach/">O Cinema Miami Beach</a></li>
+					<li><a href="/venue/o-cinema-north-beach/">O Cinema North Beach</a></li>
 				</ul>			
 			</div>
 
