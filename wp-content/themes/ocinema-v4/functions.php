@@ -55,6 +55,9 @@ function returnFancyHtmlForVenue( $id ) {
 		case '4202':
 			echo 'O Cinema <span class="venue-fg-4202">North Beach</span>';
 			break;
+		default:
+			echo tribe_get_venue();
+			break;
 	}
 };
 
@@ -96,7 +99,6 @@ function get_agiletix_from_wppostid( $id ) {
 	} else {
 		return false;
 	}
-
 }
 
 /*
@@ -123,12 +125,10 @@ function get_json_from_agile_api( $evtinfo ) {
 		} else {
 			$xmlstr = wp_remote_retrieve_body( $response );
 			$data   = simplexml_load_string( $xmlstr, 'SimpleXMLElement', LIBXML_NOCDATA );
-			// $data_arr = xmlToarray( $data );
 
 			$json     = json_encode( $data ); // convert the XML string to JSON
 			$data_arr = json_decode( $json, true ); // convert the JSON-encoded string to a PHP variable
 
-			// error_log( print_r( $data_arr, true ) );
 			return $data_arr;
 		}
 	} else {
@@ -155,34 +155,30 @@ function convert_date_to_spoken( $hit ) {
  * - If there are start and end dates print "OPENS [START DATE]"
  * - If there is only one night, say "ONE NIGHT ONLY: [DATE]"
  */
-function printFrontRunDates( $id, $is_audio = false ) {
+function printFrontRunDates( $id, $from_twilio = false ) {
 
 	$evtinfo  = get_agiletix_from_wppostid( $id );
 	$data_arr = get_json_from_agile_api( $evtinfo );
 
 	if ( isset( $data_arr ) && ! empty( $data_arr ) ) {
+		// GETTING THIS FROM THE AGILE FEED
 		$json = $data_arr['ArrayOfShows']['Show']['CurrentShowings']['Showing'];
 
-		// $tz = new DateTimeZone( 'America/New_York' );
 		date_default_timezone_set( 'America/New_York' );
 		$todays_date = new DateTime( 'now' );
-		// $todays_date->setTimezone( $tz );
 		$todays_date = $todays_date->format( 'Y-m-d' );
 
 		$today_showing = array();
 
 		if ( isset( $json['StartDate'] ) ) {
 			echo ( get_field( 'override_desc' ) ) ? get_field( 'override_desc' ) : 'ONE NIGHT ONLY:';
-			echo date( ( $is_audio ) ? ' l F jS \a\t g:iA' : ' n/j', strtotime( $json['StartDate'] ) );
+			echo date( ( $from_twilio ) ? ' l F jS \a\t g:iA' : ' n/j', strtotime( $json['StartDate'] ) );
 		} else {
 			if ( isset( $json ) ) {
 				foreach ( $json as $agile_event ) {
 					error_log( print_r( $agile_event, true ) );
 					$timestamp      = strtotime( $agile_event['StartDate'] );
 					$timestamp_date = date( 'Y-m-d', $timestamp );
-
-					// error_log( $todays_date );
-					// error_log( $timestamp_date );
 
 					if ( $todays_date == $timestamp_date ) {
 						$today_showing[] = date( 'g:iA', $timestamp );
@@ -191,7 +187,7 @@ function printFrontRunDates( $id, $is_audio = false ) {
 						// This is a date that will open in the future.
 						if ( empty( $today_showing ) ) {
 							echo 'OPENS ';
-							echo date( ( $is_audio ) ? 'l F jS' : 'n/j', $timestamp );
+							echo date( ( $from_twilio ) ? 'l F jS' : 'n/j', $timestamp );
 						}
 						break;
 					}
@@ -200,12 +196,13 @@ function printFrontRunDates( $id, $is_audio = false ) {
 
 			if ( ! empty( $today_showing ) ) {
 				echo 'SHOWING TODAY, ';
-				echo date( ( $is_audio ) ? 'l F jS' : 'n/j', strtotime( $todays_date ) );
+				echo date( ( $from_twilio ) ? 'l F jS' : 'n/j', strtotime( $todays_date ) );
 				echo ': ';
 				echo implode( ', ', $today_showing );
 			}
 		}
 	} else {
+		// GETTING THIS FROM WPDB & TEC
 		$meta = get_sql_from_id_and_key( $id, 'showing' );
 
 		// If today falls in the range of the event,
@@ -229,7 +226,7 @@ function printFrontRunDates( $id, $is_audio = false ) {
 					$string = $key->meta_value;
 
 					// example: Opening May 26th!
-					if ( $is_audio ) {
+					if ( $from_twilio ) {
 						$pattern = '~(\d{1,2}/\d{1,2})~';
 						$string  = preg_replace_callback( $pattern, 'convert_date_to_spoken', $string );
 					}
@@ -240,10 +237,10 @@ function printFrontRunDates( $id, $is_audio = false ) {
 					if ( $todays_date < $start_date ) {
 						// examples: Thu, Jun 9th @ 6pm
 						echo ( get_field( 'override_desc' ) ) ? get_field( 'override_desc' ) : 'ONE NIGHT ONLY: ';
-						echo tribe_get_start_date( $id, true, ( $is_audio ) ? 'l F jS \a\t g:iA' : 'n/j' );
+						echo tribe_get_start_date( $id, true, ( $from_twilio ) ? 'l F jS \a\t g:iA' : 'n/j' );
 					} else {
 						echo 'SHOWING TODAY, ';
-						echo date( ( $is_audio ) ? 'l F jS \a\t g:iA' : 'n/j', $todays_date );
+						echo date( ( $from_twilio ) ? 'l F jS \a\t g:iA' : 'n/j', $todays_date );
 						echo ': ';
 						echo substr( $key->meta_value, $pos );
 					}
@@ -252,60 +249,11 @@ function printFrontRunDates( $id, $is_audio = false ) {
 				break;
 			default:
 				echo 'OPENS ';
-				echo tribe_get_start_date( $id, true, ( $is_audio ) ? 'l F jS' : 'n/j' );
+				echo tribe_get_start_date( $id, true, ( $from_twilio ) ? 'l F jS' : 'n/j' );
 		}
-	}
-};
-
-
-// Given a POST ID ($post->ID, usually)
-// Show todays date if it has a start and end time that today is part of
-// The start and end dates if if hasn't begun yet
-// Or just coming soon if there are no dates period
-function printEventRunDates( $id ) {
-	// Get Custom values with key "Expansion"
-	$meta = get_sql_from_id_and_key( $id, 'showing' );
-
-	// If today falls in the range of the event,
-	// grep each line, see if todays date fit and display it if it does
-	date_default_timezone_set( 'America/New_York' );
-	$todays_date = strtotime( 'now' );
-	$start_date  = strtotime( tribe_get_start_date( $id, true, 'Y-m-d' ) );
-
-	if ( count( $meta ) == 1 ) {
-		if ( $todays_date > $start_date ) {
-			echo 'TODAY: ';
-		}
-		foreach ( $meta as $key ) {
-			echo $key->meta_value;
-		}
-	} elseif ( count( $meta ) == 0 ) {
-		echo 'COMING SOON!';
-	} else {
-		// else, just print the beginning and end times
-		if ( $start_date == $end_date ) {
-			$final = tribe_get_end_date( $id, true, 'M jS' );
-		} else {
-			$final = tribe_get_start_date( $id, true, 'M jS' ) . ' - ' .
-			tribe_get_end_date( $id, true, 'M jS' );
-		}
-
-		if ( $todays_date < $start_date ) {
-		} else {
-			foreach ( $meta as $key ) {
-				if ( strstr( $key->meta_value, date( ' jS' ) ) ) {
-					echo 'TODAY: ';
-					$final = $key->meta_value;
-				}
-			}
-		}
-
-		echo $final;
 	}
 };
 
 add_filter( 'gform_submit_button', 'form_submit_button', 10, 2 );
 
 require_once 'wp_bootstrap_navwalker.php';
-
-
