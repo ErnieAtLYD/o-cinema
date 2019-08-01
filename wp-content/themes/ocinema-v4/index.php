@@ -3,8 +3,8 @@
 /**
 * The main page of the O Cinema front page
 */
-	// In order: Wynwood, North Beach
-	$venue_arrays = array( 2118, 4202 );
+	// In order: North Beach, South Beach
+	$venue_arrays = array( 4202, 8845 );
 ?>
 	<div class="container home">
 		<div class="row">
@@ -40,7 +40,7 @@
 	?>
 	<div class="span6">
 
-		<a href="<?php echo tribe_get_venue_link( $venue, false ); ?>" style="display:block;position:relative; background-image:url(<?php the_field( 'venue_banner', $queried_venue ); ?>); background-size:cover; height:14em; margin-bottom:1em;">
+		<a href="<?php echo tribe_get_venue_link( $venue, false ); ?>" style="display:block;position:relative; background:url(<?php the_field( 'venue_banner', $queried_venue ); ?>) center center; background-size:cover; height:14em; margin-bottom:1em;">
 			<div style="background: rgba(0, 0, 0, 0.67); position:absolute; bottom:0; width:100%; color:#fff;">
 				<div style="margin:10px;">
 					<h3 style="margin:0; line-height:30px;"><?php returnFancyHtmlForVenue( $venue ); ?></h3>
@@ -95,7 +95,15 @@
 									case '4202':
 										echo '<span class="venue-fg-4202">North Beach</span>';
 									break;
-} ?>
+									case '8845':
+										// Why 2118? Because that was the color of Wynwood and
+										// I am too lazy to change the CSS 
+										echo '<span class="venue-fg-2118">South Beach</span>';
+									break;
+									default:
+										echo tribe_get_venue();
+										break;
+										} ?>
 							</span>
 						</div>
 					</div>
