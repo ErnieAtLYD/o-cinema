@@ -153,8 +153,12 @@ get_header();
 			<a class="venue-thumb" href="<?php echo tribe_get_venue_link( null, false ); ?>" style="display:block;position:relative; background-image:url(<?php the_field( 'venue_banner', $queried_venue ); ?>); background-size:cover; height:14em; margin:1em 0;">
 				<div style="background: rgba(0, 0, 0, 0.67); position:absolute; bottom:0; width:100%; color:#fff;">
 					<div style="margin:10px;">
-						<h3 style="margin:0; line-height:30px;"><?php returnFancyHtmlForVenue( tribe_get_venue_id() ); ?></h3>
-						<span style="font-family: 'Carrois Gothic', sans-serif;"><?php echo tribe_get_address(); ?>, <?php echo tribe_get_city(); ?> <?php echo tribe_get_phone(); ?></span>
+						<h3 style="margin:0; line-height:30px;">
+							<?php returnFancyHtmlForVenue( tribe_get_venue_id() ); ?>		
+						</h3>
+						<span style="font-family: 'Carrois Gothic', sans-serif;">
+							<?php echo tribe_get_address(); ?>, <?php echo tribe_get_city(); ?> <?php echo tribe_get_phone(); ?>
+						</span>
 					</div>
 				</div>
 			</a>

@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) { die( '-1' ); } ?>
 			<div class="row" style="margin-bottom:2em;">
 				<div class="span12">
 
-					<div style="margin-top:15px;background-image:url(<?php the_field('venue_banner'); ?>); display:block;position:relative; background-size:cover; height:24em; background-position: 40% 40%;">
+					<div style="margin-top:15px; background:url(<?php the_field('venue_banner'); ?>) center center; display:block;position:relative; background-size:cover; height:24em;">
 						<div style="background: rgba(0, 0, 0, 0.67); position:absolute; bottom:0; width:100%; color:#fff;">
 							<div style="margin:10px;">
 								<h1 style="margin:0; line-height:1.5em; font-size:3em;">

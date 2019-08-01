@@ -40,11 +40,19 @@ get_header(); ?>
 			setup_postdata($post);	?>
 					<li class="span3">
 						<div class="thumbnail">
-							<div><a href="<?php echo get_permalink($post->ID); ?>" title="<?php the_title_attribute('echo=0') ?>" style=""><?php the_post_thumbnail( 'poster-thumb'); ?></a></div>
+							<div>
+								<a href="<?php echo get_permalink($post->ID); ?>" title="<?php the_title_attribute('echo=0') ?>" style="">
+									<?php the_post_thumbnail( 'poster-thumb'); ?>
+								</a>
+							</div>
 							<?php the_title('<h4><a href="' . get_permalink($post->ID) . '" title="' . the_title_attribute('echo=0') . '" rel="bookmark" itemprop="url">', '</a></h4>'); ?>
 							<?php // Check if the current event belongs to category $id
 							if ( has_term ( 6, TribeEvents::TAXONOMY, get_the_ID() ) ) : ?>
-							<div class="ribbon-wrapper-green"><div class="ribbon-green">EVENT</div></div>
+							<div class="ribbon-wrapper-green">
+								<div class="ribbon-green">
+									EVENT
+								</div>
+							</div>
 							<?php endif; ?>
 							<table class="table table-condensed table-striped">
 								<tr>
@@ -82,12 +90,11 @@ get_header(); ?>
 												$final = tribe_get_start_date( $post->ID, true, "M jS" ) . ' - ' . tribe_get_end_date( $post->ID, true, "M jS" );
 											}
 							
-							
-											if ( $todays_date < $start_date ) {
-											} else {
-												// echo 'TODAY: ';
+											if ( $todays_date >= $start_date ) {
 								  				foreach($meta as $key) {
-								  					if ( strstr( $key->meta_value, date("jS") )) $final = $key->meta_value;
+								  					if ( strstr( $key->meta_value, date("jS") ) ) {
+								  						$final = $key->meta_value;
+								  					} 
 								  				}
 											}
 											
