@@ -55,6 +55,9 @@ function returnFancyHtmlForVenue( $id ) {
 		case '4202':
 			echo 'O Cinema <span class="venue-fg-4202">North Beach</span>';
 			break;
+		case '8845':
+			echo 'O Cinema <span class="venue-fg-2118">South Beach</span>';
+			break;
 		default:
 			echo tribe_get_venue();
 			break;
@@ -108,7 +111,7 @@ function get_agiletix_from_wppostid( $id ) {
 function get_json_from_agile_api( $evtinfo ) {
 	if ( isset( $evtinfo ) && ( ! empty( trim( $evtinfo ) ) ) ) {
 		$params    = array(
-			'guid'            => 'f0495d17-0bdf-4bae-a6c9-33aeed2425f2',
+			'guid'            => '910fed20-ca0b-44d4-a0c8-ff325b16b92e',
 			'fulldescription' => 'true',
 			'showslist'       => 'true',
 			'withmedia'       => 'true',
@@ -161,6 +164,7 @@ function printFrontRunDates( $id, $from_twilio = false ) {
 	$data_arr = get_json_from_agile_api( $evtinfo );
 
 	if ( isset( $data_arr ) && ! empty( $data_arr ) ) {
+
 		// GETTING THIS FROM THE AGILE FEED
 		$json = $data_arr['ArrayOfShows']['Show']['CurrentShowings']['Showing'];
 
@@ -176,7 +180,6 @@ function printFrontRunDates( $id, $from_twilio = false ) {
 		} else {
 			if ( isset( $json ) ) {
 				foreach ( $json as $agile_event ) {
-					error_log( print_r( $agile_event, true ) );
 					$timestamp      = strtotime( $agile_event['StartDate'] );
 					$timestamp_date = date( 'Y-m-d', $timestamp );
 
