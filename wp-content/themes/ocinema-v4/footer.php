@@ -22,6 +22,7 @@
 				<h5>Locations</h5>
 				<ul>
 					<li><a href="/venue/o-cinema-north-beach/">O Cinema North Beach</a></li>
+					<li><a href="/venue/o-cinema-south-beach/">O Cinema South Beach</a></li>
 				</ul>			
 			</div>
 
