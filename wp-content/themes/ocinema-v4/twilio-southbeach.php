@@ -8,7 +8,7 @@ Template Name: Twilio Script - South Beach
 // curl -X POST -d "Digits=1" http://ocinema.staging.wpengine.com/twilio-southbeach/?node=default
 
 define( 'VENUE', 'South Beach' );
-define( 'VENUE_SLUG', 'southbeach' );
+define( 'VENUE_SLUG', 'south-beach' );
 define( 'VENUE_ID', 8845 );
 define( 'BASE_URL', '//s3.amazonaws.com/mangrove-labs-o-cinema/phone-tree/' );
 define( 'MP3_INTRO', BASE_URL . 'OMB-INTRO.mp3' );
@@ -92,7 +92,6 @@ $index = (int) $_REQUEST['Digits'];
 $url = 'https://' . dirname( $_SERVER['SERVER_NAME'] . $_SERVER['PHP_SELF'] ) . '/twilio-' . VENUE_SLUG . '/';
 
 global $post;
-$alreadyshowed = false;
 
 /* Check to make sure index is valid */
 if ( isset( $web[ $node ] ) || count( $web[ $node ] ) >= $index && ! is_null( $_REQUEST['Digits'] ) ) {
