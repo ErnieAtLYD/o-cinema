@@ -4,20 +4,28 @@ Template Name: Twilio Script - South Beach
 */
 
 // To debug, run a cURL call from:
-// curl -X POST -d "Digits=1" https://www.o-cinema.org/twilio-southbeach/?node=default
-// curl -X POST -d "Digits=1" http://ocinema.staging.wpengine.com/twilio-southbeach/?node=default
+// curl -X POST -d "Digits=1" https://www.o-cinema.org/twilio-south-beach/?node=default
 
 define( 'VENUE', 'South Beach' );
 define( 'VENUE_SLUG', 'south-beach' );
 define( 'VENUE_ID', 8845 );
-define( 'BASE_URL', '//s3.amazonaws.com/mangrove-labs-o-cinema/phone-tree/' );
-define( 'MP3_INTRO', BASE_URL . 'OMB-INTRO.mp3' );
-define( 'MP3_BASEMENU', BASE_URL . 'omb-phone-menu-edited.mp3' );
-define( 'MP3_NOWSHOWING', BASE_URL . 'OMB-NOW-SHOWING.mp3' );
-define( 'MP3_PARKING', BASE_URL . 'OMB-PARKING.mp3' );
-define( 'MP3_PRICES', BASE_URL . 'OMB-TICKET-PRICES.mp3' );
-define( 'MP3_CONTACTUS', BASE_URL . 'thank-you-for-contacting-us.mp3' );
-define( 'MP3_VOICEMAIL', BASE_URL . 'OMB-VOICEMAIL.mp3' );
+define( 'BASE_URL', '//s3.amazonaws.com/mangrove-labs-o-cinema/phone-tree/southbeach/' );
+
+define( 'MP3_INTRO', BASE_URL . 'OSB+-+Hello.m4a' );
+define( 'MP3_PRESS1', BASE_URL . 'OSB+-+Press+1.m4a' );
+define( 'MP3_PRESS2', BASE_URL . 'OSB+-+Press+2.m4a' );
+define( 'MP3_PRESS0', BASE_URL . 'OSB+-+Press+0.m4a' );
+define( 'MP3_NOWSHOWING', BASE_URL . 'OSB+-+Playing+this+week.m4a' );
+define( 'MP3_LOCATION', BASE_URL . 'OSB+-+Location.m4a' );
+define( 'MP3_PARKING', BASE_URL . 'OSB+-+Parking.m4a' );
+define( 'MP3_PRICES', BASE_URL . 'OSB+-+Ticket+Prices.m4a' );
+define( 'MP3_VISITWEBSITE', BASE_URL . 'OSB+-+Website.m4a' );
+
+define( 'MP3_VOICEMAIL', '//s3.amazonaws.com/mangrove-labs-o-cinema/phone-tree/OMB-VOICEMAIL.mp3' );
+define( 'MP3_CONTACTUS', '//s3.amazonaws.com/mangrove-labs-o-cinema/phone-tree/thank-you-for-contacting-us.mp3' );
+
+
+// define( 'MP3_BASEMENU', BASE_URL . 'omb-phone-menu-edited.mp3' );
 
 function email( $url ) {
 	$message = sprintf( '<b>Caller:</b> %s<br/>', $_REQUEST['From'] );
@@ -127,8 +135,8 @@ switch ( $destination ) {
 		echo '<Gather action="' . $url . '?node=showing" timeout="3" numDigits="1">';
 		if ( sizeof( $venue_events ) > 0 ) : ?>
 
-			<!-- <Play><?php echo MP3_NOWSHOWING; ?></Play> -->
-			<Say>Now showing at O Cinema South Beach</Say>
+			<Play><?php echo MP3_NOWSHOWING; ?></Play>
+			<!-- <Say>Playing this week at O Cinema South Beach</Say> -->
 			<Pause />
 
 			<?php foreach ( $venue_events as $post ) :
@@ -148,13 +156,17 @@ switch ( $destination ) {
 		<?php
 		break;
 	case 'info': ?>
-		<!-- <Play><?php echo MP3_PARKING; ?></Play> -->
-		<Say>O Cinema South Beach is on the corner of 12th Street and Washington Avenue inside Old City Hall, the historical building by the Miami Beach Police Station. Our lobby and box office open thirty minutes before the first showtime of the day. There is a city-owned parking lot directly behind our building on 12th street, between Washington and Pennsylvania Ave. Additionally, there are multiple public and private lots within walking distance to the theater.</Say>
+		<Play><?php echo MP3_LOCATION; ?></Play>
+		<!-- <Say>O Cinema South Beach is on the corner of 12th Street and Washington Avenue inside Old City Hall, the historical building by the Miami Beach Police Station. Our lobby and box office open thirty minutes before the first showtime of the day.</Say> -->
+
+		<Play><?php echo MP3_PARKING; ?></Play>
+		<!-- <Say>There is a city-owned parking lot directly behind our building on 12th street, between Washington and Pennsylvania avenues. Additionally, there are multiple public and private lots within walking distance to the theater.</Say> -->
+
 		<Play><?php echo MP3_PRICES; ?></Play>
 		<?php break;
 	case 'voicemail'; ?>
-		<!-- <Play><?php echo MP3_VOICEMAIL; ?></Play> -->
-		<Say>Please leave your message after the beep. When you're done, you may hang up or press the pound key.</Say>
+		<Play><?php echo MP3_VOICEMAIL; ?></Play>
+		<!-- <Say>Please leave your message after the beep. When you're done, you may hang up or press the pound key.</Say> -->
 		<Record
 			transcribeCallback="<?php echo $url . '?node=voicemail'; ?>"
 			timeout="10"
@@ -165,11 +177,22 @@ switch ( $destination ) {
 		<?php break;
 	default: ?>
 		<Gather timeout="10" action="<?php echo $url . '?node=default'; ?>" method="POST" numDigits="1">
-			<!-- <Play><?php echo MP3_INTRO; ?></Play> -->
-			<Say>Thank you for calling O Cinema South Beach - South Beach's preimere venue for first-run independant films.</Say>
+			<Play><?php echo MP3_INTRO; ?></Play>
+			<!-- <Say>Thank you for calling O Cinema South Beach - South Beach's preimere venue for first-run independant films.</Say> -->
  
 			<!-- <Play><?php echo MP3_BASEMENU; ?></Play> -->
-			<Say>For this week's showtimes, press 1. For general information including locations and parking, press 2. To leave a message for the O Cinema staff, press 0.</Say>
+
+			<Play><?php echo MP3_PRESS1; ?></Play>
+			<!-- <Say>For this week's showtimes, press 1.</Say> -->
+
+			<Play><?php echo MP3_PRESS2; ?></Play>
+			<!-- <Say>For general information including locations and parking, press 2.</Say> -->
+
+			<Play><?php echo MP3_PRESS0; ?></Play>
+			<!-- <Say>To leave a message for the O Cinema staff, press 0.</Say> -->
+
+			<Play><?php echo MP3_VISITWEBSITE; ?></Play>
+			<!-- <Say>For a full schedule of upcoming films, events, trailers, and to purchase tickets, please visit us online at o-cinema.org.</Say> -->
 		</Gather>
 		<Pause/>
 		<Say>Main Menu</Say>
