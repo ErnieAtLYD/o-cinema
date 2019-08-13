@@ -11,15 +11,15 @@ define( 'VENUE_SLUG', 'south-beach' );
 define( 'VENUE_ID', 8845 );
 define( 'BASE_URL', '//s3.amazonaws.com/mangrove-labs-o-cinema/phone-tree/southbeach/' );
 
-define( 'MP3_INTRO', BASE_URL . 'OSB+-+Hello.m4a' );
-define( 'MP3_PRESS1', BASE_URL . 'OSB+-+Press+1.m4a' );
-define( 'MP3_PRESS2', BASE_URL . 'OSB+-+Press+2.m4a' );
-define( 'MP3_PRESS0', BASE_URL . 'OSB+-+Press+0.m4a' );
-define( 'MP3_NOWSHOWING', BASE_URL . 'OSB+-+Playing+this+week.m4a' );
-define( 'MP3_LOCATION', BASE_URL . 'OSB+-+Location.m4a' );
-define( 'MP3_PARKING', BASE_URL . 'OSB+-+Parking.m4a' );
-define( 'MP3_PRICES', BASE_URL . 'OSB+-+Ticket+Prices.m4a' );
-define( 'MP3_VISITWEBSITE', BASE_URL . 'OSB+-+Website.m4a' );
+define( 'MP3_INTRO', BASE_URL . 'OSB+-+Hello.mp3' );
+define( 'MP3_PRESS1', BASE_URL . 'OSB+-+Press+1.mp3' );
+define( 'MP3_PRESS2', BASE_URL . 'OSB+-+Press+2.mp3' );
+define( 'MP3_PRESS0', BASE_URL . 'OSB+-+Press+0.mp3' );
+define( 'MP3_NOWSHOWING', BASE_URL . 'OSB+-+Playing+this+week.mp3' );
+define( 'MP3_LOCATION', BASE_URL . 'OSB+-+Location.mp3' );
+define( 'MP3_PARKING', BASE_URL . 'OSB+-+Parking.mp3' );
+define( 'MP3_PRICES', BASE_URL . 'OSB+-+Ticket+Prices.mp3' );
+define( 'MP3_VISITWEBSITE', BASE_URL . 'OSB+-+Website.mp3' );
 
 define( 'MP3_VOICEMAIL', '//s3.amazonaws.com/mangrove-labs-o-cinema/phone-tree/OMB-VOICEMAIL.mp3' );
 define( 'MP3_CONTACTUS', '//s3.amazonaws.com/mangrove-labs-o-cinema/phone-tree/thank-you-for-contacting-us.mp3' );
