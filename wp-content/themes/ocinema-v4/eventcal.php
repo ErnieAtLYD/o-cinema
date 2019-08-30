@@ -33,14 +33,14 @@ echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>'; ?>
 	<?php do_action('rss2_head'); ?>
 
 <?php global $post; ?>
-<?php $all_events = tribe_get_events( array('eventDisplay'=>'upcoming', 'posts_per_page'=>-1) ); ?>
+<?php $all_events = tribe_get_events(
+			[
+				'eventDisplay' => 'list',
+				'ends_after' => 'now',
+				'post_per_page' => -1,
+			]
+		); ?>
 <?php foreach($all_events as $post) : setup_postdata($post); ?>
-<?php // print_r( $post ); ?>
-	<?php // if (have_posts()) : ?>
-	<?php // while ( have_posts() ) : the_post(); ?>	
-	<?php // $posts = get_events(10, 'Events'); ?>
-	<?php // foreach ($posts as $post): ?>
-	<?php // setup_postdata($post); ?>
 	<?php $id = get_the_ID(); ?>
 
 		<item>
@@ -74,7 +74,5 @@ echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>'; ?>
 	<?php do_action('rss2_item'); ?>
 	</item>
 	<?php endforeach; ?>
-	<?php // endwhile; ?>		
-	<?php // endif; ?>
 </channel>
 </rss>
