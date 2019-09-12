@@ -1,5 +1,4 @@
 <?php
-
 /*
 Plugin Name: ML O Cinema Admin plug-ins
 Description: Hide TEC extraneous admin fields, ACF fields, etc.
@@ -8,6 +7,14 @@ Author: Mangrove Labs
 Author URI: http://mangrove.miami
 */
 
+define( 'ML_AGILETIX_PATH', plugin_dir_path( __FILE__ ) );
+define( 'ML_AGILETIX_URL', plugin_dir_url( __FILE__ ) );
+define( 'ML_AGILETIX_NAME', plugin_basename( __FILE__ ) );
+
+require_once( ML_AGILETIX_PATH . 'inc/Base.php' );
+require_once( ML_AGILETIX_PATH . 'inc/REST.php' );
+require_once( ML_AGILETIX_PATH . 'inc/API.php' );
+require_once( ML_AGILETIX_PATH . 'inc/Parser.php' );
 
 /**
  * Enqueue admin JavaScripts
@@ -15,7 +22,7 @@ Author URI: http://mangrove.miami
  * @return void
  */
 function enqueue_admin_scripts( $hook ) {
-	wp_enqueue_style( "mpt-admin-css", plugins_url( 'css/ml-ocinema-admin.css', __FILE__ ) );
+	wp_enqueue_style( 'mpt-admin-css', plugins_url( 'css/ml-ocinema-admin.css', __FILE__ ) );
 }
 
 /**
@@ -24,7 +31,7 @@ function enqueue_admin_scripts( $hook ) {
  * @since    1.0.0
  */
 function save_acf_json( $path ) {
-	$path = plugin_dir_path( __FILE__ ) . 'acf-json';
+	$path = ML_AGILETIX_PATH . 'acf-json';
 	return $path;
 }
 
@@ -36,15 +43,12 @@ function save_acf_json( $path ) {
 function load_acf_json( $paths ) {
 	// remove original path (optional)
 	unset( $paths[0] );
-	$paths[] = plugin_dir_path( __FILE__ ) . 'acf-json';
+	$paths[] = ML_AGILETIX_PATH . 'acf-json';
 	return $paths;
 }
 
 add_action( 'admin_enqueue_scripts', 'enqueue_admin_scripts' );
 add_filter( 'acf/settings/save_json', 'save_acf_json' );
 add_filter( 'acf/settings/load_json', 'load_acf_json' );
-
-/* Matt needs this to edit the Showing custom field post. When I move this to ACF I can move off this. */
-add_filter( 'acf/settings/remove_wp_meta_box', '__return_false' );
 
 

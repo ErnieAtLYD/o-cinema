@@ -7,8 +7,8 @@
 
 // Don't load directly
 if ( ! defined( 'ABSPATH' ) ) { die( '-1' ); } ?>
-	<div class="body container">
-		<div class="row">                
+<div class="body container">
+	<div class="row">                
 		<div class="span12">
 			<div class="row" style="margin-bottom:2em;">
 				<div class="span12">
@@ -39,9 +39,7 @@ if ( ! defined( 'ABSPATH' ) ) { die( '-1' ); } ?>
 			</ul>
 			
 			<div class="tab-content">
-			
-			<div class="tab-pane active" id="comingsoon">               
-			
+				<div class="tab-pane active" id="comingsoon">		
 <?php 
 $venue_events = tribe_get_events(
 	array(
@@ -110,32 +108,28 @@ else :
 	echo '<p style="margin:2em 0;">We currently have no events scheduled for this venue at this time. Please take a look at <a href="/">our other venues</a>!</p>';
 endif; ?>
 			</div>
-			<div class="tab-pane" id="maps" style="margin-bottom:2.5em;">
 
-<div class="row">
-
-<div class="span4">
-<?php echo tribe_get_embedded_map( get_the_ID(), '350px', '400px' ) ?>
+<div class="tab-pane" id="maps" style="margin-bottom:2.5em;">
+	<div class="row">
+		<div class="span4">
+			<?php echo tribe_get_embedded_map( get_the_ID(), '350px', '400px' ) ?>
+		</div>
+		<div class="span8">
+			<?php wp_reset_query(); the_field( 'venue_directions' ); ?>
+		</div>
+	</div>				
 </div>
-<div class="span8">
-<?php wp_reset_query(); the_field( 'venue_directions' ); ?>
-</div>
-</div>
-				
-			</div>
 			
-			<div class="tab-pane" id="venue" style="margin-bottom:2.5em;">
-
-<div class="row">
-<div class="span8 offset4">
-	<h3>About <?php echo tribe_get_venue(); ?></h3>
-	<?php 
-	if ( get_the_content() != ''): ?>
-	<?php the_content() ?>
-	<?php endif ?>
-</div>
-</div>		
-			</div>              
+<div class="tab-pane" id="venue" style="margin-bottom:2.5em;">
+	<div class="row">
+		<div class="span8 offset4">
+			<h3>About <?php echo tribe_get_venue(); ?></h3>
+			<?php if ( get_the_content() != ''): ?>
+				<?php the_content() ?>
+			<?php endif ?>
+		</div>
+	</div>
+</div>              
 
 <?php wp_reset_query(); ?>
 <?php $whileindex = 0; while ( the_flexible_field( 'venue_tab' ) ) : ?>
