@@ -18,42 +18,16 @@
 
 		<h4>Select a Location<br />
 		<span class="caption" style="text-transform:none; font-family: 'Carrois Gothic', sans-serif; font-size:14px; color:#888; line-height:0;">Choose what theater you're interested in, and we'll show you what's playing.</span></h4>
+
 		<div class="row">
-
-	<?php
-	foreach ( $venue_arrays as $venue ) {
-
-		// PHP snippet gets the post object of the venue so we can get ACF values from there
-		// Example: the_field('venue_logo', $queried_venue);
-
-		$args = array(
-			'numberposts' => -1,
-			'post_type' => 'tribe_venue',
-			'p' => $venue,
-		);
-
-		$the_query = new WP_Query( $args );
-		$query_venues = $the_query->get_posts();
-		$queried_venue = $query_venues[0];
-
-		wp_reset_query();  // Restore global post data stomped by the_post().
-	?>
-	<div class="span6">
-
-		<a href="<?php echo tribe_get_venue_link( $venue, false ); ?>" style="display:block;position:relative; background:url(<?php the_field( 'venue_banner', $queried_venue ); ?>) center center; background-size:cover; height:14em; margin-bottom:1em;">
-			<div style="background: rgba(0, 0, 0, 0.67); position:absolute; bottom:0; width:100%; color:#fff;">
-				<div style="margin:10px;">
-					<h3 style="margin:0; line-height:30px;"><?php returnFancyHtmlForVenue( $venue ); ?></h3>
-					<span style="font-family: 'Carrois Gothic', sans-serif;">
-						<?php echo tribe_get_address( $venue ); ?>,
-						<?php echo tribe_get_city( $venue ); ?>
-						<?php echo tribe_get_phone( $venue ); ?>
-					</span>
-				</div>
+			<?php foreach ( $venue_arrays as $venue ) : ?>
+			<div class="span6">
+				<?php
+					set_query_var( 'venue', absint( $venue ) );
+					get_template_part( 'template-parts/venue-box' );
+				?>
 			</div>
-		</a>
-	</div>
-	<?php } ?>
+			<?php endforeach; ?>
 		</div>
 
 		<hr class="hidden-phone" style="border-color:#ddd;">
@@ -90,7 +64,13 @@
 						<div style="margin:10px 5px">
 							<?php the_title( '<h5 style="margin:0; min-height:2.85em;">', '</h5>' ); ?>
 							<span style="font-family: 'Carrois Gothic', sans-serif;">
-								<?php printFrontRunDates( get_the_ID() ); ?><br>
+								<?php 
+
+								$parser = new ML_Agile_Parser( get_the_ID() );
+								echo $parser->get_front_run_dates();
+
+								// printFrontRunDates( get_the_ID() ); 
+								?><br>
 								<?php switch ( $venue ) {
 									case '4202':
 										echo '<span class="venue-fg-4202">North Beach</span>';
