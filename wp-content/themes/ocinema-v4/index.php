@@ -66,7 +66,7 @@
 							<span style="font-family: 'Carrois Gothic', sans-serif;">
 								<?php 
 
-								$parser = new ML_Agile_Parser( get_the_ID() );
+								$parser = new ML_Agile_Parser( $post->ID );
 								echo $parser->get_front_run_dates();
 
 								// printFrontRunDates( get_the_ID() ); 

@@ -94,7 +94,8 @@ if ( sizeof( $venue_events ) > 0 ) :
 						}       
 
 						echo '<div style="margin-top:5px; font-size:93%; font-family: \'Carrois Gothic\', sans-serif;">';
-						printFrontRunDates( $post->ID );
+						$parser = new ML_Agile_Parser( $post->ID );
+						echo $parser->get_front_run_dates();
 						echo '</div>';
 
 						 ?>
