@@ -28,9 +28,7 @@ if ( $evtinfo_test->is_from_agile() ) {
 	foreach ( $sorted_data as $date_s => $date_elems ) : ?>
 		<tr>
 			<td>
-				<span class="print-friendly-date">
-					<?php echo $date_s ?>		
-				</span><br/>
+				<span class="print-friendly-date"><?php echo $date_s ?></span><br/>
 				<?php foreach ( $date_elems as $date_elem ) :
 					$timestamp = strtotime( $date_elem['start_date'] ); ?>
 					<a class="showtimes venue-<?php echo tribe_get_venue_id(); ?>" href="<?php echo $date_elem['legacy_purchase_link']; ?>">
@@ -43,19 +41,16 @@ if ( $evtinfo_test->is_from_agile() ) {
 <?php
 } else {
 
-	$meta = get_sql_from_id_and_key( $post->ID, 'showing' );
+	$meta = get_post_meta( $post->ID, 'showing' );
 	if ( count( $meta ) == 0 ) {
 		echo '<tr><td>COMING SOON!</td></tr>';
 	} else {
 		foreach ( $meta as $key ) {
 			echo '<tr><td>';
 			if ( get_field( 'ticketurl' ) ) {
-				echo '<a href="' . get_field( 'ticketurl' ) . '" target="_blank">';
-				echo $key->meta_value;
-				echo '</a>';
-
+				echo '<a href="' . get_field( 'ticketurl' ) . '" target="_blank">' . $key . '</a>';
 			} else {
-				echo $key->meta_value;
+				echo $key;
 			}
 			echo '</td></tr>';
 		}
