@@ -64,12 +64,9 @@
 						<div style="margin:10px 5px">
 							<?php the_title( '<h5 style="margin:0; min-height:2.85em;">', '</h5>' ); ?>
 							<span style="font-family: 'Carrois Gothic', sans-serif;">
-								<?php 
-
-								$parser = new ML_Agile_Parser( $post->ID );
-								echo $parser->get_front_run_dates();
-
-								// printFrontRunDates( get_the_ID() ); 
+								<?php
+									$parser = new ML_Agile_Parser( $post->ID );
+									echo $parser->get_front_run_dates();
 								?><br>
 								<?php switch ( $venue ) {
 									case '4202':

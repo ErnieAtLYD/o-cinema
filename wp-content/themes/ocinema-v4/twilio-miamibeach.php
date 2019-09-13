@@ -136,7 +136,10 @@ switch ( $destination ) {
 				<Say><?php echo get_the_title(); ?></Say>
 				<Pause />
 
-				<Say><?php echo printFrontRunDates( $post->ID, true ); ?></Say>
+				<Say><?php 
+					$parser = new ML_Agile_Parser( $post->ID );
+					echo $parser->get_front_run_dates();
+				?></Say>
 				<Pause />
 			<?php endforeach;
 		else : ?>
