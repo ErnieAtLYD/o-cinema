@@ -12,6 +12,7 @@ class ML_Agile_Parser extends ML_Agile_Base {
 	protected $post_id;
 
 	public function __construct( $post_id ) {
+		date_default_timezone_set('America/New_York');
 		$this->is_from_agile = false;
 		$this->post_id       = $post_id;
 		$this->showtimes     = $this->get_agiletix_showtimes( $post_id );
