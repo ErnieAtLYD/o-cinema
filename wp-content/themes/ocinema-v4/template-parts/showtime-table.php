@@ -9,7 +9,7 @@ $showing_arr = $evtinfo_test->get_showtimes();
 ?>
 <table class="timetable table table-striped">
 <?php 
-if ( $evtinfo_test->is_from_agile() ) {
+if ( $evtinfo_test->has_showtimes() ) {
 
 	$showing_arr = $evtinfo_test->get_showtimes();
 
@@ -40,21 +40,12 @@ if ( $evtinfo_test->is_from_agile() ) {
 	<?php endforeach; ?>
 <?php
 } else {
-
-	$meta = get_post_meta( $post->ID, 'showing' );
-	if ( count( $meta ) == 0 ) {
-		echo '<tr><td>COMING SOON!</td></tr>';
+	$meta = get_post_meta( $post->ID, 'override_desc', true );
+	if ( empty( $meta ) ) {
+		echo '<tr><td>OPENS ' . tribe_get_start_date( $post->ID, true, 'n/j' ) . '</td></tr>';
 	} else {
-		foreach ( $meta as $key ) {
-			echo '<tr><td>';
-			if ( get_field( 'ticketurl' ) ) {
-				echo '<a href="' . get_field( 'ticketurl' ) . '" target="_blank">' . $key . '</a>';
-			} else {
-				echo $key;
-			}
-			echo '</td></tr>';
-		}
+		echo '<tr><td>' . $meta . '</td></tr>';
 	}
-} 
+}
 ?>
 </table>

@@ -1,9 +1,5 @@
 <?php
 
-// http://lifeonlars.com/wordpress/how-to-add-multiple-featured-images-in-wordpress/
-// Load external file to add support for MultiPostThumbnails. Allows you to set more than one "feature image" per post.
-require_once 'library/multi-post-thumbnails.php';
-
 add_action( 'after_setup_theme', 'wpt_setup' );
 
 if ( ! function_exists( 'wpt_setup' ) ) :
@@ -26,19 +22,6 @@ if ( function_exists( 'add_theme_support' ) ) {
 		add_image_size( 'slideshow', 1920, 808, true );
 	}
 }
-
-// Define additional "post thumbnails". Relies on MultiPostThumbnails to work
-if ( class_exists( 'MultiPostThumbnails' ) ) {
-	new MultiPostThumbnails(
-		array(
-			'label'     => 'Banner Image',
-			'id'        => 'banner-image',
-			'post_type' => 'tribe_events',
-		)
-	);
-};
-
-/* --- */
 
 function form_submit_button( $button, $form ) {
 	return '<input type="submit" class="btn btn-primary" id="gform_submit_button_' . $form['id'] . '" value="' . $form['button']['text'] . '">';

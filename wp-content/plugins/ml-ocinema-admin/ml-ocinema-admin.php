@@ -12,6 +12,7 @@ define( 'ML_AGILETIX_URL', plugin_dir_url( __FILE__ ) );
 define( 'ML_AGILETIX_NAME', plugin_basename( __FILE__ ) );
 
 require_once( ML_AGILETIX_PATH . 'inc/Base.php' );
+require_once( ML_AGILETIX_PATH . 'inc/ACF.php' );
 require_once( ML_AGILETIX_PATH . 'inc/REST.php' );
 require_once( ML_AGILETIX_PATH . 'inc/API.php' );
 require_once( ML_AGILETIX_PATH . 'inc/Parser.php' );

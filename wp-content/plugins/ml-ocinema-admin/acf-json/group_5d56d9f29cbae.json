@@ -1,109 +1,9 @@
 {
-    "key": "group_594d4f4631269",
-    "title": "Events Field Group",
+    "key": "group_5d56d9f29cbae",
+    "title": "Events Field Group V2",
     "fields": [
         {
-            "key": "field_5d5754cce4d5a",
-            "label": "Showing",
-            "name": "showing",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "49",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
-        },
-        {
-            "key": "field_5d5db60cc507b",
-            "label": "Manually enter showtimes?",
-            "name": "is_manually_overriden",
-            "type": "true_false",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "message": "",
-            "default_value": 0,
-            "ui": 1,
-            "ui_on_text": "",
-            "ui_off_text": ""
-        },
-        {
-            "key": "field_5d5db54a79609",
-            "label": "Manual Override",
-            "name": "manual_override",
-            "type": "repeater",
-            "instructions": "For events that don't use Agile Tix, it's possible to add dates one by one and include a link where necessary. If you leave the \"Manual Event URL\" blank then links will default to whatever is in the \"Event Ticket URL\" field below.",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5d5db60cc507b",
-                        "operator": "==",
-                        "value": "1"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "collapsed": "",
-            "min": 0,
-            "max": 0,
-            "layout": "table",
-            "button_label": "",
-            "sub_fields": [
-                {
-                    "key": "field_5d5db55d7960a",
-                    "label": "Manual Event Date",
-                    "name": "manual_event_date",
-                    "type": "date_time_picker",
-                    "instructions": "",
-                    "required": 1,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "display_format": "m\/d\/Y g:i a",
-                    "return_format": "m\/d\/Y g:i a",
-                    "first_day": 1
-                },
-                {
-                    "key": "field_5d5db5b47960b",
-                    "label": "Manual Event URL",
-                    "name": "manual_event_url",
-                    "type": "url",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "placeholder": ""
-                }
-            ]
-        },
-        {
-            "key": "field_5084cdb193e67",
+            "key": "field_5d56d9f2a06cf",
             "label": "Event Metadata",
             "name": "event_metadata",
             "type": "text",
@@ -122,7 +22,7 @@
             "maxlength": ""
         },
         {
-            "key": "field_5084ce47b1f86",
+            "key": "field_5d56d9f2a198d",
             "label": "Event Details",
             "name": "event_details",
             "type": "wysiwyg",
@@ -141,7 +41,7 @@
             "delay": 0
         },
         {
-            "key": "field_5084ce47b24b5",
+            "key": "field_5d56d9f2a2a6d",
             "label": "Event Sponsor",
             "name": "event_sponsor",
             "type": "wysiwyg",
@@ -160,7 +60,7 @@
             "delay": 0
         },
         {
-            "key": "field_5084ce47b672f",
+            "key": "field_5d56d9f2a2ab9",
             "label": "Event Reviews",
             "name": "event_reviews",
             "type": "wysiwyg",
@@ -179,7 +79,7 @@
             "delay": 0
         },
         {
-            "key": "field_584da6b8af2dc",
+            "key": "field_5d56d9f2a2b8f",
             "label": "Slideshow",
             "name": "event_slideshow",
             "type": "gallery",
@@ -202,11 +102,10 @@
             "max_height": 0,
             "max_size": 0,
             "mime_types": "",
-            "insert": "append",
-            "return_format": "array"
+            "insert": "append"
         },
         {
-            "key": "field_5086abfd83f1a",
+            "key": "field_5d56d9f2a3ede",
             "label": "Event Video Trailer",
             "name": "trailer",
             "type": "url",
@@ -222,7 +121,7 @@
             "placeholder": ""
         },
         {
-            "key": "field_5086abfd84472",
+            "key": "field_5d56d9f2a5483",
             "label": "Event Ticket URL",
             "name": "ticketurl",
             "type": "url",
@@ -238,7 +137,7 @@
             "placeholder": ""
         },
         {
-            "key": "field_594d5c33684fb",
+            "key": "field_5d56d9f2a551f",
             "label": "Override \"one night only\" prefix",
             "name": "override_desc",
             "type": "text",
@@ -246,12 +145,31 @@
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "49",
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "ONE NIGHT ONLY:&nbsp;",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5d56d9f2a55a5",
+            "label": "Showing",
+            "name": "showing",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
                 "class": "",
                 "id": ""
             },
             "default_value": "",
-            "placeholder": "ONE NIGHT ONLY: ",
+            "placeholder": "",
             "prepend": "",
             "append": "",
             "maxlength": ""
@@ -272,7 +190,7 @@
     "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": "",
-    "active": 1,
+    "active": 0,
     "description": "",
-    "modified": 1568406804
+    "modified": 1565972997
 }

@@ -8,24 +8,23 @@ class ML_Agile_Parser extends ML_Agile_Base {
 
 	protected $media_embed;
 
-	// Used for methods which don't get their post ID arguments passed such as get_front_run_dates_NOAGILETIX
+	// Used for methods which don't get their post ID arguments passed such as get_front_run_dates_NOSHOWTIMES
 	protected $post_id;
 
 	public function __construct( $post_id ) {
 		date_default_timezone_set('America/New_York');
 		$this->is_from_agile = false;
 		$this->post_id       = $post_id;
-		$this->showtimes     = $this->get_agiletix_showtimes( $post_id );
+		// $this->showtimes     = $this->get_agiletix_showtimes( $post_id );
+		$this->showtimes = $this->extract_showtimes( $post_id );
 	}
 
 	/**
-	 * Helper function. If there is at least one string key, $array will be regarded as an associative array.
-	 *
-	 * @param  array  $array
-	 * @return bool
+	 * Returns true if there are showtimes in AgileTix's API OR manually created via ACF.
+	 * @return boolean
 	 */
-	function has_string_keys( array $array ) {
-		return count( array_filter( array_keys( $array ), 'is_string' ) ) > 0;
+	public function has_showtimes() {
+		return count($this->showtimes) > 0;
 	}
 
 	/**
@@ -47,12 +46,24 @@ class ML_Agile_Parser extends ML_Agile_Base {
 	}
 
 	/**
-	 * @uses tribe_get_start_date
+	 * Figures out whether there's an ACF manual override. If so use ACF, if not extract from the AgileTix API.
+	 * @param int
 	 */
-	protected function get_front_run_dates_NOAGILETIX() {
-		return 'OPENS ' . tribe_get_start_date( $this->post_id, true, 'n/j' );
+	protected function extract_showtimes( $post_id ) {
+		$ACF = ML_Agile_ACF::instance();
+
+		if ( $ACF->is_manual_override( $post_id ) ) {
+			return $ACF->get_ACF_showtimes( $post_id );
+		}
+		return $this->get_agiletix_showtimes( $post_id );
 	}
 
+	/**
+	 * @uses tribe_get_start_date
+	 */
+	protected function get_front_run_dates_NOSHOWTIMES() {
+		return 'OPENS ' . tribe_get_start_date( $this->post_id, true, 'n/j' );
+	}
 
 	/**
 	 * Print front dates: used in venue pages, front page and twilio
@@ -69,7 +80,7 @@ class ML_Agile_Parser extends ML_Agile_Base {
 	public function get_front_run_dates() {
 		$timestamp_now = strtotime( 'today' );
 
-		if ( $this->is_from_agile() ) {
+		if ( $this->has_showtimes() ) {
 			$showtimes     = $this->showtimes;
 			$earliest_date = min( array_map( [ get_called_class(), 'get_start_date' ], $showtimes ) );
 			$latest_date   = max( array_map( [ get_called_class(), 'get_start_date' ], $showtimes ) );
@@ -77,8 +88,8 @@ class ML_Agile_Parser extends ML_Agile_Base {
 			if ( 1 == count($showtimes) ) {
 				$prefix = ( get_field( 'override_desc' ) )
 					? get_field( 'override_desc' )
-					: 'ONE NIGHT ONLY: ';
-				return $prefix . date( 'n/j', $earliest_date );
+					: 'ONE NIGHT ONLY: ' . date( 'n/j', $earliest_date );
+				return $prefix;
 			}
 
 			// It's in the future, so return the date it opens
@@ -91,7 +102,7 @@ class ML_Agile_Parser extends ML_Agile_Base {
 			$todays_showtimes = array_map( [ get_called_class(), 'get_timestamp' ], $todays_showtimes );
 			return 'TODAY: ' . implode( ', ', $todays_showtimes );
 		}
-		return $this->get_front_run_dates_NOAGILETIX();
+		return $this->get_front_run_dates_NOSHOWTIMES();
 	}
 
 

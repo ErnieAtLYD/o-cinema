@@ -5,15 +5,6 @@ class ML_Agile_API extends ML_Agile_Base {
 	private static $instance = null;
 
 	/**
-	 * Sets up actions and filters
-	 *
-	 * @uses add_filter
-	 * @return null
-	 */
-	public static function init() {
-	}
-
-	/**
 	 * @see https://phpenthusiast.com/blog/the-singleton-design-pattern-in-php
 	 * @return ML_Agile_API
 	 */

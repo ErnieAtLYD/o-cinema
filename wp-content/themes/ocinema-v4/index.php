@@ -47,14 +47,16 @@
 	<?php
 		$events = tribe_get_events(
 			[
-				'eventDisplay' => 'list',
-				'ends_after' => 'now',
+				'eventDisplay'  => 'list',
+				'ends_after'    => 'now',
 				'post_per_page' => -1,
 			]
 		);
 		global $post;
 
-		foreach ( $events as $post ) : setup_postdata( $post ); ?>
+		foreach ( $events as $post ) :
+			setup_postdata( $post );
+			?>
 			<?php $venue = tribe_get_venue_id(); ?>
 			<li class="item">
 				<a href="<?php echo get_permalink( $post->ID ); ?>"
@@ -67,26 +69,29 @@
 								<?php
 									$parser = new ML_Agile_Parser( $post->ID );
 									echo $parser->get_front_run_dates();
-								?><br>
-								<?php switch ( $venue ) {
+								?>
+								<br>
+								<?php
+								switch ( $venue ) {
 									case '4202':
 										echo '<span class="venue-fg-4202">North Beach</span>';
-									break;
+										break;
 									case '8845':
 										// Why 2118? Because that was the color of Wynwood and
-										// I am too lazy to change the CSS 
+										// I am too lazy to change the CSS
 										echo '<span class="venue-fg-2118">South Beach</span>';
-									break;
+										break;
 									default:
 										echo tribe_get_venue();
 										break;
-										} ?>
+								}
+								?>
 							</span>
 						</div>
 					</div>
 				</a>
 			</li>
-		<?php endforeach;?>
+		<?php endforeach; ?>
 			</ul>
 		</div>
 	</div>

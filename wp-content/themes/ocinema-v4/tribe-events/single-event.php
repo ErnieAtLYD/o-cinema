@@ -54,7 +54,7 @@ get_header();
 				?>
 			</div>
 
-			<?php 
+			<?php
 			set_query_var( 'venue', absint( tribe_get_venue_id() ) );
 			get_template_part( 'template-parts/venue-box' );
 
@@ -96,7 +96,13 @@ get_header();
 			?>
 			<div class="row">
 				<div class="span5">
-					<?php /* if (tribe_get_end_date(null, FALSE, 'U') < time()  ) { ?><p class="alert" style="margin-top:20px"><strong>PLEASE NOTE:</strong> This event has passed.</p> <?php } */ ?>
+					<?php
+					if ( tribe_get_end_date( null, false, 'U' ) < time() ) :
+						?>
+							<p class="alert" style="margin-top:20px">
+								<strong>PLEASE NOTE:</strong> This event has passed.
+							</p>
+					<?php endif; ?>
 
 					<div id="synopsis" style="font-family:'Carrois Gothic', sans-serif; font-size:108%; margin: 2em 0 0 1em;">
 						<?php the_content(); ?>
