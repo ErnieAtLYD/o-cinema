@@ -254,8 +254,9 @@ class Tribe__Events__Pro__Geo_Loc {
 					],
 					'relation' => 'OR',
 					[
-						'key' => self::ADDRESS,
-						'='   => '',
+						'key'     => self::ADDRESS,
+						'compare' => '=',
+						'value'   => '',
 					],
 				],
 				[

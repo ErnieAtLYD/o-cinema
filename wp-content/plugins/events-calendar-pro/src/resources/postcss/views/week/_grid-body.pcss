@@ -19,11 +19,15 @@
 
 	.tribe-events-pro-week-grid__events-row-wrapper {
 		height: 638px;
-		overflow-y: scroll;
+		overflow-y: hidden;
 
 		&:focus + .tribe-events-pro-week-grid__events-row-scroll-pane {
 			opacity: 1;
 		}
+	}
+
+	.tribe-events-pro-week-grid__events-row-wrapper--active {
+		overflow-y: scroll;
 	}
 
 	.tribe-events-pro-week-grid__multiday-events-row,
@@ -31,11 +35,50 @@
 		display: flex;
 	}
 
+	.tribe-events-pro-week-grid__multiday-events-row {
+		overflow: hidden;
+	}
+
 	.tribe-events-pro-week-grid__multiday-events-row-header,
 	.tribe-events-pro-week-grid__events-row-header {
 		flex: none;
 		position: relative;
 		width: var(--spacer-11);
+	}
+
+	.tribe-events-pro-week-grid__multiday-toggle-button {
+		bottom: var(--spacer-1);
+		margin-right: var(--spacer-3);
+		line-height: 0;
+		padding: var(--spacer-0);
+		position: absolute;
+		right: 0;
+
+		&:after {
+			background-image: svg-inline(caret-down);
+			background-repeat: no-repeat;
+			background-size: contain;
+			content: '';
+			display: inline-block;
+			height: 8px;
+			width: 12px;
+		}
+
+		&:hover,
+		&:focus {
+			opacity: var(--opacity-icon-hover);
+		}
+
+		&:active {
+			opacity: var(--opacity-icon-active);
+		}
+	}
+
+	.tribe-events-pro-week-grid__multiday-toggle-button--open {
+
+		&:after {
+			background-image: svg-inline(caret-up);
+		}
 	}
 
 	.tribe-events-pro-week-grid__events-row-header {
@@ -53,7 +96,8 @@
 	.tribe-events-pro-week-grid__multiday-events-day,
 	.tribe-events-pro-week-grid__events-day {
 		border-left: 1px solid var(--color-border-secondary);
-		flex: 1 1 var(--grid-width-1-of-7);
+		flex: none;
+		width: calc(var(--grid-width-1-of-7) - (var(--spacer-11) / 7));
 	}
 
 	.tribe-events-pro-week-grid__events-day {
@@ -105,6 +149,7 @@
 		transition: var(--transition-opacity);
 		top: 0;
 		width: 6px;
+		z-index: var(--z-index-scroller);
 
 		&.active {
 			opacity: 1;

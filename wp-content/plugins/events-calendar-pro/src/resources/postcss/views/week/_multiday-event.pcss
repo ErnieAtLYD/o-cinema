@@ -5,12 +5,9 @@
 	 * ----------------------------------------------------------------------------- */
 
 	.tribe-events-pro-week-grid__multiday-event-wrapper {
-
-		@media (--viewport-medium) {
-			height: 19px;
-			margin-bottom: var(--spacer-0);
-			position: relative;
-		}
+		height: 19px;
+		margin-bottom: var(--spacer-0);
+		position: relative;
 	}
 
 	.tribe-events-pro-week-grid__multiday-event {
@@ -104,9 +101,24 @@
 
 	.tribe-events-pro-week-grid__multiday-event-title {
 		flex: auto;
-		font-weight: var(--font-weight-regular);
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
+	}
+
+	.tribe-events-pro-week-grid__multiday-overflow-events {
+		display: none;
+	}
+
+	.tribe-events-pro-week-grid__multiday-more-events {
+		margin-bottom: var(--spacer-0);
+		display: flex;
+		flex: none;
+		padding: 1px var(--spacer-2);
+	}
+
+	.tribe-events-pro-week-grid__multiday-more-events-button {
+		display: block;
+		flex: none;
 	}
 }

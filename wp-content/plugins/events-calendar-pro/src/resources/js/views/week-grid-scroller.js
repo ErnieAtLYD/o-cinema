@@ -40,6 +40,11 @@ tribe.events.views.weekGridScroller = {};
 	 */
 	obj.selectors = {
 		weekGridEventsRowOuterWrapper: '[data-js="tribe-events-pro-week-grid-events-row-outer-wrapper"]',
+		weekGridEventsRowWrapper: '[data-js="tribe-events-pro-week-grid-events-row-wrapper"]',
+		weekGridEventsRowWrapperClass: '.tribe-events-pro-week-grid__events-row-wrapper',
+		weekGridEventsRowWrapperActiveClass: '.tribe-events-pro-week-grid__events-row-wrapper--active',
+		weekGridEventsPaneClass: '.tribe-events-pro-week-grid__events-row-scroll-pane',
+		weekGridEventsSliderClass: '.tribe-events-pro-week-grid__events-row-scroll-slider',
 	};
 
 	/**
@@ -70,16 +75,18 @@ tribe.events.views.weekGridScroller = {};
 		$container
 			.find( obj.selectors.weekGridEventsRowOuterWrapper )
 			.nanoScroller( {
-				paneClass: 'tribe-events-pro-week-grid__events-row-scroll-pane',
-				sliderClass: 'tribe-events-pro-week-grid__events-row-scroll-slider',
-				contentClass: 'tribe-events-pro-week-grid__events-row-wrapper',
+				paneClass: obj.selectors.weekGridEventsPaneClass.className(),
+				sliderClass: obj.selectors.weekGridEventsSliderClass.className(),
+				contentClass: obj.selectors.weekGridEventsRowWrapperClass.className(),
 				iOSNativeScrolling: true,
 				alwaysVisible: false,
 				/**
 				 * @todo: implement scrollTo when events are available.
 				 */
 				// scrollTo: $first_event
-			} );
+			} )
+			.find( obj.selectors.weekGridEventsRowWrapper )
+			.addClass( obj.selectors.weekGridEventsRowWrapperActiveClass.className() );
 	};
 
 	/**
@@ -111,8 +118,10 @@ tribe.events.views.weekGridScroller = {};
 	 * @return {void}
 	 */
 	obj.init = function( event, index, $container, data ) {
-		obj.initScroller( $container );
-		$container.on( 'beforeAjaxSuccess.tribeEvents', { container: $container }, obj.deinit );
+		if ( 'week' === data.slug ) {
+			obj.initScroller( $container );
+			$container.on( 'beforeAjaxSuccess.tribeEvents', { container: $container }, obj.deinit );
+		}
 	};
 
 	/**

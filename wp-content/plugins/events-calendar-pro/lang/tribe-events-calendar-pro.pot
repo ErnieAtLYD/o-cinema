@@ -2,13 +2,13 @@
 # This file is distributed under the same license as the The Events Calendar PRO package.
 msgid ""
 msgstr ""
-"Project-Id-Version: The Events Calendar PRO 4.7.5\n"
+"Project-Id-Version: The Events Calendar PRO 4.7.7\n"
 "Report-Msgid-Bugs-To: http://m.tri.be/191x\n"
-"POT-Creation-Date: 2019-07-24 15:20:15+00:00\n"
+"POT-Creation-Date: 2019-08-30 19:44:46+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2019-07-24 15:20\n"
+"PO-Revision-Date: 2019-08-30 19:44\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 
@@ -46,8 +46,8 @@ msgid "Title"
 msgstr ""
 
 #: src/Tribe/APM_Filters/APM_Filters.php:97 src/Tribe/Recurrence/Meta.php:291
-#: src/views/v2/week/grid-body/event/date.php:26
-#: src/views/v2/week/grid-body/event/date.php:27
+#: src/views/v2/week/grid-body/events-day/event/date.php:32
+#: src/views/v2/week/grid-body/events-day/event/date.php:33
 msgid "Recurring"
 msgstr ""
 
@@ -248,75 +248,75 @@ msgid ""
 "map view."
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:291
+#: src/Tribe/Geo_Loc.php:292
 msgid "Map"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:329
+#: src/Tribe/Geo_Loc.php:330
 msgid "Venue Overwrite Coordinates"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:360
+#: src/Tribe/Geo_Loc.php:361
 msgid "Near"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:361
+#: src/Tribe/Geo_Loc.php:362
 msgid "Location"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:386
+#: src/Tribe/Geo_Loc.php:387
 msgid "Use latitude + longitude"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:397
+#: src/Tribe/Geo_Loc.php:398
 msgid "Latitude"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:398
+#: src/Tribe/Geo_Loc.php:399
 msgid "Longitude"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:416
+#: src/Tribe/Geo_Loc.php:417
 msgid "Enter a custom Google Maps API key"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:417
+#: src/Tribe/Geo_Loc.php:418
 msgid ""
 "for latitude and longitude to be auto-generated; otherwise, you'll only be "
 "able to enter the values manually."
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:687
+#: src/Tribe/Geo_Loc.php:688
 msgid ""
 "The latitude and longitude for your venue could not be fetched. The Google "
 "Maps API daily query limit has been reached!. %1$s "
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:691
+#: src/Tribe/Geo_Loc.php:692
 msgid "Enter your API Key"
-msgstr ""
-
-#: src/Tribe/Geo_Loc.php:1237
-msgctxt "debug geodata"
-msgid "Geocode request failed ($1%s - $2%s)"
 msgstr ""
 
 #: src/Tribe/Geo_Loc.php:1238
 msgctxt "debug geodata"
+msgid "Geocode request failed ($1%s - $2%s)"
+msgstr ""
+
+#: src/Tribe/Geo_Loc.php:1239
+msgctxt "debug geodata"
 msgid "empty response"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:1303
+#: src/Tribe/Geo_Loc.php:1304
 msgid "Fix venues data"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:1352
+#: src/Tribe/Geo_Loc.php:1353
 msgid ""
 "You have venues for which we don't have Geolocation information. <a "
 "href='%s'>Click here to generate it</a>."
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:1378
+#: src/Tribe/Geo_Loc.php:1379
 msgid "Fixed geolocation data for %d venues"
 msgstr ""
 
@@ -2675,7 +2675,7 @@ msgid "&larr; Back to %s"
 msgstr ""
 
 #: src/views/pro/week/loop-grid-allday.php:18
-#: src/views/v2/week/grid-body/multiday-events-row-header.php:18
+#: src/views/v2/week/grid-body/multiday-events-row-header.php:21
 msgid "All Day"
 msgstr ""
 
@@ -2746,12 +2746,42 @@ msgstr ""
 msgid "In a location"
 msgstr ""
 
+#: src/views/v2/map/event-cards/event-card/event/date-time.php:30
+#: src/views/v2/map/event-cards/event-card/event/date-time.php:31
+#: src/views/v2/map/event-cards/event-card/event/date-time.php:34
 #: src/views/v2/photo/event/title.php:23 src/views/v2/photo/event/title.php:24
 #: src/views/v2/week/grid-body/multiday-events-day/multiday-event.php:56
 #: src/views/v2/week/grid-body/multiday-events-day/multiday-event.php:57
-#: src/views/v2/week/mobile-events/event/date.php:28
-#: src/views/v2/week/mobile-events/event/date.php:29
+#: src/views/v2/week/mobile-events/day/event/date.php:28
+#: src/views/v2/week/mobile-events/day/event/date.php:29
 msgid "Featured"
+msgstr ""
+
+#: src/views/v2/map/event-cards/event-card/event/distance.php:20
+msgid "4.7 mi away"
+msgstr ""
+
+#: src/views/v2/map/event-cards/event-card/event/venue.php:27
+msgid "Venue Title"
+msgstr ""
+
+#: src/views/v2/map/event-cards/event-card/event/venue.php:30
+msgid "1234 Street, San Francisco"
+msgstr ""
+
+#: src/views/v2/map/nav/next-disabled.php:20 src/views/v2/map/nav/next.php:24
+#: src/views/v2/week/nav.php:37 src/views/v2/week/nav.php:39
+msgid "Next"
+msgstr ""
+
+#: src/views/v2/map/nav/prev-disabled.php:20 src/views/v2/map/nav/prev.php:24
+msgid "Prev"
+msgstr ""
+
+#: src/views/v2/map/nav/today.php:26 src/views/v2/photo/nav/today.php:31
+#: src/views/v2/photo/top-bar/today.php:23 src/views/v2/week/nav/today.php:31
+#: src/views/v2/week/top-bar/today.php:23
+msgid "Today"
 msgstr ""
 
 #. translators: %s: Event (plural or singular).
@@ -2766,15 +2796,12 @@ msgstr ""
 msgid "Previous %1$s"
 msgstr ""
 
-#: src/views/v2/photo/nav/today.php:31 src/views/v2/photo/top-bar/today.php:28
-msgid "Today"
-msgstr ""
-
-#: src/views/v2/photo/top-bar/datepicker.php:43
+#: src/views/v2/photo/top-bar/datepicker.php:45
 msgid "Now"
 msgstr ""
 
-#: src/views/v2/photo/top-bar/datepicker.php:58
+#: src/views/v2/photo/top-bar/datepicker.php:60
+#: src/views/v2/week/top-bar/datepicker.php:38
 msgid "Select date."
 msgstr ""
 
@@ -2782,12 +2809,37 @@ msgstr ""
 msgid "Hide Recurring Events"
 msgstr ""
 
+#: src/views/v2/week/day-selector/days/day.php:45
+#: src/views/v2/week/day-selector/days/day.php:46
+msgid "Has events"
+msgstr ""
+
+#: src/views/v2/week/day-selector/nav/next.php:24
+msgid "Next week"
+msgstr ""
+
+#: src/views/v2/week/day-selector/nav/prev.php:24
+msgid "Previous week"
+msgstr ""
+
+#: src/views/v2/week/grid-body/multiday-events-row-header/multiday-events-row-header-toggle.php:30
+msgid "Toggle multiday events"
+msgstr ""
+
 #: src/views/v2/week/grid-header.php:61
 msgid "Week of %s"
 msgstr ""
 
-#: src/views/v2/week/mobile-events/event/venue.php:27
+#: src/views/v2/week/mobile-events/day/event/venue.php:27
 msgid "Venue Name"
+msgstr ""
+
+#: src/views/v2/week/nav.php:27 src/views/v2/week/nav.php:29
+msgid "Previous"
+msgstr ""
+
+#: src/views/v2/week.php:32
+msgid "Loading..."
 msgstr ""
 
 #. Plugin Name of the plugin/theme

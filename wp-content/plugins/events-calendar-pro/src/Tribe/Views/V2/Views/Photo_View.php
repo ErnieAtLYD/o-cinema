@@ -208,4 +208,5 @@ class Photo_View extends View {
 
 		return $args;
 	}
+
 }

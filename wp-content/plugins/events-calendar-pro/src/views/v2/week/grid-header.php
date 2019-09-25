@@ -70,25 +70,9 @@ $days_of_week = [
 		</div>
 
 		<?php foreach ( $days_of_week as $day ) : ?>
-			<div
-				class="tribe-events-pro-week-grid__header-column"
-				role="columnheader"
-				aria-label="<?php echo esc_attr( $day[ 'full_date' ] ); ?>"
-			>
-				<h3 class="tribe-events-pro-week-grid__header-column-title">
-					<time
-						class="tribe-events-pro-week-grid__header-column-datetime"
-						datetime="<?php echo esc_attr( $day[ 'datetime' ] ); ?>"
-					>
-						<span class="tribe-events-pro-week-grid__header-column-weekday tribe-common-h8 tribe-common-h--alt">
-							<?php echo esc_html( $day[ 'weekday' ] ); ?>
-						</span>
-						<span class="tribe-events-pro-week-grid__header-column-daynum tribe-common-h4">
-							<?php echo esc_html( $day[ 'daynum' ] ); ?>
-						</span>
-					</time>
-				</h3>
-			</div>
+
+			<?php $this->template( 'week/grid-header/header-column', [ 'day' => $day ] ); ?>
+
 		<?php endforeach; ?>
 	</div>
 </header>

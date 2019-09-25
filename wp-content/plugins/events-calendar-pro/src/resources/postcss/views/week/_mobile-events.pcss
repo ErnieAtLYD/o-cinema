@@ -1,5 +1,9 @@
 .tribe-events-pro {
 
+	/* -----------------------------------------------------------------------------
+	 * Mobile Events
+	 * ----------------------------------------------------------------------------- */
+
 	.tribe-events-pro-week-mobile-events {
 
 		@media (--viewport-medium) {
@@ -7,9 +11,13 @@
 		}
 	}
 
-	/* -----------------------------------------------------------------------------
-	 * Mobile Event
-	 * ----------------------------------------------------------------------------- */
+	.tribe-events-pro-week-mobile-events__day {
+		display: none;
+	}
+
+	.tribe-events-pro-week-mobile-events__day--active {
+		display: block;
+	}
 
 	.tribe-events-pro-week-mobile-events__event {
 		display: flex;

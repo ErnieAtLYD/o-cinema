@@ -9,7 +9,7 @@
  *
  * @link {INSERT_ARTCILE_LINK_HERE}
  *
- * @version 4.7.5
+ * @version 4.7.7
  *
  */
 
@@ -58,7 +58,7 @@ if ( $event->should_display ) {
 				>
 				</em>
 			<?php endif; ?>
-			<h3 class="tribe-events-pro-week-grid__multiday-event-title tribe-common-h8">
+			<h3 class="tribe-events-pro-week-grid__multiday-event-title tribe-common-h8 tribe-common-h--alt">
 				<?php echo esc_html( $event->title ); ?>
 			</h3>
 		</a>

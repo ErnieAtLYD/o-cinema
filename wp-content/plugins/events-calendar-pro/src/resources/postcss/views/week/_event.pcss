@@ -1,25 +1,16 @@
 .tribe-events-pro {
 
 	.tribe-events-pro-week-grid__event {
-		background-color: var(--color-background);
-		border: 2px solid var(--color-background);
-		border-radius: var(--border-radius-default);
-		overflow: hidden;
 		position: absolute;
+		height: var(--spacer-5);
+		top: 0;
 		right: 0;
 		width: 100%;
-		height: var(--spacer-5);
 
-		&:hover,
-		&:focus {
-			z-index: var(--z-index-week-event-hover);
-			.tribe-events-pro-week-grid__event-inner {
-				background-color: var(--color-accent-primary-week-event-hover);
-			}
-		}
-
+		/* If event is less than 1 hour */
 		&:not([class*="tribe-events-pro-week-grid__event--h-"]) {
-			.tribe-events-pro-week-grid__event-inner {
+
+			.tribe-events-pro-week-grid__event-link-inner {
 				padding: 2px var(--spacer-1);
 			}
 
@@ -27,19 +18,11 @@
 				@mixin visually-hide;
 			}
 		}
-
-	}
-
-	.tribe-events-pro-week-grid__event-inner {
-		background-color: var(--color-accent-primary-week-event);
-		display: block;
-		height: 100%;
-		padding: var(--spacer-0) var(--spacer-1);
 	}
 
 	.tribe-events-pro-week-grid__event--past {
 
-		.tribe-events-pro-week-grid__event-inner {
+		.tribe-events-pro-week-grid__event-link {
 			background-color: var(--color-background-secondary);
 
 			&:hover,
@@ -49,35 +32,62 @@
 		}
 	}
 
+	.tribe-events-pro-week-grid__event-link {
+		background-color: var(--color-background);
+		border: 2px solid var(--color-background);
+		border-radius: var(--border-radius-default);
+		height: 100%;
+		overflow: hidden;
+		position: absolute;
+		width: 100%;
+
+		&:hover,
+		&:focus {
+			z-index: var(--z-index-week-event-hover);
+
+			.tribe-events-pro-week-grid__event-link-inner {
+				background-color: var(--color-accent-primary-week-event-hover);
+			}
+		}
+	}
+
+	.tribe-events-pro-week-grid__event-link-inner {
+		background-color: var(--color-accent-primary-week-event);
+		display: block;
+		height: 100%;
+		padding: var(--spacer-0) var(--spacer-1);
+		width: 100%;
+	}
+
 	/* -----------------------------------------------------------------------------
-	 * Event Width
+	 * Event Sequence
 	 * ----------------------------------------------------------------------------- */
 
-	.tribe-events-pro-week-grid__event--w-90 {
+	.tribe-events-pro-week-grid__event--seq-2 {
 		width: 90%;
 	}
 
-	.tribe-events-pro-week-grid__event--w-80 {
+	.tribe-events-pro-week-grid__event--seq-3 {
 		width: 80%;
 	}
 
-	.tribe-events-pro-week-grid__event--w-70 {
+	.tribe-events-pro-week-grid__event--seq-4 {
 		width: 70%;
 	}
 
-	.tribe-events-pro-week-grid__event--w-60 {
+	.tribe-events-pro-week-grid__event--seq-5 {
 		width: 60%;
 	}
 
-	.tribe-events-pro-week-grid__event--w-50 {
+	.tribe-events-pro-week-grid__event--seq-6 {
 		width: 50%;
 	}
 
-	.tribe-events-pro-week-grid__event--w-40 {
+	.tribe-events-pro-week-grid__event--seq-7 {
 		width: 40%;
 	}
 
-	.tribe-events-pro-week-grid__event--w-30 {
+	.tribe-events-pro-week-grid__event--seq-8 {
 		width: 30%;
 	}
 
@@ -471,7 +481,6 @@
 
 	.tribe-events-pro-week-grid__event-title {
 		flex: auto;
-		font-weight: var(--font-weight-regular);
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
@@ -482,6 +491,7 @@
 		@mixin mobile-body-3;
 
 		color: var(--color-text-secondary);
+		white-space: nowrap;
 
 		> * {
 			vertical-align: middle;
@@ -496,5 +506,27 @@
 	.tribe-events-pro-week-grid__event-recurring-icon {
 		flex: none;
 		margin-left: 5px;
+	}
+
+
+	/* -----------------------------------------------------------------------------
+	 * Event Tooltip
+	 * ----------------------------------------------------------------------------- */
+
+	.tribe-events-pro-week-grid__event-tooltip {
+		position: absolute;
+		visibility: hidden; /* A11y purposes */
+	}
+
+	.tribe-events-pro-week-grid__event-tooltip-featured-image-wrapper {
+		margin-bottom: var(--spacer-3);
+	}
+
+	.tribe-events-pro-week-grid__event-tooltip-featured-image {
+		padding-bottom: 56.25%;
+	}
+
+	.tribe-events-pro-week-grid__event-tooltip-cta {
+		margin-top: var(--spacer-3);
 	}
 }

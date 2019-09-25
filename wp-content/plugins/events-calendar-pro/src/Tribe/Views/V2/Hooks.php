@@ -20,6 +20,7 @@ namespace Tribe\Events\Pro\Views\V2;
 use Tribe\Events\Pro\Views\V2\Views\All_View;
 use Tribe\Events\Pro\Views\V2\Views\Photo_View;
 use Tribe\Events\Pro\Views\V2\Views\Week_View;
+use Tribe\Events\Pro\Views\V2\Views\Map_View;
 use Tribe\Events\Pro\Views\V2\Views\Partials\Hide_Recurring_Events_Toggle;
 use Tribe\Events\Pro\Views\V2\Views\Partials\Location_Search_Field;
 use Tribe\Events\Views\V2\View_Interface;
@@ -105,6 +106,7 @@ class Hooks extends \tad_DI52_ServiceProvider {
 		$views['all'] = All_View::class;
 		$views['photo'] = Photo_View::class;
 		$views['week'] = Week_View::class;
+		$views['map'] = Map_View::class;
 
 		return $views;
 	}

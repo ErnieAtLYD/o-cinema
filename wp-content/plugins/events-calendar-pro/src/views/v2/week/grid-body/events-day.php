@@ -27,6 +27,6 @@
 			'recurring' => true,
 		]
 	?>
-	<?php $this->template( 'week/grid-body/event', [ 'event' => (object) $event ] ); ?>
+	<?php $this->template( 'week/grid-body/events-day/event', [ 'event' => (object) $event ] ); ?>
 
 </div>

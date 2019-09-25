@@ -68,7 +68,87 @@ class Assets extends \tad_DI52_ServiceProvider {
 			[
 				'jquery',
 				'tribe-common',
-				'tribe-events-pro-views-v2-nanoscroller'
+				'tribe-events-pro-views-v2-nanoscroller',
+			],
+			'wp_enqueue_scripts',
+			[
+				'priority'     => 10,
+				'conditionals' => [ $this, 'should_enqueue_frontend' ],
+				'groups'       => [ static::$group_key ],
+			]
+		);
+
+		tribe_asset(
+			$plugin,
+			'tribe-events-pro-views-v2-week-day-selector',
+			'views/week-day-selector.js',
+			[ 'tribe-events-views-v2-accordion' ],
+			'wp_enqueue_scripts',
+			[
+				'priority'     => 10,
+				'conditionals' => [ $this, 'should_enqueue_frontend' ],
+				'groups'       => [ static::$group_key ],
+			]
+		);
+
+		tribe_asset(
+			$plugin,
+			'tribe-events-pro-views-v2-week-multiday-toggle',
+			'views/week-multiday-toggle.js',
+			[
+				'jquery',
+				'tribe-common',
+				'tribe-events-views-v2-accordion',
+			],
+			'wp_enqueue_scripts',
+			[
+				'priority'     => 10,
+				'conditionals' => [ $this, 'should_enqueue_frontend' ],
+				'groups'       => [ static::$group_key ],
+			]
+		);
+
+		tribe_asset(
+			$plugin,
+			'tribe-events-pro-views-v2-map-events-scroller',
+			'views/map-events-scroller.js',
+			[
+				'jquery',
+				'tribe-common',
+				'tribe-events-pro-views-v2-nanoscroller',
+			],
+			'wp_enqueue_scripts',
+			[
+				'priority'     => 10,
+				'conditionals' => [ $this, 'should_enqueue_frontend' ],
+				'groups'       => [ static::$group_key ],
+			]
+		);
+
+		tribe_asset(
+			$plugin,
+			'tribe-events-pro-views-v2-map-events',
+			'views/map-events.js',
+			[
+				'jquery',
+				'tribe-common',
+				'tribe-events-pro-views-v2-map-provider-google-maps',
+			],
+			'wp_enqueue_scripts',
+			[
+				'priority'     => 10,
+				'conditionals' => [ $this, 'should_enqueue_frontend' ],
+				'groups'       => [ static::$group_key ],
+			]
+		);
+
+		tribe_asset(
+			$plugin,
+			'tribe-events-pro-views-v2-map-provider-google-maps',
+			'views/map-provider-google-maps.js',
+			[
+				'jquery',
+				'tribe-common',
 			],
 			'wp_enqueue_scripts',
 			[

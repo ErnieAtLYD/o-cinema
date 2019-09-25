@@ -11,23 +11,16 @@
  *
  * @version 4.7.5
  *
+ * @var array $days An array of all the days in the Week; the array has shape `[ <Y-m-d> => [ ...<day_data> ] ]`.
  */
-
-$events = $this->get( 'events' );
-
 ?>
 
 <section class="tribe-events-pro-week-mobile-events">
 
-	<?php $this->template( 'week/mobile-events/time-separator' ); ?>
-
-	<?php foreach ( $events as $event ) : ?>
-
-		<?php $this->template( 'week/mobile-events/event', [ 'event' => $event ] ); ?>
-
+	<?php foreach ( $days as $day_date => $day ) : ?>
+		<?php $this->template( 'week/mobile-events/day', [ 'day_date' => $day_date, 'day' => $day ] ); ?>
 	<?php endforeach; ?>
 
-	<?php // @todo: implement navigation ); ?>
-	<?php //$this->template( 'week/nav', [ 'location' => 'mobile' ] ); ?>
+	<?php $this->template( 'week/nav', [ 'location' => 'mobile' ] ); ?>
 
 </section>

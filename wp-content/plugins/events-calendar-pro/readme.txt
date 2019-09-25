@@ -1,11 +1,11 @@
 === The Events Calendar PRO ===
 
-Contributors: ModernTribe, barry.hughes, bordoni, borkweb, brianjessee, brook-tribe, faction23, geoffgraham, ggwicz, jazbek, jbrinley, joshlimecuda, leahkoerper, lucatume, mastromktg, mat-lipe, mdbitz, neillmcshea, nicosantos, peterchester, reid.peifer, roblagatta, ryancurban, shane.pearlman, thatdudebutch,  zbtirrell
+Contributors: ModernTribe, barry.hughes, bordoni, borkweb, brianjessee, brook-tribe, faction23, geoffgraham, ggwicz, jazbek, jbrinley, joshlimecuda, leahkoerper, lucatume, mastromktg, mat-lipe, mdbitz, neillmcshea, nicosantos, peterchester, reid.peifer, roblagatta, ryancurban, shane.pearlman, thatdudebutch,  zbtirrell, juanfra
 Tags: events, calendar, event, venue, organizer, dates, date, google maps, conference, workshop, concert, meeting, seminar, summit, class, modern tribe, tribe, widget, pro
 Donate link: http://m.tri.be/29
 Requires at least: 4.7
 Tested up to: 5.2.2
-Stable tag: 4.7.5
+Stable tag: 4.7.7
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -204,6 +204,16 @@ Our Premium Plugins:
 * <a href="http://m.tri.be/fa" target="_blank">The Events Calendar: Filter Bar</a>
 
 == Changelog ==
+
+= [4.7.7] 2019-09-04 =
+
+* Fix - 'Fix venues data' button on Settings page will now NOT show if no venue data needs to be fixed [128589]
+* Language - 5 new strings added, 23 updated, 0 fuzzied, and 0 obsoleted
+
+= [4.7.6] 2019-08-19 =
+
+* Tweak - Updates to the shortcode Javascript code to allow disabling the URL manipulation behavior via the 'tribe_events_js_config' filter [132567]
+* Language - 6 new strings added, 9 updated, 0 fuzzied, and 0 obsoleted
 
 = [4.7.5] 2019-07-25 =
 

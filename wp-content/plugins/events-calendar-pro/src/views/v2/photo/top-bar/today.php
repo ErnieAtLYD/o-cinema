@@ -3,7 +3,7 @@
  * View: Top Bar - Today
  *
  * Override this template in your own theme by creating a file at:
- * [your-theme]/tribe/events/views/v2/top-bar/today.php
+ * [your-theme]/tribe/events-pro/views/v2/photo/top-bar/today.php
  *
  * See more documentation about our views templating system.
  *
@@ -11,14 +11,9 @@
  *
  * @version 4.9.3
  *
+ * @var string $today_url The URL to the today, current, version of the View.
  */
 
-// If we didn't have a view setup we cannot print today's link
-if ( ! $this->get( 'view' ) ) {
-	return false;
-}
-
-$today_url = tribe_events_get_url( [ 'paged' => 1, 'eventDisplay' => $this->get( 'view_slug' ) ] );
 ?>
 <a
 	href="<?php echo esc_url( $today_url ); ?>"
