@@ -62,7 +62,10 @@ class ML_Agile_Parser extends ML_Agile_Base {
 	 * @uses tribe_get_start_date
 	 */
 	protected function get_front_run_dates_NOSHOWTIMES() {
-		return 'OPENS ' . tribe_get_start_date( $this->post_id, true, 'n/j' );
+		$meta = get_post_meta( $this->post_id, 'override_desc', true );
+		return ( !empty( $meta ) )
+			? $meta
+			: 'OPENS ' . tribe_get_start_date( $this->post_id, true, 'n/j' );
 	}
 
 	/**
