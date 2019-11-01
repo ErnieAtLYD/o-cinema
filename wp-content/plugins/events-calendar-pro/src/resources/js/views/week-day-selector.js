@@ -200,7 +200,7 @@ tribe.events.views.weekDaySelector = {};
 	/**
 	 * Initialize week day selector.
 	 *
-	 * @since 4.7.6
+	 * @since 4.7.8
 	 *
 	 * @param {Event}   event      JS event triggered.
 	 * @param {integer} index      jQuery.each index param from 'afterSetup.tribeEvents' event.
@@ -210,10 +210,10 @@ tribe.events.views.weekDaySelector = {};
 	 * @return {void}
 	 */
 	obj.init = function( event, index, $container, data ) {
-		if ( 'week' === data.slug ) {
-			obj.initDaySelector( $container );
-			$container.on( 'beforeAjaxSuccess.tribeEvents', { container: $container }, obj.deinit );
-		}
+		if ( 'week' !== data.slug ) return;
+
+		obj.initDaySelector( $container );
+		$container.on( 'beforeAjaxSuccess.tribeEvents', { container: $container }, obj.deinit );
 	};
 
 	/**

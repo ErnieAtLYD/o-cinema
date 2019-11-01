@@ -9,8 +9,9 @@
  *
  * @link {INSERT_ARTCILE_LINK_HERE}
  *
- * @version 4.7.7
+ * @version 4.7.8
  *
+ * @var array  $events The array containing the events.
  */
 ?>
 <div class="tribe-events-pro-map__event-column tribe-common-g-col">
@@ -23,17 +24,12 @@
 			class="tribe-events-pro-map__event-cards"
 			data-js="tribe-events-pro-map-event-cards"
 		>
-
 			<?php foreach ( $events as $index => $event ) : ?>
-
-				<?php $this->template( 'map/event-cards/event-card', [ 'event' => (object) $event, 'index' => $index, 'map_provider_key' => $map_provider_key ] ); ?>
-
+				<?php $this->template( 'map/event-cards/event-card', [ 'event' => $event, 'index' => $index ] ); ?>
 			<?php endforeach; ?>
-
 		</div>
-
 	</div>
 
-	<?php $this->template( 'map/nav' ); ?>
+	<?php $this->template( 'map/event-cards/nav' ); ?>
 
 </div>

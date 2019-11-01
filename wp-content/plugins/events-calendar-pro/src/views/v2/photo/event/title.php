@@ -9,28 +9,21 @@
  *
  * @link {INSERT_ARTCILE_LINK_HERE}
  *
- * @version 4.7.5
+ * @version 4.7.8
+ *
+ * @var WP_Post $event The event post object with properties added by the `tribe_get_event` function.
+ *
+ * @see tribe_get_event() For the format of the event object.
  *
  */
-$event       = $this->get( 'event' );
-$event_id    = $event->ID;
-$is_featured = tribe( 'tec.featured_events' )->is_featured( $event_id );
 ?>
 <h3 class="tribe-events-pro-photo__event-title tribe-common-h6">
-	<?php if ( $is_featured ) : ?>
-		<em
-			class="tribe-events-pro-photo__event-title-featured-icon tribe-common-svgicon tribe-common-svgicon--featured"
-			aria-label="<?php esc_attr_e( 'Featured', 'tribe-events-calendar-pro' ); ?>"
-			title="<?php esc_attr_e( 'Featured', 'tribe-events-calendar-pro' ); ?>"
-		>
-		</em>
-	<?php endif; ?>
 	<a
-		href="<?php echo esc_url( tribe_get_event_link( $event_id ) ); ?>"
-		title="<?php the_title_attribute( $event_id ); ?>"
+		href="<?php echo esc_url( $event->permalink ); ?>"
+		title="<?php the_title_attribute( $event->ID ); ?>"
 		rel="bookmark"
 		class="tribe-events-pro-photo__event-title-link tribe-common-anchor-thin"
 	>
-		<?php echo get_the_title( $event_id ); ?>
+		<?php echo get_the_title( $event->ID ); ?>
 	</a>
 </h3>

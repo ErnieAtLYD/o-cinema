@@ -9,13 +9,14 @@
  *
  * @link {INSERT_ARTCILE_LINK_HERE}
  *
- * @version 4.7.7
+ * @version 4.7.8
+ *
+ * @var WP_Post $event The event post object with properties added by the `tribe_get_event` function.
+ *
+ * @see tribe_get_event() For the format of the event object.
  *
  */
-$event    = $this->get( 'event' );
-$event_id = $event->ID;
 ?>
 <div class="tribe-events-pro-map__event-distance tribe-common-b3">
-	<?php // @todo @be @luca: this is the distance for the PRO version with Key. ?>
-	<?php esc_html_e( '4.7 mi away', 'tribe-events-calendar-pro' ); ?>
+	<?php echo $event->distance; ?>
 </div>

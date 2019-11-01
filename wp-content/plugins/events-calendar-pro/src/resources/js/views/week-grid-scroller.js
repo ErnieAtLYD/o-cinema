@@ -108,7 +108,7 @@ tribe.events.views.weekGridScroller = {};
 	/**
 	 * Initialize week grid scroller.
 	 *
-	 * @since 4.7.5
+	 * @since 4.7.8
 	 *
 	 * @param {Event}   event      JS event triggered.
 	 * @param {integer} index      jQuery.each index param from 'afterSetup.tribeEvents' event.
@@ -118,10 +118,10 @@ tribe.events.views.weekGridScroller = {};
 	 * @return {void}
 	 */
 	obj.init = function( event, index, $container, data ) {
-		if ( 'week' === data.slug ) {
-			obj.initScroller( $container );
-			$container.on( 'beforeAjaxSuccess.tribeEvents', { container: $container }, obj.deinit );
-		}
+		if ( 'week' !== data.slug ) return;
+
+		obj.initScroller( $container );
+		$container.on( 'beforeAjaxSuccess.tribeEvents', { container: $container }, obj.deinit );
 	};
 
 	/**

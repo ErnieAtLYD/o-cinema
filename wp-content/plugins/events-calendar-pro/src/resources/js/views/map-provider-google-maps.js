@@ -39,9 +39,16 @@ tribe.events.views.mapProviderGoogleMaps = {};
 	 * @type {PlainObject}
 	 */
 	obj.selectors = {
+		map: '[data-js="tribe-events-pro-map-map"]',
 		googleMapsDefault: '[data-js="tribe-events-pro-map-google-maps-default"]',
 		googleMapsPremium: '[data-js="tribe-events-pro-map-google-maps-premium"]',
 		eventCardWrapper: '[data-js="tribe-events-pro-map-event-card-wrapper"]',
+		eventTooltipTemplate: '[data-js="tribe-events-pro-map-event-tooltip-template"]',
+		eventTooltipSlider: '[data-js="tribe-events-pro-map-event-tooltip-slider"]',
+		eventTooltipSlide: '[data-js="tribe-events-pro-map-event-tooltip-slide"]',
+		eventTooltipPrevButton: '[data-js="tribe-events-pro-map-event-tooltip-prev-button"]',
+		eventTooltipNextButton: '[data-js="tribe-events-pro-map-event-tooltip-next-button"]',
+		eventTooltipButtonDisabledClass: '.tribe-events-pro-map__event-tooltip-navigation-button--disabled',
 		tribeCommonA11yHiddenClass: '.tribe-common-a11y-hidden',
 	};
 
@@ -57,11 +64,35 @@ tribe.events.views.mapProviderGoogleMaps = {};
 	};
 
 	/**
+	 * Handle tooltip slider slide change.
+	 *
+	 * @since 4.7.8
+	 *
+	 * @param {jQuery}      $container jQuery object of view container.
+	 * @param {PlainObject} state      state of Google Maps premium.
+	 *
+	 * @return {function}
+	 */
+	obj.handleTooltipSlideChange = function( $container, state ) {
+		return function() {
+			var eventId = $( state.slider.slides[ state.slider.activeIndex ] ).attr( 'data-event-id' );
+			var mapEventsSelectors = tribe.events.views.mapEvents.selectors;
+			var activeEventCardWrapperSelector = '[data-event-id="' + eventId + '"]';
+
+			var $buttons = $container.find( mapEventsSelectors.eventCardButton );
+			var $button = $container.find( mapEventsSelectors.eventCardWrapper + activeEventCardWrapperSelector + ' ' + mapEventsSelectors.eventCardButton );
+
+			tribe.events.views.mapEvents.deselectAllEvents( $buttons );
+			tribe.events.views.mapEvents.selectEvent( $button );
+		};
+	};
+
+	/**
 	 * Get event object from premium map state
 	 *
 	 * @since 4.7.7
 	 *
-	 * @param {PlainObject} state   state of map container.
+	 * @param {PlainObject} state   state of Google Maps premium.
 	 * @param {string}      eventId id of the event.
 	 *
 	 * @return {PlainObject|boolean}
@@ -76,7 +107,86 @@ tribe.events.views.mapProviderGoogleMaps = {};
 		}
 
 		return false;
-};
+	};
+
+	/**
+	 * Deinitialize tooltip slider
+	 *
+	 * @since 4.7.8
+	 *
+	 * @param {Swiper} slider object of swiper.
+	 *
+	 * @return {void}
+	 */
+	obj.deinitTooltipSlider = function( slider ) {
+		if ( slider && ! slider.destroyed ) {
+			slider.destroy();
+		}
+	};
+
+	/**
+	 * Initialize tooltip slider
+	 *
+	 * @since 4.7.8
+	 *
+	 * @param {jQuery} $container jQuery object of view container.
+	 *
+	 * @return {void}
+	 */
+	obj.initTooltipSlider = function( $container ) {
+		var $googleMapsPremium = $container.find( obj.selectors.googleMapsPremium );
+		var $tooltipSlider = $googleMapsPremium.find( obj.selectors.eventTooltipSlider );
+
+		if ( $tooltipSlider.length ) {
+			var state = $googleMapsPremium.data( 'tribeEventsState' );
+			var activeEventTooltipSlideSelector = '[data-event-id="' + state.activeEventId + '"]';
+			var $initialSlide = $tooltipSlider.find( obj.selectors.eventTooltipSlide + activeEventTooltipSlideSelector );
+
+			state.slider = new Swiper( $tooltipSlider[0], {
+				initialSlide: $initialSlide.attr( 'data-slide-index' ),
+				speed: 0,
+				resistanceRatio: 0,
+				allowTouchMove: false,
+				navigation: {
+					prevEl: $tooltipSlider.find( obj.selectors.eventTooltipPrevButton )[0],
+					nextEl: $tooltipSlider.find( obj.selectors.eventTooltipNextButton )[0],
+					disabledClass: obj.selectors.eventTooltipButtonDisabledClass.className(),
+				},
+			} );
+			state.slider.on( 'slideChange', obj.handleTooltipSlideChange( $container, state ) );
+		}
+	};
+
+	/**
+	 * Clean up slider and close tooltip
+	 *
+	 * @since 4.7.8
+	 *
+	 * @param {PlainObject} state state of Google Maps premium.
+	 *
+	 * @return {void}
+	 */
+	obj.closeTooltip = function( state ) {
+		obj.deinitTooltipSlider( state.slider );
+		state.tooltip.close();
+	};
+
+	/**
+	 * Set tooltip content and open
+	 *
+	 * @since 4.7.8
+	 *
+	 * @param {InfoWindow} tooltip  object of info window.
+	 * @param {string}     template template of tooltip content.
+	 * @param {Map}        map      object of map.
+	 * @param {Marker}     marker   object of marker.
+	 *
+	 * @return {void}
+	 */
+	obj.openTooltip = function( tooltip, template, map, marker ) {
+		tooltip.setContent( template );
+		tooltip.open( map, marker );
+	};
 
 	/**
 	 * Handle event click.
@@ -90,18 +200,31 @@ tribe.events.views.mapProviderGoogleMaps = {};
 	 * @return {void}
 	 */
 	obj.handleEventClick = function( event, $container, $button ) {
-		var state = $container.data( 'state' );
+		var isPremium = $container.find( obj.selectors.map ).data( 'tribeEventsState' ).isPremium;
 
-		if ( ! state.isPremium ) {
+		if ( ! isPremium ) {
+			// set google maps default iframe src
 			var src = $button.closest( obj.selectors.eventCardWrapper ).attr( 'data-src' );
 			$container.find( obj.selectors.googleMapsDefault ).attr( 'src', src );
 		} else {
-			var mapState = $container.find( obj.selectors.googleMapsPremium ).data( 'state' );
-			var eventId = $button.closest( obj.selectors.eventCardWrapper ).attr( 'data-event-id' );
-			var eventObject = obj.getEventFromState( mapState, eventId );
+			var $googleMapsPremium = $container.find( obj.selectors.googleMapsPremium );
+			var state = $googleMapsPremium.data( 'tribeEventsState' );
+			var $eventCardWrapper = $button.closest( obj.selectors.eventCardWrapper );
+			var eventId = $eventCardWrapper.attr( 'data-event-id' );
+			var eventObject = obj.getEventFromState( state, eventId );
 
 			if ( eventObject ) {
-				mapState.map.panTo( eventObject.marker.getPosition() );
+				// close previous tooltip and open selected event tooltip
+				var $tooltipTemplate = $eventCardWrapper.find( obj.selectors.eventTooltipTemplate );
+				obj.closeTooltip( state );
+				obj.openTooltip( state.tooltip, $tooltipTemplate[0].textContent, state.map, eventObject.marker );
+
+				// set active event id
+				state.activeEventId = eventId;
+				$googleMapsPremium.data( 'tribeEventsState', state );
+
+				// move map center
+				state.map.panTo( eventObject.marker.getPosition() );
 			}
 		}
 	};
@@ -113,25 +236,108 @@ tribe.events.views.mapProviderGoogleMaps = {};
 	 *
 	 * @param {jQuery} $container jQuery object of view container.
 	 * @param {Marker} marker     instance of marker object.
+	 *
+	 * @return {function}
 	 */
 	obj.handleMarkerClick = function( $container, marker ) {
 		return function( event ) {
-			var mapState = $container.find( obj.selectors.googleMapsPremium ).data( 'state' );
+			var $googleMapsPremium = $container.find( obj.selectors.googleMapsPremium );
+			var state = $googleMapsPremium.data( 'tribeEventsState' );
 			var eventIds = marker.get( 'eventIds' );
 			var position = marker.getPosition();
-
-			mapState.map.panTo( position );
 
 			var mapEventsSelectors = tribe.events.views.mapEvents.selectors;
 			var activeEventCardWrapperSelector = '[data-event-id="' + eventIds[0] + '"]';
 
-			var $buttons = $container
-				.find( mapEventsSelectors.eventCardButton );
-			var $button = $container
-				.find( mapEventsSelectors.eventCardWrapper + activeEventCardWrapperSelector + ' ' + mapEventsSelectors.eventCardButton );
+			var $buttons = $container.find( mapEventsSelectors.eventCardButton );
+			var $eventCardWrapper = $container.find( mapEventsSelectors.eventCardWrapper + activeEventCardWrapperSelector );
+			var $button = $eventCardWrapper.find( mapEventsSelectors.eventCardButton );
 
+			// deselect all events and select active event
 			tribe.events.views.mapEvents.deselectAllEvents( $buttons );
 			tribe.events.views.mapEvents.selectEvent( $button );
+
+			// close previous tooltip and open selected event tooltip
+			var $tooltipTemplate = $eventCardWrapper.find( obj.selectors.eventTooltipTemplate );
+			obj.closeTooltip( state );
+			obj.openTooltip( state.tooltip, $tooltipTemplate[0].textContent, state.map, marker );
+
+			// set active event id
+			state.activeEventId = eventIds[0];
+			$googleMapsPremium.data( 'tribeEventsState', state );
+
+			// move map center
+			state.map.panTo( position );
+		};
+	};
+
+	/**
+	 * Handle map click.
+	 *
+	 * @since 4.7.8
+	 *
+	 * @param {jQuery} $container jQuery object of view container.
+	 * @param {Marker} map        instance of map object.
+	 *
+	 * @return {function}
+	 */
+	obj.handleMapClick = function( $container, map ) {
+		return function( event ) {
+			var $googleMapsPremium = $container.find( obj.selectors.googleMapsPremium );
+			var state = $googleMapsPremium.data( 'tribeEventsState' );
+
+			// close tooltip
+			obj.closeTooltip( state );
+
+			// set active event id to null
+			state.activeEventId = null;
+			$googleMapsPremium.data( 'tribeEventsState', state );
+
+			// deselect all event buttons
+			var $buttons = $container.find( tribe.events.views.mapEvents.selectors.eventCardButton );
+			tribe.events.views.mapEvents.deselectAllEvents( $buttons );
+		};
+	};
+
+	/**
+	 * Handle tooltip close click event
+	 *
+	 * @since 4.7.8
+	 *
+	 * @param {jQuery} $container jQuery object of view container.
+	 *
+	 * @return {function}
+	 */
+	obj.handleTooltipCloseClick = function( $container ) {
+		return function() {
+			var $googleMapsPremium = $container.find( obj.selectors.googleMapsPremium );
+			var state = $googleMapsPremium.data( 'tribeEventsState' );
+
+			// set active event id to null
+			state.activeEventId = null;
+			$googleMapsPremium.data( 'tribeEventsState', state );
+
+			// deinit tooltip slider
+			obj.deinitTooltipSlider( state.slider );
+
+			// deselect all event buttons
+			var $buttons = $container.find( tribe.events.views.mapEvents.selectors.eventCardButton );
+			tribe.events.views.mapEvents.deselectAllEvents( $buttons );
+		};
+	};
+
+	/**
+	 * Handle tooltip dom ready event
+	 *
+	 * @since 4.7.8
+	 *
+	 * @param {jQuery} $container jQuery object of view container.
+	 *
+	 * @return {function}
+	 */
+	obj.handleTooltipDomReady = function( $container ) {
+		return function() {
+			obj.initTooltipSlider( $container );
 		};
 	};
 
@@ -146,16 +352,17 @@ tribe.events.views.mapProviderGoogleMaps = {};
 	 */
 	obj.unsetMarkers = function( $container ) {
 		var $googleMapsPremium = $container.find( obj.selectors.googleMapsPremium );
-		var state = $googleMapsPremium.data( 'state' );
+		var state = $googleMapsPremium.data( 'tribeEventsState' );
 
 		state.markers.forEach( function( marker, index ) {
+			google.maps.event.clearInstanceListeners( marker );
 			marker.setMap( null );
 		} );
 
 		state.markers = [];
 		state.events = [];
 
-		$googleMapsPremium.data( 'state', state );
+		$googleMapsPremium.data( 'tribeEventsState', state );
 	};
 
 	/**
@@ -170,14 +377,16 @@ tribe.events.views.mapProviderGoogleMaps = {};
 	 */
 	obj.setMarkers = function( $container, data ) {
 		var $googleMapsPremium = $container.find( obj.selectors.googleMapsPremium );
-		var state = $googleMapsPremium.data( 'state' );
+		var state = $googleMapsPremium.data( 'tribeEventsState' );
 		var bounds = new google.maps.LatLngBounds();
 
+		console.log( data, $container );
+
 		// init markers from data structure
-		data.events_by_venue.forEach( function( venue, venueIndex ) {
+		$.each( data.events_by_venue, function( venueId, venue ) {
 			// create marker
 			var marker = new google.maps.Marker( {
-				position: new google.maps.LatLng( venue.lat, venue.lng ),
+				position: new google.maps.LatLng( venue.geolocation.latitude, venue.geolocation.longitude ),
 				map: state.map,
 				eventIds: venue.event_ids,
 			} );
@@ -204,8 +413,8 @@ tribe.events.views.mapProviderGoogleMaps = {};
 		// set map bounds based on markers
 		state.map.fitBounds( bounds );
 
-		// save state to map container
-		$googleMapsPremium.data( 'state', state );
+		// save state to Google Maps premium
+		$googleMapsPremium.data( 'tribeEventsState', state );
 	};
 
 	/**
@@ -220,11 +429,62 @@ tribe.events.views.mapProviderGoogleMaps = {};
 	obj.initMapState = function( $googleMapsPremium ) {
 		var state = {
 			map: null,
+			tooltip: null,
+			slider: null,
+			activeEventId: null,
 			events: [],
 			markers: [],
 		};
 
-		$googleMapsPremium.data( 'state', state );
+		$googleMapsPremium.data( 'tribeEventsState', state );
+	};
+
+	/**
+	 * Denitialize tooltip
+	 *
+	 * @since 4.7.8
+	 *
+	 * @param {PlainObject} state state of Google Maps premium.
+	 *
+	 * @return {void}
+	 */
+	obj.deinitTooltip = function( state ) {
+		google.maps.event.clearInstanceListeners( state.tooltip );
+	};
+
+	/**
+	 * Initialize tooltip
+	 *
+	 * @since 4.7.8
+	 *
+	 * @param {jQuery} $container jQuery object of view container.
+	 *
+	 * @return {void}
+	 */
+	obj.initTooltip = function( $container ) {
+		var state = $container.find( obj.selectors.googleMapsPremium ).data( 'tribeEventsState' );
+		state.tooltip.addListener( 'closeclick', obj.handleTooltipCloseClick( $container ) );
+		state.tooltip.addListener( 'domready', obj.handleTooltipDomReady( $container ) );
+	};
+
+	/**
+	 * Creates a new tooltip
+	 *
+	 * @since 4.7.8
+	 *
+	 * @param {jQuery} $container jQuery object of view container.
+	 *
+	 * @return {void}
+	 */
+	obj.createTooltip = function( $container ) {
+		var $googleMapsPremium = $container.find( obj.selectors.googleMapsPremium );
+		var state = $googleMapsPremium.data( 'tribeEventsState' );
+
+		state.tooltip = new google.maps.InfoWindow();
+		state.tooltip.addListener( 'closeclick', obj.handleTooltipCloseClick( $container ) );
+		state.tooltip.addListener( 'domready', obj.handleTooltipDomReady( $container ) );
+
+		$googleMapsPremium.data( 'tribeEventsState', state );
 	};
 
 	/**
@@ -232,19 +492,21 @@ tribe.events.views.mapProviderGoogleMaps = {};
 	 *
 	 * @since 4.7.7
 	 *
-	 * @param {jQuery} $googleMapsPremium jQuery object of Google Maps premium.
+	 * @param {jQuery} $container jQuery object of view container.
 	 *
 	 * @return {void}
 	 */
-	obj.createNewMap = function( $googleMapsPremium ) {
-		var state = $googleMapsPremium.data( 'state' );
+	obj.createNewMap = function( $container ) {
+		var $googleMapsPremium = $container.find( obj.selectors.googleMapsPremium );
+		var state = $googleMapsPremium.data( 'tribeEventsState' );
 
 		state.map = new google.maps.Map( $googleMapsPremium[0], {
 			zoom: 5, // @todo: figure out how to set initial zoom
 			center: new google.maps.LatLng( -34.397, 150.644 ), // @todo: fix this and set a lat lng
 		} );
+		state.map.addListener( 'click', obj.handleMapClick( $container, state.map ) );
 
-		$googleMapsPremium.data( 'state', state );
+		$googleMapsPremium.data( 'tribeEventsState', state );
 	};
 
 	/**
@@ -309,8 +571,16 @@ tribe.events.views.mapProviderGoogleMaps = {};
 		var $googleMapsPremium = $container.find( obj.selectors.googleMapsPremium );
 
 		if ( $googleMapsPremium.length && 'undefined' !== typeof google ) {
-			// unset markers
+			var state = $googleMapsPremium.data( 'tribeEventsState' );
+
+			// unset markers, deinit slider and tooltip
 			obj.unsetMarkers( $container );
+			obj.closeTooltip( state );
+			obj.deinitTooltip( state );
+
+			// set active event id to null
+			state.activeEventId = null;
+			$googleMapsPremium.data( 'tribeEventsState', state );
 
 			// cache map
 			obj.cacheMap( $container );
@@ -336,12 +606,12 @@ tribe.events.views.mapProviderGoogleMaps = {};
 			if ( obj.isMapCached( $container ) ) {
 				// get cached map
 				obj.getCachedMap( $container );
+				obj.initTooltip( $container );
 			} else {
-				// init map state
+				// init map state, create tooltip and new map
 				obj.initMapState( $googleMapsPremium );
-
-				// create new map
-				obj.createNewMap( $googleMapsPremium );
+				obj.createTooltip( $container );
+				obj.createNewMap( $container );
 			}
 
 			// set markers
@@ -380,10 +650,10 @@ tribe.events.views.mapProviderGoogleMaps = {};
 	 */
 	obj.setIsPremium = function( $container, data ) {
 		var state = {
-			isPremium: data.is_premium,
+			isPremium: data.map_provider.is_premium,
 		};
 
-		$container.data( 'state', state );
+		$container.find( obj.selectors.map ).data( 'tribeEventsState', state );
 
 		return state.isPremium;
 	};
@@ -418,29 +688,28 @@ tribe.events.views.mapProviderGoogleMaps = {};
 	 * @return {void}
 	 */
 	obj.init = function( event, index, $container, data ) {
-		if ( 'map' === data.slug ) {
-			var isPremium = obj.setIsPremium( $container, data );
+		if ( 'map' !== data.slug ) return;
 
-			if ( isPremium ) {
-				if ( ! obj.state.mapsScriptLoaded ) {
-					// @todo: get url from BE
-					var url = 'https://maps.googleapis.com/maps/api/js?key=' + data.map_provider_key.google_maps;
+		var isPremium = obj.setIsPremium( $container, data );
 
-					$.ajax( {
-						url: url,
-						dataType: 'script',
-						success: obj.handleMapsScriptLoadedSuccess( $container, data ),
-					} );
-				} else {
-					obj.initMap( $container, data );
-					$container.on( 'afterMapEventClick.tribeEvents', obj.handleEventClick );
-					$container.on( 'mapDeinit.tribeEvents', { container: $container }, obj.deinit );
-				}
+		if ( isPremium ) {
+			if ( ! obj.state.mapsScriptLoaded ) {
+				var url = data.map_provider.javascript_url + '?key=' + data.map_provider.api_key;
+
+				$.ajax( {
+					url: url,
+					dataType: 'script',
+					success: obj.handleMapsScriptLoadedSuccess( $container, data ),
+				} );
+			} else {
+				obj.initMap( $container, data );
+				$container.on( 'afterMapEventClick.tribeEvents', obj.handleEventClick );
+				$container.on( 'mapDeinit.tribeEvents', { container: $container }, obj.deinit );
 			}
-
-			$container.on( 'afterMapEventClick.tribeEvents', obj.handleEventClick );
-			$container.on( 'mapDeinit.tribeEvents', { container: $container }, obj.deinit );
 		}
+
+		$container.on( 'afterMapEventClick.tribeEvents', obj.handleEventClick );
+		$container.on( 'mapDeinit.tribeEvents', { container: $container }, obj.deinit );
 	};
 
 	/**

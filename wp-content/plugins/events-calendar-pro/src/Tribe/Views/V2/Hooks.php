@@ -21,8 +21,12 @@ use Tribe\Events\Pro\Views\V2\Views\All_View;
 use Tribe\Events\Pro\Views\V2\Views\Photo_View;
 use Tribe\Events\Pro\Views\V2\Views\Week_View;
 use Tribe\Events\Pro\Views\V2\Views\Map_View;
+use Tribe\Events\Pro\Views\V2\Views\Partials\Day_Event_Recurring_Icon;
 use Tribe\Events\Pro\Views\V2\Views\Partials\Hide_Recurring_Events_Toggle;
+use Tribe\Events\Pro\Views\V2\Views\Partials\List_Event_Recurring_Icon;
 use Tribe\Events\Pro\Views\V2\Views\Partials\Location_Search_Field;
+use Tribe\Events\Pro\Views\V2\Views\Partials\Month_Calendar_Event_Recurring_Icon;
+use Tribe\Events\Pro\Views\V2\Views\Partials\Month_Mobile_Event_Recurring_Icon;
 use Tribe\Events\Views\V2\View_Interface;
 use Tribe__Context as Context;
 
@@ -54,6 +58,10 @@ class Hooks extends \tad_DI52_ServiceProvider {
 		add_action( 'init', [ $this, 'action_add_shortcodes' ], 20 );
 		add_action( 'tribe_template_after_include:events/components/top-bar/actions/content', [ $this, 'action_include_hide_recurring_events' ], 10, 3 );
 		add_action( 'tribe_template_after_include:events/events-bar/search/keyword', [ $this, 'action_include_location_form_field' ], 10, 3 );
+		add_action( 'tribe_template_after_include:events/day/event/date/meta', [ $this, 'action_include_day_event_recurring_icon' ], 10, 3 );
+		add_action( 'tribe_template_after_include:events/list/event/date/meta', [ $this, 'action_include_list_event_recurring_icon' ], 10, 3 );
+		add_action( 'tribe_template_after_include:events/month/calendar-body/day/calendar-events/calendar-event/date/meta', [ $this, 'action_include_month_calendar_event_recurring_icon' ], 10, 3 );
+		add_action( 'tribe_template_after_include:events/month/mobile-events/mobile-day/mobile-event/date/meta', [ $this, 'action_include_month_mobile_event_recurring_icon' ], 10, 3 );
 	}
 
 	/**
@@ -125,7 +133,7 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	}
 
 	/**
-	 * Fires to include the hide recurring template on the end of the actions of the top-bar.
+	 * Fires to include the location form field after the keyword form field of the events bar.
 	 *
 	 * @since 4.7.5
 	 *
@@ -135,6 +143,58 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	 */
 	public function action_include_location_form_field( $file, $name, $template ) {
 		$this->container->make( Location_Search_Field::class )->render( $template );
+	}
+
+	/**
+	 * Fires to include the recurring icon on the day view event.
+	 *
+	 * @since 4.7.8
+	 *
+	 * @param string $file      Complete path to include the PHP File
+	 * @param array  $name      Template name
+	 * @param self   $template  Current instance of the Tribe__Template
+	 */
+	public function action_include_day_event_recurring_icon( $file, $name, $template ) {
+		$this->container->make( Day_Event_Recurring_Icon::class )->render( $template );
+	}
+
+	/**
+	 * Fires to include the recurring icon on the list view event.
+	 *
+	 * @since 4.7.8
+	 *
+	 * @param string $file      Complete path to include the PHP File
+	 * @param array  $name      Template name
+	 * @param self   $template  Current instance of the Tribe__Template
+	 */
+	public function action_include_list_event_recurring_icon( $file, $name, $template ) {
+		$this->container->make( List_Event_Recurring_Icon::class )->render( $template );
+	}
+
+	/**
+	 * Fires to include the recurring icon on the month view calendar event.
+	 *
+	 * @since 4.7.8
+	 *
+	 * @param string $file      Complete path to include the PHP File
+	 * @param array  $name      Template name
+	 * @param self   $template  Current instance of the Tribe__Template
+	 */
+	public function action_include_month_calendar_event_recurring_icon( $file, $name, $template ) {
+		$this->container->make( Month_Calendar_Event_Recurring_Icon::class )->render( $template );
+	}
+
+	/**
+	 * Fires to include the recurring icon on the month view mobile event.
+	 *
+	 * @since 4.7.8
+	 *
+	 * @param string $file      Complete path to include the PHP File
+	 * @param array  $name      Template name
+	 * @param self   $template  Current instance of the Tribe__Template
+	 */
+	public function action_include_month_mobile_event_recurring_icon( $file, $name, $template ) {
+		$this->container->make( Month_Mobile_Event_Recurring_Icon::class )->render( $template );
 	}
 
 	/**
@@ -166,9 +226,9 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	 *
 	 * @since 4.7.5
 	 *
-	 * @param array                $repository_args The current repository args.
+	 * @param array        $repository_args The current repository args.
 	 * @param Context|null $context         An instance of the context the View is using or `null` to use the
-	 *                                              global Context.
+	 *                                      global Context.
 	 *
 	 * @return array The filtered repository args.
 	 */

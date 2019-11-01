@@ -11,7 +11,7 @@
  *
  * @var array $day Array of data of the day
  *
- * @version 4.7.6
+ * @version 4.7.7
  *
  */
 
@@ -39,7 +39,7 @@ if ( ! empty( $day[ 'is_active' ] ) ) {
 		data-js="tribe-events-pro-week-day-selector-day"
 	>
 
-		<?php if ( tribe_is_truthy( $day[ 'has_events' ] ) ) : ?>
+		<?php if ( ! empty( $day['found_events'] ) ) : ?>
 			<em
 				class="tribe-events-pro-week-day-selector__events-icon"
 				aria-label="<?php esc_attr_e( 'Has events', 'the-events-calendar' ); ?>"

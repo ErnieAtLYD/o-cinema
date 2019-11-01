@@ -10,7 +10,6 @@
  * @link {INSERT_ARTCILE_LINK_HERE}
  *
  * @version 4.7.5
- *
  */
 ?>
 <div class="tribe-events-pro-week-grid__events-row-header" role="rowheader">

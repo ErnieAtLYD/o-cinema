@@ -53,7 +53,7 @@
 
 			<?php $this->template( 'week/grid-header' ); ?>
 
-			<?php $this->template( 'week/grid-body', [''] ); ?>
+			<?php $this->template( 'week/grid-body' ); ?>
 
 		</div>
 

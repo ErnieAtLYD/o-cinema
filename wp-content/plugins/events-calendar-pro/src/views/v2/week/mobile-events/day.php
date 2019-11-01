@@ -10,7 +10,7 @@
  * @link {INSERT_ARTCILE_LINK_HERE}
  *
  *
- * @version 4.7.6
+ * @version 4.7.7
  *
  * @var string $day_date The day date, in the `Y-m-d` format.
  * @var array $day The data for the day.
@@ -19,7 +19,7 @@
 $hidden      = 'true';
 $day_classes = [ 'tribe-events-pro-week-mobile-events__day' ];
 
-if ( $day[ 'has_events' ] ) {
+if ( $day[ 'found_events' ] ) {
 	$hidden        = 'false';
 	$day_classes[] = 'tribe-events-pro-week-mobile-events__day--active';
 }

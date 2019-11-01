@@ -8,13 +8,16 @@
 
 namespace Tribe\Events\Pro\Views\V2\Views\Partials;
 
+use Tribe\Events\Views\V2\Interfaces\View_Partial_Interface;
+use Tribe\Events\Views\V2\Views\Month_View;
+
 /**
  * Class Hide_Recurring_Events_Toggle
  *
  * @since   4.7.5
  * @package Tribe\Events\Pro\Views\V2\Views\Partials;
  */
-class Hide_Recurring_Events_Toggle {
+class Hide_Recurring_Events_Toggle implements View_Partial_Interface {
 	/**
 	 * Renders the "Hide recurring events" toggle in the View.
 	 *
@@ -24,7 +27,11 @@ class Hide_Recurring_Events_Toggle {
 	 *
 	 * @return string The rendered partial HTML code.
 	 */
-	public function render( $template ) {
-		return $template->template( 'recurrence/hide-recurring' );
+	public function render( \Tribe__Template $template ) {
+		if ( Month_View::class === $template->get( 'view_class' ) ) {
+			return '';
+		}
+
+		return $template->template( 'recurrence/hide-recurring', $template->get_values() );
 	}
 }

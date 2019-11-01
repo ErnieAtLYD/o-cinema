@@ -73,6 +73,12 @@ tribe.events.views.mapEvents = {};
 			.attr( 'aria-selected', 'false' )
 			.closest( obj.selectors.eventCardWrapper )
 			.removeClass( obj.selectors.eventCardWrapperActiveClass.className() );
+
+		var contentId = $button.attr( 'aria-controls' );
+		if ( contentId ) {
+			var $content = $button.closest( obj.selectors.eventCardWrapper ).find( '#' + contentId );
+			tribe.events.views.accordion.closeAccordion( $button, $content );
+		}
 	};
 
 	/**
@@ -89,6 +95,12 @@ tribe.events.views.mapEvents = {};
 			.attr( 'aria-selected', 'true' )
 			.closest( obj.selectors.eventCardWrapper )
 			.addClass( obj.selectors.eventCardWrapperActiveClass.className() );
+
+		var contentId = $button.attr( 'aria-controls' );
+		if ( contentId ) {
+			var $content = $button.closest( obj.selectors.eventCardWrapper ).find( '#' + contentId );
+			tribe.events.views.accordion.openAccordion( $button, $content );
+		}
 	};
 
 	/**
@@ -225,11 +237,11 @@ tribe.events.views.mapEvents = {};
 	 * @return {void}
 	 */
 	obj.init = function( event, index, $container, data ) {
-		if ( 'map' === data.slug ) {
-			obj.initMap( index, $container, data );
-			obj.bindEvents( index, $container, data );
-			$container.on( 'beforeAjaxSuccess.tribeEvents', { container: $container }, obj.deinit );
-		}
+		if ( 'map' !== data.slug ) return;
+
+		obj.initMap( index, $container, data );
+		obj.bindEvents( index, $container, data );
+		$container.on( 'beforeAjaxSuccess.tribeEvents', { container: $container }, obj.deinit );
 	};
 
 	/**

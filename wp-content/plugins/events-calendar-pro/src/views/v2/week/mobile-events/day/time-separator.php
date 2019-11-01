@@ -9,7 +9,7 @@
  *
  * @link {INSERT_ARTCILE_LINK_HERE}
  *
- * @version 4.7.5
+ * @version 4.7.8
  *
  * @var string $datetime The event datetime string, in the ISO 8601 format, e.g. `2019-01-01T00:00:00+00:00`.
  * @var string $formatted_time The time formatted according to the site settings.
@@ -18,8 +18,8 @@
 <div class="tribe-events-pro-week-mobile-events__event-time-separator">
 	<time
 		class="tribe-events-pro-week-mobile-events__event-time-separator-text tribe-common-h7 tribe-common-h--alt"
-		datetime="<?php echo esc_attr( $datetime ) ?>"
+		datetime="<?php echo esc_attr( $datetime ); ?>"
 	>
-		<?php echo esc_html( $time ) ?>
+		<?php echo esc_html( $time ); ?>
 	</time>
 </div>

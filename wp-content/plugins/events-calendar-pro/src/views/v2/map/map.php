@@ -13,6 +13,6 @@
  *
  */
 ?>
-<div class="tribe-events-pro-map__map tribe-common-g-col">
-	<?php $this->template( 'map/map/google-maps', [ 'events' => $events, 'is_premium' => $is_premium, 'map_provider_key' => $map_provider_key ] ); ?>
+<div class="tribe-events-pro-map__map tribe-common-g-col" data-js="tribe-events-pro-map-map">
+	<?php $this->template( 'map/map/google-maps' ); ?>
 </div>

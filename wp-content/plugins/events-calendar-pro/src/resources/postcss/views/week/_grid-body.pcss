@@ -22,7 +22,7 @@
 		overflow-y: hidden;
 
 		&:focus + .tribe-events-pro-week-grid__events-row-scroll-pane {
-			opacity: 1;
+			opacity: var(--opacity-default);
 		}
 	}
 
@@ -55,9 +55,8 @@
 		right: 0;
 
 		&:after {
+			background: center / contain no-repeat;
 			background-image: svg-inline(caret-down);
-			background-repeat: no-repeat;
-			background-size: contain;
 			content: '';
 			display: inline-block;
 			height: 8px;
@@ -109,7 +108,7 @@
 		position: relative;
 
 		&:hover .tribe-events-pro-week-grid__events-row-scroll-pane {
-			opacity: 1;
+			opacity: var(--opacity-default);
 		}
 	}
 
@@ -152,7 +151,7 @@
 		z-index: var(--z-index-scroller);
 
 		&.active {
-			opacity: 1;
+			opacity: var(--opacity-default);
 		}
 	}
 

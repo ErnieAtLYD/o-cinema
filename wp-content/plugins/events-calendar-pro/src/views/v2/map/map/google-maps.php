@@ -10,13 +10,15 @@
  *
  * @link {INSERT_ARTCILE_LINK_HERE}
  *
- * @version 4.7.7
+ * @version 4.7.8
  *
+ * @var  array   $events An array of the week events, in sequence.
+ * @var  array   $providers Array with all the possible map providers available to the view.
  */
 ?>
-<?php if ( empty( $is_premium ) ) : ?>
+<?php if ( empty( $map_provider->is_premium ) ) : ?>
 	<?php if ( ! empty( $events ) ) : ?>
-		<?php $this->template( 'map/map/google-maps/default', [ 'events' => $events, 'is_premium' => $is_premium, 'map_provider_key' => $map_provider_key ] ); ?>
+		<?php $this->template( 'map/map/google-maps/default' ); ?>
 	<?php endif; ?>
 <?php else : ?>
 	<?php $this->template( 'map/map/google-maps/premium' ); ?>

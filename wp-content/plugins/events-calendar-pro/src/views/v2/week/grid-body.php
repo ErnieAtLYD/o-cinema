@@ -9,10 +9,11 @@
  *
  * @link {INSERT_ARTCILE_LINK_HERE}
  *
- * @version 4.7.7
+ * @version 4.7.8
  *
- * @var array $multiday_events An array of the day multi-day events, if any.
- * @var array $events An array of the day non multi-day events, if any.
+ * @var array $multiday_events An array of each day multi-day events and more event count, if any, in the shape
+ *                             `[ <Y-m-d> => [ 'events' => [ ...$multiday_events], 'more_events' => <int> ] ]`.
+ * @var array $events An array of each day non multi-day events, if any, in the shape `[ <Y-m-d> => [ ...$events ] ]`.
  */
 
 ?>
@@ -30,10 +31,10 @@
 
 					<?php $this->template( 'week/grid-body/multiday-events-row-header' ); ?>
 
-					<?php foreach ( $multiday_events as $day => $day_multiday_events ) : ?>
+					<?php foreach ( $multiday_events as $day => list( $day_multiday_events, $more_events ) ) : ?>
 						<?php $this->template(
 							'week/grid-body/multiday-events-day',
-							[ 'events' => $day_multiday_events, 'day' => $day ]
+							[ 'day' => $day, 'events' => $day_multiday_events, 'more_events' => $more_events ]
 						); ?>
 					<?php endforeach; ?>
 

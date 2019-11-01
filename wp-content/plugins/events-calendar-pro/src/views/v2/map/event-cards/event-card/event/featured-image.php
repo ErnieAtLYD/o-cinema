@@ -9,24 +9,25 @@
  *
  * @link {INSERT_ARTCILE_LINK_HERE}
  *
- * @version 4.7.7
+ * @version 4.7.8
+ *
+ * @var WP_Post $event The event post object with properties added by the `tribe_get_event` function.
+ *
+ * @see tribe_get_event() For the format of the event object.
  *
  */
-$event    = $this->get( 'event' );
-$event_id = $event->ID;
 
-if ( ! has_post_thumbnail( $event_id ) ) {
+if ( ! $event->thumbnail->exists ) {
 	return;
 }
-
 ?>
 <div class="tribe-events-pro-map__event-featured-image-wrapper tribe-common-g-col">
 	<div class="tribe-events-pro-map__event-featured-image tribe-common-c-image tribe-common-c-image--bg">
 		<div
 			class="tribe-common-c-image__bg"
-			style="background-image: url('<?php echo esc_attr( get_the_post_thumbnail_url( $event_id, 'large' ) ); ?>');"
+			style="background-image: url('<?php echo esc_url( $event->thumbnail->full->url ); ?>');"
 			role="img"
-			aria-label="alt text here"
+			aria-label="<?php echo esc_attr( get_the_title( $event ) ); ?>"
 		>
 		</div>
 	</div>

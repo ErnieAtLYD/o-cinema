@@ -9,7 +9,7 @@
  *
  * @link {INSERT_ARTCILE_LINK_HERE}
  *
- * @version 4.7.5
+ * @version 4.7.8
  *
  * @var WP_Post $event The event post object, decorated with additional properties by the `tribe_get_event` function.
  *
@@ -33,7 +33,7 @@ if ( ! $event->thumbnail->exists ) {
 				class="tribe-common-c-image__bg"
 				style="background-image: url('<?php echo esc_attr( $event->thumbnail->full->url ); ?>');"
 				role="img"
-				aria-label="alt text here"
+				aria-label="<?php echo esc_attr( get_the_title( $event ) ); ?>"
 			>
 			</div>
 		</div>

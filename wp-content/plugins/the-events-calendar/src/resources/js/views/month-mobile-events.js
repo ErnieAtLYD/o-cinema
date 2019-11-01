@@ -42,7 +42,7 @@ tribe.events.views.monthMobileEvents = {};
 		calendar: '[data-js="tribe-events-month-grid"]',
 		calendarDay: '[data-js="tribe-events-calendar-month-day-cell-mobile"]',
 		calendarDaySelectedClass: '.tribe-events-calendar-month__day-cell--selected',
-		mobileEvents: '[data-js="tribe-events-pro-week-mobile-events"]',
+		mobileEvents: '[data-js="tribe-events-calendar-month-mobile-events"]',
 		mobileEventsMobileDayShowClass: '.tribe-events-calendar-month-mobile-events__mobile-day--show',
 	};
 
@@ -261,7 +261,9 @@ tribe.events.views.monthMobileEvents = {};
 	obj.init = function( event, index, $container, data ) {
 		var $mobileEvents = $container.find( obj.selectors.mobileEvents );
 
-		if ( ! $mobileEvents.length ) return;
+		if ( ! $mobileEvents.length ) {
+			return;
+		}
 
 		obj.initState( $container );
 		obj.bindCalendarEvents( $container );

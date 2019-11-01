@@ -170,6 +170,10 @@ class Tribe__Events__Pro__Geo_Loc {
 	 * @return array
 	 */
 	public function inject_settings( $args, $id ) {
+		if ( tribe_is_using_basic_gmaps_api() ) {
+		    // If the user is using the default Google Maps API key, then don't show the button to fix Venues at all.
+			return $args;
+		}
 
 		if ( $id == 'general' ) {
 
@@ -242,40 +246,64 @@ class Tribe__Events__Pro__Geo_Loc {
 	 * @return WP_Query
 	 */
 	protected function get_venues_without_geoloc_info( $full_data = false ) {
-		$query_args = [
-			'post_type'      => Tribe__Events__Main::VENUE_POST_TYPE,
-			'post_status'    => 'publish',
-			'posts_per_page' => 250,
-			'meta_query'     => [
-				'empty-or-no-geo-address' => [
-					[
-						'key'     => self::ADDRESS,
-						'compare' => 'NOT EXISTS',
-					],
-					'relation' => 'OR',
-					[
-						'key'     => self::ADDRESS,
-						'compare' => '=',
-						'value'   => '',
-					],
-				],
-				[
-					'key'     => '_VenueAddress',
-					'compare' => '!=',
-					'value'   => '',
-				],
-			],
-		];
+		$default_args = [];
+		$venues       = [];
+		$count_target = 250;
 
+		// When not full data limit the Query to 1
 		if ( ! $full_data ) {
-			$query_args['fields']         = 'ids';
-			$query_args['posts_per_page'] = 1;
+			$default_args['fields']         = 'ids';
+			$default_args['posts_per_page'] = 1;
+			$count_target                   = 1;
 		}
 
+		$per_page = $count_target;
 
-		$venues = new WP_Query( $query_args );
+		foreach ( [ static::ADDRESS, static::LAT, static::LNG ] as $required_meta ) {
+			if ( 0 === $per_page ) {
+				break;
+			}
 
-		return $venues;
+			$query_args = wp_parse_args( [
+				'post_type'      => Tribe__Events__Main::VENUE_POST_TYPE,
+				'post_status'    => 'publish',
+				'posts_per_page' => $per_page,
+				'meta_query'     => [
+					[
+						'has-an-address-string'   => [
+							'key'     => '_VenueAddress',
+							'compare' => '!=',
+							'value'   => '',
+						],
+						'relation'                => 'AND',
+						'has-empty-geoloc-fields' => [
+							'empty-' . $required_meta      => [
+								'key'     => $required_meta,
+								'compare' => '=',
+								'value'   => '',
+							],
+							'relation'                     => 'OR',
+							$required_meta . '-not-exists' => [
+								'key'     => $required_meta,
+								'compare' => 'NOT EXISTS',
+							]
+						]
+					]
+				]
+			], $default_args );
+
+			$posts    = get_posts( $query_args );
+			$per_page = max( $count_target - count( $posts ), 0 );
+			$venues[] = $posts;
+		}
+
+		$found = array_merge( ...$venues );
+
+		$query              = new WP_Query();
+		$query->found_posts = count( $found );
+		$query->posts        = $found;
+
+		return $query;
 	}
 
 	/**
@@ -582,12 +610,15 @@ class Tribe__Events__Pro__Geo_Loc {
 	 * Hooks into the venue save and if we don't have Geo Data for that address,
 	 * it calls the Google Maps API and grabs the Lat and Lng for that venue.
 	 *
-	 * @param $venueId
-	 * @param $data
+	 * @param int       $venueId The The Venue post ID.
+	 * @param array     $data    An array of location data for the Venue as provided by WordPress.
+	 * @param bool|null $force   Whether to force the re-fetch of the geolocation data for the Venue or not.
 	 *
-	 * @return bool
+	 * @return bool Whether the Venue geolocation information was updated or not.
+     *
+     * @throws \RuntimeException If the `$throw` parameter is set to `true` and th
 	 */
-	public function save_venue_geodata( $venueId, $data ) {
+	public function save_venue_geodata( $venueId, $data, $force = false ) {
 
 		$_address  = ( ! empty( $data['Address'] ) ) ? $data['Address'] : '';
 		$_city     = ( ! empty( $data['City'] ) ) ? $data['City'] : '';
@@ -641,8 +672,16 @@ class Tribe__Events__Pro__Geo_Loc {
 			return false;
 		}
 
+		$all_meta_is_set = 3 === array_sum(
+				[
+					(bool) get_post_meta( $venueId, static::ADDRESS, true ),
+					(bool) get_post_meta( $venueId, static::LNG, true ),
+					(bool) get_post_meta( $venueId, static::LAT, true ),
+				]
+			);
+
 		// If the address didn't change, it doesn't make sense to query Google again for the geo data.
-		if ( true !== $reset && $address === get_post_meta( $venueId, self::ADDRESS, true ) ) {
+		if ( ! $force && false === $reset && $all_meta_is_set ) {
 			return false;
 		}
 
@@ -652,6 +691,10 @@ class Tribe__Events__Pro__Geo_Loc {
 		}
 
 		$resolved = $this->geocode_address( $address, $venueId, $pieces );
+
+		if ( false === $resolved ) {
+			return false;
+		}
 
 		if ( false !== $resolved ) {
 			if ( isset( $resolved['lat'] ) ) {
@@ -1245,6 +1288,7 @@ class Tribe__Events__Pro__Geo_Loc {
 			return false;
 		}
 
+
 		$data_arr = json_decode( $data['body'] );
 
 		if ( isset( $data_arr->status ) && 'OVER_QUERY_LIMIT' === $data_arr->status ) {
@@ -1255,6 +1299,20 @@ class Tribe__Events__Pro__Geo_Loc {
 			set_transient( 'tribe-google-over-limit', 1, time() + MINUTE_IN_SECONDS );
 
 			$this->over_query_limit_displayed = true;
+
+			return false;
+		}
+
+		if ( isset( $data_arr->error_message ) ) {
+			tribe_notice( 'failed-geocode',
+				sprintf(
+					esc_html__(
+						'There was an error while trying to fix the Venues geolocation information: %s',
+						'tribe-events-calendar-pro'
+					),
+					$data_arr->error_message
+				)
+			);
 
 			return false;
 		}
@@ -1317,7 +1375,7 @@ class Tribe__Events__Pro__Geo_Loc {
 			return;
 		}
 
-		$done = get_option( '_tribe_geoloc_fixed' );
+		$done = get_transient( '_tribe_geoloc_fixed' );
 
 		if ( ! empty( $done ) ) {
 			return;
@@ -1326,6 +1384,9 @@ class Tribe__Events__Pro__Geo_Loc {
 		$venues = $this->get_venues_without_geoloc_info();
 
 		if ( $venues->found_posts === 0 ) {
+			// Let's run the Venue check once a day.
+			set_transient( '_tribe_geoloc_fixed', 1, DAY_IN_SECONDS );
+
 			return;
 		}
 
@@ -1367,7 +1428,10 @@ class Tribe__Events__Pro__Geo_Loc {
 
 		$this->last_venues_fixed_count = $this->generate_geopoints_for_all_venues();
 
-		add_action( 'admin_notices', array( $this, 'show_fixed_notice' ) );
+		if ( $this->last_venues_fixed_count > 0 ) {
+		    // Show a message if we've actually fixed something.
+			add_action( 'admin_notices', array( $this, 'show_fixed_notice' ) );
+		}
 	}
 
 	/**
@@ -1395,7 +1459,7 @@ class Tribe__Events__Pro__Geo_Loc {
 
 		$count = 0;
 		foreach ( $venues->posts as $venue ) {
-			$data             = array();
+			$data             = [];
 			$data['Address']  = get_post_meta( $venue->ID, '_VenueAddress', true );
 			$data['City']     = get_post_meta( $venue->ID, '_VenueCity', true );
 			$data['Province'] = get_post_meta( $venue->ID, '_VenueProvince', true );
@@ -1403,12 +1467,25 @@ class Tribe__Events__Pro__Geo_Loc {
 			$data['Zip']      = get_post_meta( $venue->ID, '_VenueZip', true );
 			$data['Country']  = get_post_meta( $venue->ID, '_VenueCountry', true );
 
-			self::instance()->save_venue_geodata( $venue->ID, $data );
+			// If we're here we need to re-fetch the geolocation data, just force it.
+			$updated = self::instance()->save_venue_geodata( $venue->ID, $data, true );
+
+			if ( false === $updated ) {
+				/**
+				 * There is an issue that, most likely, will prevent any update to any Venue from happening.
+				 * Let's stop; the inner methods should provide feedback to the user by means of a transient notice.
+				 */
+				return $count;
+			}
 
 			$count ++;
 		}
 
-		update_option( '_tribe_geoloc_fixed', 1 );
+		// For back-compatibility purposes let's remove this.
+		delete_option( '_tribe_geoloc_fixed', 1 );
+
+		// Let's run the Venue check once a day.
+		set_transient( '_tribe_geoloc_fixed', 1, DAY_IN_SECONDS );
 
 		return $count;
 	}

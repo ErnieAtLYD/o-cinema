@@ -118,10 +118,10 @@ tribe.events.views.mapEventsScroller = {};
 	 * @return {void}
 	 */
 	obj.init = function( event, index, $container, data ) {
-		if ( 'map' === data.slug ) {
-			obj.initScroller( $container );
-			$container.on( 'beforeAjaxSuccess.tribeEvents', { container: $container }, obj.deinit );
-		}
+		if ( 'map' !== data.slug ) return;
+
+		obj.initScroller( $container );
+		$container.on( 'beforeAjaxSuccess.tribeEvents', { container: $container }, obj.deinit );
 	};
 
 	/**

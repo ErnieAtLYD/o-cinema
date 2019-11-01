@@ -95,6 +95,7 @@ class Tribe__Events__Pro__Recurrence__Children_Events {
 			'meta_key'       => '_EventStartDate',
 			'orderby'        => 'meta_value',
 			'order'          => 'ASC',
+			'tribe_remove_date_filters' => true,
 		);
 	}
 

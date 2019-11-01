@@ -9,7 +9,7 @@
  *
  * @link {INSERT_ARTCILE_LINK_HERE}
  *
- * @version 4.7.5
+ * @version 4.7.8
  *
  * @var WP_Post $event The event post object, decorated with additional properties by the `tribe_get_event` function.
  *
@@ -17,16 +17,26 @@
  */
 
 ?>
-<div class="tribe-events-pro-week-mobile-events__event-datetime-wrapper">
-	<time class="tribe-events-pro-week-mobile-events__event-datetime tribe-common-b2"
-	      datetime="<?php echo esc_attr( $event->dates->start->format( 'c' ) ) ?>">
-	<?php echo $event->schedule_details->escaped(); // Already escaped. ?>
-	</time>
+<div class="tribe-events-pro-week-mobile-events__event-datetime-wrapper tribe-common-b2">
 	<?php if ( ! empty( $event->featured ) ) : ?>
 		<em
 			class="tribe-events-pro-week-mobile-events__event-datetime-featured-icon tribe-common-svgicon tribe-common-svgicon--featured"
 			aria-label="<?php esc_attr_e( 'Featured', 'tribe-events-calendar-pro' ); ?>"
 			title="<?php esc_attr_e( 'Featured', 'tribe-events-calendar-pro' ); ?>"
+		>
+		</em>
+	<?php endif; ?>
+	<time
+		class="tribe-events-pro-week-mobile-events__event-datetime"
+		datetime="<?php echo esc_attr( $event->dates->start->format( 'c' ) ); ?>"
+	>
+		<?php echo $event->schedule_details->escaped(); // Already escaped. ?>
+	</time>
+	<?php if ( ! empty( $event->recurring ) ) : ?>
+		<em
+			class="tribe-events-pro-week-mobile-events__event-datetime-recurring-icon tribe-common-svgicon tribe-common-svgicon--recurring"
+			aria-label="<?php esc_attr_e( 'Recurring', 'tribe-events-calendar-pro' ) ?>"
+			title="<?php esc_attr_e( 'Recurring', 'tribe-events-calendar-pro' ) ?>"
 		>
 		</em>
 	<?php endif; ?>

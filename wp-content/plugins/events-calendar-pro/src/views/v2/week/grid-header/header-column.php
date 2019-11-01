@@ -9,11 +9,16 @@
  *
  * @link {INSERT_ARTCILE_LINK_HERE}
  *
- * @var array $day Array of data of the day.
+ * @version 4.7.8
  *
- * @version 4.7.6
- *
+ * @var array $day Array of data for the day.
+ * @var string $today_date Today's date in the `Y-m-d` format.
  */
+$day_classes = [ 'tribe-events-pro-week-grid__header-column-daynum', 'tribe-common-h4' ];
+
+if ( $today_date === $day['datetime'] ) {
+	$day_classes[] = 'tribe-events-pro-week-grid__header-column-daynum--current';
+}
 ?>
 <div
 	class="tribe-events-pro-week-grid__header-column"
@@ -28,7 +33,7 @@
 			<span class="tribe-events-pro-week-grid__header-column-weekday tribe-common-h8 tribe-common-h--alt">
 				<?php echo esc_html( $day[ 'weekday' ] ); ?>
 			</span>
-			<span class="tribe-events-pro-week-grid__header-column-daynum tribe-common-h4">
+			<span <?php tribe_classes( $day_classes ); ?>>
 				<?php echo esc_html( $day[ 'daynum' ] ); ?>
 			</span>
 		</time>

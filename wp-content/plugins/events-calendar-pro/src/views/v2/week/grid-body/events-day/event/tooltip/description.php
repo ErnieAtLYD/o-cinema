@@ -9,10 +9,16 @@
  *
  * @link {INSERT_ARTCILE_LINK_HERE}
  *
- * @version 4.7.6
+ * @version 4.7.8
+ *
+ * @var WP_Post $event The event post object with properties added by the `tribe_get_event` function.
+ *
+ * @see tribe_get_event() For the format of the event object.
  *
  */
+$description = get_the_excerpt( $event->ID ) ?: get_the_title( $event->ID );
+
 ?>
 <p class="tribe-events-pro-week-grid__event-tooltip-description tribe-common-b3">
-	Lorem ipsum dolor sit amet, consectetur adipiscing elit. In consectetur metus tortor, et maximus libero aliquet in. Praesent rhoncus ultricies neque in imperdiet. Aenean at ex luctus, tempor justo eget, pharetra magna. Nullam ut odio maximus nisi mollis gravida.
+	<?php echo wp_kses_post( $description ) ?>
 </p>

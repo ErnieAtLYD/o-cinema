@@ -9,7 +9,7 @@
  *
  * @link {INSERT_ARTCILE_LINK_HERE}
  *
- * @version 4.7.5
+ * @version 4.7.7
  *
  *
  * @var WP_Post $event The event post object, decorated with additional properties by the `tribe_get_event` function.
@@ -33,6 +33,7 @@ if ( ! empty( $event->featured ) ) {
 		<?php $this->template( 'week/mobile-events/day/event/date', [ 'event' => $event ] ); ?>
 		<?php $this->template( 'week/mobile-events/day/event/title', [ 'event' => $event ] ); ?>
 		<?php $this->template( 'week/mobile-events/day/event/venue', [ 'event' => $event ] ); ?>
+		<?php $this->template( 'week/mobile-events/day/event/cost', [ 'event' => $event ] ); ?>
 
 	</div>
 

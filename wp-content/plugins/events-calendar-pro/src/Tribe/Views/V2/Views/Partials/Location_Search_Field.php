@@ -31,6 +31,6 @@ class Location_Search_Field implements View_Partial_Interface {
 			return '';
 		}
 
-		return $template->template( 'location/form-field' );
+		return $template->template( 'location/form-field', $template->get_values() );
 	}
 }

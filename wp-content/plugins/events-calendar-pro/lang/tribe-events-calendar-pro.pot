@@ -2,13 +2,13 @@
 # This file is distributed under the same license as the The Events Calendar PRO package.
 msgid ""
 msgstr ""
-"Project-Id-Version: The Events Calendar PRO 4.7.7\n"
+"Project-Id-Version: The Events Calendar PRO 4.7.8\n"
 "Report-Msgid-Bugs-To: http://m.tri.be/191x\n"
-"POT-Creation-Date: 2019-08-30 19:44:46+00:00\n"
+"POT-Creation-Date: 2019-09-20 16:21:15+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2019-08-30 19:44\n"
+"PO-Revision-Date: 2019-09-20 16:21\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 
@@ -46,8 +46,22 @@ msgid "Title"
 msgstr ""
 
 #: src/Tribe/APM_Filters/APM_Filters.php:97 src/Tribe/Recurrence/Meta.php:291
-#: src/views/v2/week/grid-body/events-day/event/date.php:32
-#: src/views/v2/week/grid-body/events-day/event/date.php:33
+#: src/views/v2/day/event/recurring.php:22
+#: src/views/v2/day/event/recurring.php:23
+#: src/views/v2/list/event/recurring.php:22
+#: src/views/v2/list/event/recurring.php:23
+#: src/views/v2/map/event-cards/event-card/event/date-time.php:73
+#: src/views/v2/map/event-cards/event-card/event/date-time.php:74
+#: src/views/v2/month/calendar-event/recurring.php:22
+#: src/views/v2/month/calendar-event/recurring.php:23
+#: src/views/v2/month/mobile-event/recurring.php:18
+#: src/views/v2/month/mobile-event/recurring.php:19
+#: src/views/v2/photo/event/date-time.php:52
+#: src/views/v2/photo/event/date-time.php:53
+#: src/views/v2/week/grid-body/events-day/event/date.php:43
+#: src/views/v2/week/grid-body/events-day/event/date.php:44
+#: src/views/v2/week/mobile-events/day/event/date.php:38
+#: src/views/v2/week/mobile-events/day/event/date.php:39
 msgid "Recurring"
 msgstr ""
 
@@ -216,107 +230,112 @@ msgstr ""
 msgid "Distance"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:183
+#: src/Tribe/Geo_Loc.php:187
 msgid "Map view search distance limit"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:185
+#: src/Tribe/Geo_Loc.php:189
 msgid ""
 "Set the distance that the location search covers (find events within X "
 "distance units of location search input)."
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:192
+#: src/Tribe/Geo_Loc.php:196
 msgid "Distance unit"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:198 src/Tribe/Geo_Loc_Filter.php:23
+#: src/Tribe/Geo_Loc.php:202 src/Tribe/Geo_Loc_Filter.php:23
 msgid "Miles"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:199 src/Tribe/Geo_Loc_Filter.php:26
+#: src/Tribe/Geo_Loc.php:203 src/Tribe/Geo_Loc_Filter.php:26
 msgid "Kilometers"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:214
+#: src/Tribe/Geo_Loc.php:218
 msgid "Hide location search"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:215
+#: src/Tribe/Geo_Loc.php:219
 msgid ""
 "Removes location search field from the events bar on all views except for "
 "map view."
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:292
+#: src/Tribe/Geo_Loc.php:298
 msgid "Map"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:330
+#: src/Tribe/Geo_Loc.php:336
 msgid "Venue Overwrite Coordinates"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:361
+#: src/Tribe/Geo_Loc.php:367
 msgid "Near"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:362
+#: src/Tribe/Geo_Loc.php:368
 msgid "Location"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:387
+#: src/Tribe/Geo_Loc.php:393
 msgid "Use latitude + longitude"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:398
+#: src/Tribe/Geo_Loc.php:404
 msgid "Latitude"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:399
+#: src/Tribe/Geo_Loc.php:405
 msgid "Longitude"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:417
+#: src/Tribe/Geo_Loc.php:423
 msgid "Enter a custom Google Maps API key"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:418
+#: src/Tribe/Geo_Loc.php:424
 msgid ""
 "for latitude and longitude to be auto-generated; otherwise, you'll only be "
 "able to enter the values manually."
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:688
+#: src/Tribe/Geo_Loc.php:709
 msgid ""
 "The latitude and longitude for your venue could not be fetched. The Google "
 "Maps API daily query limit has been reached!. %1$s "
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:692
+#: src/Tribe/Geo_Loc.php:713
 msgid "Enter your API Key"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:1238
+#: src/Tribe/Geo_Loc.php:1259
 msgctxt "debug geodata"
 msgid "Geocode request failed ($1%s - $2%s)"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:1239
+#: src/Tribe/Geo_Loc.php:1260
 msgctxt "debug geodata"
 msgid "empty response"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:1304
+#: src/Tribe/Geo_Loc.php:1287
+msgid ""
+"There was an error while trying to fix the Venues geolocation information: %s"
+msgstr ""
+
+#: src/Tribe/Geo_Loc.php:1340
 msgid "Fix venues data"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:1353
+#: src/Tribe/Geo_Loc.php:1389
 msgid ""
 "You have venues for which we don't have Geolocation information. <a "
 "href='%s'>Click here to generate it</a>."
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:1379
+#: src/Tribe/Geo_Loc.php:1418
 msgid "Fixed geolocation data for %d venues"
 msgstr ""
 
@@ -1047,6 +1066,7 @@ msgid "Times:"
 msgstr ""
 
 #: src/Tribe/Recurrence/Strings.php:13
+#: src/views/v2/photo/event/date-time.php:36
 msgid "All day"
 msgstr ""
 
@@ -1813,6 +1833,13 @@ msgstr ""
 
 #: src/Tribe/Venue_Widget.php:21
 msgid "Events Featured Venue"
+msgstr ""
+
+#: src/Tribe/Views/V2/Views/Map_View.php:114
+#: src/Tribe/Views/V2/Views/Map_View.php:138
+#: src/Tribe/Views/V2/Views/Map_View.php:162
+#: src/Tribe/Views/V2/Views/Map_View.php:186
+msgid "4.7 mi away"
 msgstr ""
 
 #: src/admin-views/custom-fields/gutenberg.php:3
@@ -2675,6 +2702,8 @@ msgid "&larr; Back to %s"
 msgstr ""
 
 #: src/views/pro/week/loop-grid-allday.php:18
+#: src/views/v2/map/event-cards/event-card/event/date-time.php:29
+#: src/views/v2/map/event-cards/event-card/tooltip/date-time.php:27
 #: src/views/v2/week/grid-body/multiday-events-row-header.php:21
 msgid "All Day"
 msgstr ""
@@ -2746,41 +2775,51 @@ msgstr ""
 msgid "In a location"
 msgstr ""
 
-#: src/views/v2/map/event-cards/event-card/event/date-time.php:30
-#: src/views/v2/map/event-cards/event-card/event/date-time.php:31
-#: src/views/v2/map/event-cards/event-card/event/date-time.php:34
-#: src/views/v2/photo/event/title.php:23 src/views/v2/photo/event/title.php:24
-#: src/views/v2/week/grid-body/multiday-events-day/multiday-event.php:56
-#: src/views/v2/week/grid-body/multiday-events-day/multiday-event.php:57
-#: src/views/v2/week/mobile-events/day/event/date.php:28
-#: src/views/v2/week/mobile-events/day/event/date.php:29
+#: src/views/v2/map/event-cards/event-card/event/date-time.php:47
+#: src/views/v2/map/event-cards/event-card/event/date-time.php:48
+#: src/views/v2/map/event-cards/event-card/event/date-time.php:52
+#: src/views/v2/map/event-cards/event-card/tooltip/date-time.php:45
+#: src/views/v2/map/event-cards/event-card/tooltip/date-time.php:46
+#: src/views/v2/photo/event/date-time.php:26
+#: src/views/v2/photo/event/date-time.php:27
+#: src/views/v2/photo/event/date-time.php:31
+#: src/views/v2/week/grid-body/events-day/event/date.php:26
+#: src/views/v2/week/grid-body/events-day/event/date.php:27
+#: src/views/v2/week/grid-body/events-day/event/title.php:24
+#: src/views/v2/week/grid-body/events-day/event/title.php:25
+#: src/views/v2/week/grid-body/multiday-events-day/multiday-event.php:63
+#: src/views/v2/week/grid-body/multiday-events-day/multiday-event.php:64
+#: src/views/v2/week/mobile-events/day/event/date.php:24
+#: src/views/v2/week/mobile-events/day/event/date.php:25
 msgid "Featured"
 msgstr ""
 
-#: src/views/v2/map/event-cards/event-card/event/distance.php:20
-msgid "4.7 mi away"
-msgstr ""
-
-#: src/views/v2/map/event-cards/event-card/event/venue.php:27
+#: src/views/v2/map/event-cards/event-card/event/venue.php:29
+#: src/views/v2/map/event-cards/event-card/tooltip/venue.php:27
 msgid "Venue Title"
 msgstr ""
 
-#: src/views/v2/map/event-cards/event-card/event/venue.php:30
+#: src/views/v2/map/event-cards/event-card/event/venue.php:32
+#: src/views/v2/map/event-cards/event-card/tooltip/venue.php:30
 msgid "1234 Street, San Francisco"
 msgstr ""
 
-#: src/views/v2/map/nav/next-disabled.php:20 src/views/v2/map/nav/next.php:24
-#: src/views/v2/week/nav.php:37 src/views/v2/week/nav.php:39
-msgid "Next"
-msgstr ""
-
-#: src/views/v2/map/nav/prev-disabled.php:20 src/views/v2/map/nav/prev.php:24
+#: src/views/v2/map/event-cards/event-card/tooltip/navigation.php:27
+#: src/views/v2/map/event-cards/nav/prev-disabled.php:20
+#: src/views/v2/map/event-cards/nav/prev.php:24
 msgid "Prev"
 msgstr ""
 
-#: src/views/v2/map/nav/today.php:26 src/views/v2/photo/nav/today.php:31
-#: src/views/v2/photo/top-bar/today.php:23 src/views/v2/week/nav/today.php:31
-#: src/views/v2/week/top-bar/today.php:23
+#: src/views/v2/map/event-cards/event-card/tooltip/navigation.php:35
+#: src/views/v2/map/event-cards/nav/next-disabled.php:20
+#: src/views/v2/map/event-cards/nav/next.php:24 src/views/v2/week/nav.php:37
+#: src/views/v2/week/nav.php:39
+msgid "Next"
+msgstr ""
+
+#: src/views/v2/map/event-cards/nav/today.php:26
+#: src/views/v2/photo/nav/today.php:31 src/views/v2/photo/top-bar/today.php:23
+#: src/views/v2/week/nav/today.php:31 src/views/v2/week/top-bar/today.php:23
 msgid "Today"
 msgstr ""
 
@@ -2822,11 +2861,21 @@ msgstr ""
 msgid "Previous week"
 msgstr ""
 
-#: src/views/v2/week/grid-body/multiday-events-row-header/multiday-events-row-header-toggle.php:30
+#: src/views/v2/week/grid-body/events-day/event/tooltip/cta.php:35
+msgid "Buy Now"
+msgstr ""
+
+#: src/views/v2/week/grid-body/multiday-events-day/more-events.php:21
+msgid "+1 more"
+msgid_plural "+ %s more"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/views/v2/week/grid-body/multiday-events-row-header/multiday-events-row-header-toggle.php:26
 msgid "Toggle multiday events"
 msgstr ""
 
-#: src/views/v2/week/grid-header.php:61
+#: src/views/v2/week/grid-header.php:19
 msgid "Week of %s"
 msgstr ""
 

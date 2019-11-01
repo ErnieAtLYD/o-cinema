@@ -9,23 +9,23 @@
  *
  * @link {INSERT_ARTCILE_LINK_HERE}
  *
- * @version 4.7.7
+ * @version 4.7.8
+ *
+ * @var WP_Post $event The event post object with properties added by the `tribe_get_event` function.
+ *
+ * @see tribe_get_event() For the format of the event object.
  *
  */
-
-$event    = $this->get( 'event' );
-$event_id = $event->ID;
-
-$aria_selected = 'false';
-if ( 0 === $index ) {
-	$aria_selected = 'true';
-}
+$aria_selected = $aria_expanded = ! $map_provider->is_premium && ( 0 === $index ) ? 'true' : 'false';
+$aria_controls = 'tribe-events-pro-map-event-actions-' . $event->ID;
 
 ?>
 <button
 	class="tribe-events-pro-map__event-card-button"
 	data-js="tribe-events-pro-map-event-card-button"
 	aria-selected="<?php echo esc_attr( $aria_selected ); ?>"
+	aria-controls="<?php echo esc_attr( $aria_controls ); ?>"
+	aria-expanded="<?php echo esc_attr( $aria_expanded ); ?>"
 >
-	<span class="tribe-common-a11y-visual-hide"><?php echo get_the_title( $event_id ); ?></span>
+	<span class="tribe-common-a11y-visual-hide"><?php echo get_the_title( $event->ID ); ?></span>
 </button>

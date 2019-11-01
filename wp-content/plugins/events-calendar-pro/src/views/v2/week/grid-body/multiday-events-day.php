@@ -9,33 +9,16 @@
  *
  * @link {INSERT_ARTCILE_LINK_HERE}
  *
- * @version 4.7.7
+ * @version 4.7.8
  *
+ * @var array $events An array of events in this day stack.
  * @var int $multiday_min_toggle The number we should be displaying the toggle on.
- *
+ * @var int $more_events The number of events not showing in the stack due to toggle settings.
  */
 
-$events = $this->get( 'events' );
+$should_display_more_link = count( $events ) > $multiday_min_toggle;
 
-/**
- * @todo: @be: We're getting the day here to set a div ID.
- * If we can get this from template vars it shouldn't be necessary to receive it.
- * And we could get rid of this.
-*/
-$day = $this->get( 'day' );
-
-/**
- * THIS IS DAY BASED.
- * @todo: @BE: Determin if we should include the read more button.
- * It has the same condition as the "Toggle button" but on a day basis.
- * The button should be shown if we have more multiday + full-day events than the X number we want to display.
- */
-$should_display_more_link = count( $events ) >= $multiday_min_toggle;
-
-/**
- * This will be the toggle id.
- *
-*/
+// This will be the toggle id for this day.
 $mutiday_day_toggle_id = 'tribe-events-pro-multiday-toggle-day-' . $day;
 
 ?>
@@ -44,15 +27,7 @@ $mutiday_day_toggle_id = 'tribe-events-pro-multiday-toggle-day-' . $day;
 	<?php foreach ( $events as $key => $event ) : ?>
 
 		<?php if ( $should_display_more_link && ( $multiday_min_toggle === $key ) ) : ?>
-			<?php
-			/*
-				@be: This div opener is for the div containing the events that are supposed to be toggled.
-				So, if we should display the "more link" and the key for the events is "3" (meaning that is the event after 3), we should open the div.
-				The ID used here, would be part of the `aria-controls` of
-					- The button of `multiday-events-row-header-toggle.php`
-					- The button of `multiday-events-day/more-events.php`
-			*/
-			?>
+			<?php /* If this is the third event and the toggle is 3,then show this. */ ?>
 			<div
 				id="<?php echo esc_attr( $mutiday_day_toggle_id ); ?>"
 				data-js="tribe-events-pro-week-multiday-accordion"
@@ -61,19 +36,23 @@ $mutiday_day_toggle_id = 'tribe-events-pro-multiday-toggle-day-' . $day;
 		<?php endif; ?>
 
 		<?php
-		if ( 'spacer' === $event[ 'type' ] ) {
+		if ( false === $event ) {
 			$this->template( 'week/grid-body/multiday-events-day/multiday-event-spacer' );
 			continue;
 		}
 
-		$this->template( 'week/grid-body/multiday-events-day/multiday-event', [ 'event' => (object) $event ] );
+		$this->template( 'week/grid-body/multiday-events-day/multiday-event', [ 'event' => $event, 'day' => $day ] );
 		?>
 	<?php endforeach; ?>
 
 	<?php if ( $should_display_more_link ) : ?>
-		<?php /* @be: This closing tag `</div> corresponds to the one opened on line 54. */ ?>
+		<?php /* This closes the `tribe-events-pro-week-grid__multiday-overflow-events` element. */ ?>
 		</div>
-		<?php $this->template( 'week/grid-body/multiday-events-day/more-events', [ 'day' => $day ] ); ?>
-	<?php endif; ?>
+
+	<?php $this->template( 'week/grid-body/multiday-events-day/more-events', [
+		'day' => $day,
+		'more_events' => $more_events
+	] ); ?>
+<?php endif; ?>
 
 </div>

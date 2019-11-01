@@ -9,22 +9,29 @@
  *
  * @link {INSERT_ARTCILE_LINK_HERE}
  *
- * @version 4.7.7
+ * @version 4.7.8
+ *
+ * @var WP_Post $event The event post object with properties added by the `tribe_get_event` function.
+ *
+ * @see tribe_get_event() For the format of the event object.
  *
  */
-$event_id = $event->ID;
-
 $wrapper_classes = [ 'tribe-events-pro-map__event-card-wrapper' ];
-$wrapper_classes['tribe-events-pro-map__event-card-wrapper--featured'] = tribe( 'tec.featured_events' )->is_featured( $event_id );
+$wrapper_classes['tribe-events-pro-map__event-card-wrapper--featured'] = $event->featured;
 
 $classes = [ 'tribe-common-g-row', 'tribe-events-pro-map__event-row', 'tribe-events-pro-map__event-row--gutters' ];
 
 $data_src_attr = '';
-if ( empty( $is_premium ) ) {
-	$data_src_attr = 'data-src="' . esc_url( sprintf( 'https://www.google.com/maps/embed/v1/place?key=%1$s&q=%2$s', $map_provider_key['google_maps'], urlencode( $event->venues[0]['linked_name'] ) ) ) . '"';
+
+if ( empty( $map_provider->is_premium ) && $event->venues->count() ) {
+	$iframe_url = add_query_arg( [
+		'key' => $map_provider->api_key,
+		'q'   => urlencode( $event->venues->first()->geolocation->address ),
+	], $map_provider->iframe_url );
+
+	$data_src_attr = 'data-src="' . esc_url( $iframe_url ) . '"';
 	$wrapper_classes['tribe-events-pro-map__event-card-wrapper--active'] = 0 === $index;
 }
-
 ?>
 <div
 	<?php tribe_classes( $wrapper_classes ) ?>
@@ -40,9 +47,11 @@ if ( empty( $is_premium ) ) {
 
 			<?php $this->template( 'map/event-cards/event-card/date-tag', [ 'event' => $event ] ); ?>
 
-			<?php $this->template( 'map/event-cards/event-card/event', [ 'event' => $event ] ); ?>
+			<?php $this->template( 'map/event-cards/event-card/event', [ 'event' => $event, 'index' => $index ] ); ?>
 
 		</div>
 	</div>
+
+	<?php $this->template( 'map/event-cards/event-card/tooltip', [ 'event' => $event ] ); ?>
 
 </div>

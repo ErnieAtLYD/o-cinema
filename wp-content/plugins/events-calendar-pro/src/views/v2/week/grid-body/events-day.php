@@ -9,24 +9,16 @@
  *
  * @link {INSERT_ARTCILE_LINK_HERE}
  *
- * @version 4.7.5
+ * @version 4.7.8
  *
+ * @var WP_Post[] $events The day events post objects.
+ *
+ * @see tribe_get_event() for the additional properties added to the event post object.
  */
+
 ?>
 <div class="tribe-events-pro-week-grid__events-day" role="gridcell">
-	<?php
-	/*
-	for each event, print it out
-	*/
-	?>
-	<?php
-		// @todo: Populate this with the events and add the logic to position them.
-		$event = [
-			'title' => 'I\'m an event',
-			'ID' => 2,
-			'recurring' => true,
-		]
-	?>
-	<?php $this->template( 'week/grid-body/events-day/event', [ 'event' => (object) $event ] ); ?>
-
+	<?php foreach ( $events as $event ) : ?>
+		<?php $this->template( 'week/grid-body/events-day/event', [ 'event' => $event ] ); ?>
+	<?php endforeach; ?>
 </div>

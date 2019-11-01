@@ -17,6 +17,36 @@
 			.tribe-events-pro-week-grid__event-datetime {
 				@mixin visually-hide;
 			}
+
+			.tribe-events-pro-week-grid__event-title-featured-icon {
+				display: inline-block;
+			}
+		}
+	}
+
+	.tribe-events-pro-week-grid__event--featured {
+
+		.tribe-events-pro-week-grid__event-link-inner {
+			background-color: var(--color-accent-primary-week-event-featured);
+
+			&:before {
+				background: var(--color-accent-primary);
+				content: '';
+				height: 100%;
+				left: 0;
+				top: 0;
+				position: absolute;
+				width: 2px;
+			}
+		}
+
+		.tribe-events-pro-week-grid__event-link {
+			&:hover,
+			&:focus {
+				.tribe-events-pro-week-grid__event-link-inner {
+					background-color: var(--color-accent-primary-week-event-featured-hover);
+				}
+			}
 		}
 	}
 
@@ -487,7 +517,6 @@
 	}
 
 	.tribe-events-pro-week-grid__event-datetime {
-		@mixin visually-show;
 		@mixin mobile-body-3;
 
 		color: var(--color-text-secondary);
@@ -498,14 +527,27 @@
 		}
 	}
 
-	.tribe-events-pro-week-grid__event-datetime-featured,
-	.tribe-events-pro-week-grid__event-datetime-recurring {
+	.tribe-events-pro-week-grid__event-datetime-featured-icon,
+	.tribe-events-pro-week-grid__event-datetime-recurring-icon {
 		display: inline-block;
+	}
+
+	.tribe-events-pro-week-grid__event-title-featured-icon,
+	.tribe-events-pro-week-grid__event-datetime-featured-icon {
+		margin-right: 3px;
 	}
 
 	.tribe-events-pro-week-grid__event-recurring-icon {
 		flex: none;
 		margin-left: 5px;
+	}
+
+	.tribe-events-pro-week-grid__event-featured-image-wrapper {
+		margin-bottom: var(--spacer-0);
+	}
+
+	.tribe-events-pro-week-grid__event-featured-image {
+		padding-bottom: 56.25%;
 	}
 
 
@@ -519,14 +561,41 @@
 	}
 
 	.tribe-events-pro-week-grid__event-tooltip-featured-image-wrapper {
-		margin-bottom: var(--spacer-3);
+		margin-bottom: var(--spacer-2);
+		width: 206px;
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+
+	.tribe-events-pro-week-grid__event-tooltip-featured-image-link {
+		display: block;
+		transition: var(--transition-opacity);
+
+		&:hover,
+		&:focus {
+			opacity: var(--opacity-icon-hover);
+		}
+
+		&:active {
+			opacity: var(--opacity-icon-active);
+		}
 	}
 
 	.tribe-events-pro-week-grid__event-tooltip-featured-image {
 		padding-bottom: 56.25%;
 	}
 
-	.tribe-events-pro-week-grid__event-tooltip-cta {
+	.tribe-events-pro-week-grid__event-tooltip-description {
+		margin-bottom: var(--spacer-1);
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+
+	.tribe-events-pro-week-grid__event-tooltip-cost {
 		margin-top: var(--spacer-3);
 	}
 }

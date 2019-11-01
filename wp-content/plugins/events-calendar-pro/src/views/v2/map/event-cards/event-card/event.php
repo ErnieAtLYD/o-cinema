@@ -9,7 +9,12 @@
  *
  * @link {INSERT_ARTCILE_LINK_HERE}
  *
- * @version 4.7.7
+ * @version 4.7.8
+ *
+ * @var WP_Post $event The event post object with properties added by the `tribe_get_event` function.
+ *
+ * @see tribe_get_event() For the format of the event object.
+ *
  */
 ?>
 <div class="tribe-events-pro-map__event-wrapper tribe-common-g-col">
@@ -21,6 +26,8 @@
 			<?php $this->template( 'map/event-cards/event-card/event/title', [ 'event' => $event ] ); ?>
 			<?php $this->template( 'map/event-cards/event-card/event/venue', [ 'event' => $event ] ); ?>
 			<?php $this->template( 'map/event-cards/event-card/event/distance', [ 'event' => $event ] ); ?>
+
+			<?php $this->template( 'map/event-cards/event-card/event/actions', [ 'event' => $event, 'index' => $index ] ); ?>
 
 		</div>
 

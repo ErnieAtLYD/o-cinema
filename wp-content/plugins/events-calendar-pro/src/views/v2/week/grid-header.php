@@ -9,51 +9,9 @@
  *
  * @link {INSERT_ARTCILE_LINK_HERE}
  *
- * @version 4.7.5
+ * @version 4.7.8
  *
  */
-
-/**
- * @todo: replace with actual data, this is just a placeholder
- */
-$days_of_week = [
-	[
-		'weekday'   => 'Sun',
-		'daynum'    => 22,
-		'full_date' => 'Sunday July 22, 2019',
-		'datetime'  => '2019-07-22',
-	], [
-		'weekday'   => 'Mon',
-		'daynum'    => 23,
-		'full_date' => 'Monday July 23, 2019',
-		'datetime'  => '2019-07-23',
-	], [
-		'weekday'   => 'Tue',
-		'daynum'    => 24,
-		'full_date' => 'Tuesday July 24, 2019',
-		'datetime'  => '2019-07-24',
-	], [
-		'weekday'   => 'Wed',
-		'daynum'    => 25,
-		'full_date' => 'Wednesday July 25, 2019',
-		'datetime'  => '2019-07-25',
-	], [
-		'weekday'   => 'Thu',
-		'daynum'    => 26,
-		'full_date' => 'Thursday July 26, 2019',
-		'datetime'  => '2019-07-26',
-	], [
-		'weekday'   => 'Fri',
-		'daynum'    => 27,
-		'full_date' => 'Friday July 27, 2019',
-		'datetime'  => '2019-07-27',
-	], [
-		'weekday'   => 'Sat',
-		'daynum'    => 28,
-		'full_date' => 'Saturday July 28, 2019',
-		'datetime'  => '2019-07-28',
-	],
-];
 ?>
 <header class="tribe-events-pro-week-grid__header" role="rowgroup">
 

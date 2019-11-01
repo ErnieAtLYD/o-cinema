@@ -42,9 +42,9 @@ class Assets extends \tad_DI52_ServiceProvider {
 
 		tribe_asset(
 			$plugin,
-			'tribe-events-calendar-pro-views-v2',
-			'views/tribe-events-pro-v2.css',
-			[ 'tribe-common-style', 'tribe-events-calendar-views-v2' ],
+			'tribe-events-pro-views-v2-full',
+			'views-full.css',
+			[ 'tribe-common-style', 'tribe-events-views-v2-full' ],
 			'wp_enqueue_scripts',
 			[
 				'priority'     => 10,
@@ -133,6 +133,7 @@ class Assets extends \tad_DI52_ServiceProvider {
 				'jquery',
 				'tribe-common',
 				'tribe-events-pro-views-v2-map-provider-google-maps',
+				'tribe-events-views-v2-accordion',
 			],
 			'wp_enqueue_scripts',
 			[
@@ -149,6 +150,7 @@ class Assets extends \tad_DI52_ServiceProvider {
 			[
 				'jquery',
 				'tribe-common',
+				'swiper',
 			],
 			'wp_enqueue_scripts',
 			[
@@ -158,9 +160,53 @@ class Assets extends \tad_DI52_ServiceProvider {
 			]
 		);
 
-		/**
-		 * @todo: remove once we can not load v1 scripts in v2
-		 */
+		tribe_asset(
+			$plugin,
+			'swiper',
+			'vendor/swiper/dist/js/swiper.js',
+			[],
+			'wp_enqueue_scripts',
+			[
+				'priority'     => 10,
+				'conditionals' => [ $this, 'should_enqueue_frontend' ],
+				'groups'       => [ static::$group_key ],
+			]
+		);
+
+		tribe_asset(
+			$plugin,
+			'tribe-events-pro-views-v2-tooltip-pro',
+			'views/tooltip-pro.js',
+			[
+				'jquery',
+				'tribe-common',
+				'tribe-events-views-v2-tooltip',
+			],
+			'wp_enqueue_scripts',
+			[
+				'priority'     => 10,
+				'conditionals' => [ $this, 'should_enqueue_frontend' ],
+				'groups'       => [ static::$group_key ],
+			]
+		);
+
+		tribe_asset(
+			$plugin,
+			'tribe-events-pro-views-v2-multiday-events-pro',
+			'views/multiday-events-pro.js',
+			[
+				'jquery',
+				'tribe-common',
+				'tribe-events-views-v2-multiday-events',
+			],
+			'wp_enqueue_scripts',
+			[
+				'priority'     => 10,
+				'conditionals' => [ $this, 'should_enqueue_frontend' ],
+				'groups'       => [ static::$group_key ],
+			]
+		);
+
 		add_action( 'wp_enqueue_scripts', [ $this, 'disable_v1' ], 200 );
 	}
 
@@ -193,6 +239,14 @@ class Assets extends \tad_DI52_ServiceProvider {
 	 * @return void
 	 */
 	public function disable_v1() {
+		$should_enqueue = tribe( Template_Bootstrap::class )->should_load();
+
+		// Deactivate the old V1 assets.
+		if ( ! $should_enqueue ) {
+			return;
+		}
+
 		wp_deregister_script( 'tribe-events-pro-slimscroll' );
+		wp_deregister_script( 'tribe-events-pro-geoloc' );
 	}
 }

@@ -9,7 +9,7 @@
  *
  * @link {INSERT_ARTCILE_LINK_HERE}
  *
- * @version 4.7.5
+ * @version 4.7.7
  *
  * @var array $days An array of all the days in the Week; the array has shape `[ <Y-m-d> => [ ...<day_data> ] ]`.
  */

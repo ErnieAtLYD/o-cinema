@@ -9,22 +9,25 @@
  *
  * @link {INSERT_ARTCILE_LINK_HERE}
  *
- * @version 4.7.7
+ * @version 4.7.8
  *
+ *
+ * @var string $multiday_toggle_controls A space-separated list of entries for the `aria-controls` attribute.
+ * @var int $multiday_min_toggle The threshold after which multi-day events should be hidden under a "More" control.
+ * @var int $more_events The number of events not showing in the stack due to the toggle.
  */
 
-/**
- * @todo: @be: Calculate the "2" more.
- * This should be the difference of the number of events (multiday + all day) for a given day, minus the limit in which we start showing the toggle. We're using 3 as this number for now. But this would come from a variable later on.
- * @todo: @be: the `aria-controls` attribute must include the IDs of the div containing the overflow events for the days that have more than 3 events (3 should be a variable later on). We're hardcoding that to have the IDs of the demo data now.
-*/
+$more_text = sprintf(
+	_n( '+1 more', '+ %s more', $more_events, 'tribe-events-calendar-pro' ),
+	number_format_i18n( $more_events )
+);
 ?>
 <div class="tribe-events-pro-week-grid__multiday-more-events" data-js="tribe-events-pro-week-multiday-more-events-wrapper">
 	<button
 		class="tribe-events-pro-week-grid__multiday-more-events-button tribe-common-h8 tribe-common-h--alt tribe-common-anchor-thin"
 		data-js="tribe-events-pro-week-multiday-more-events"
-		aria-controls="tribe-events-pro-multiday-toggle-day-3 tribe-events-pro-multiday-toggle-day-4"
+		aria-controls="<?php echo esc_attr( $multiday_toggle_controls ) ?>"
 		aria-expanded="false"
 		aria-selected="false"
-	>+ 2 More</button>
+	><?php echo esc_html( $more_text ) ?></button>
 </div>

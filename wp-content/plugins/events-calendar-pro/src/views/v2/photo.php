@@ -9,15 +9,16 @@
  *
  * @link {INSERT_ARTCILE_LINK_HERE}
  *
- * @version 4.7.7
+ * @version 4.7.8
  *
  * @var string $rest_url The REST URL.
  * @var string $rest_nonce The REST nonce.
  * @var int    $should_manage_url int containing if it should manage the URL.
- *
+ * @var array  $events The array containing the events.
+ * @var string $today_url URL pointing to the today link for this view.
+ * @var string $prev_url URL pointing to the prev page link for this view.
+ * @var string $next_url URL pointing to the next page link for this view.
  */
-
-$events = $this->get( 'events' );
 ?>
 <div
 	class="tribe-common tribe-events tribe-events-view tribe-events-pro tribe-events-view--photo"

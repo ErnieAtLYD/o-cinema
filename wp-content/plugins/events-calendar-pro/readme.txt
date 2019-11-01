@@ -5,7 +5,7 @@ Tags: events, calendar, event, venue, organizer, dates, date, google maps, confe
 Donate link: http://m.tri.be/29
 Requires at least: 4.7
 Tested up to: 5.2.2
-Stable tag: 4.7.7
+Stable tag: 4.7.8.1
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -204,6 +204,18 @@ Our Premium Plugins:
 * <a href="http://m.tri.be/fa" target="_blank">The Events Calendar: Filter Bar</a>
 
 == Changelog ==
+
+= [4.7.8.1] 2019-09-26 =
+
+* Fix - Geolocalization venue fixer no longer 5xx on Hosts with Join SQL limitations [134742]
+* Fix - SQL queries sped up to prevent 5xx when too many venues are present on Geolocatization venue fixer [134742]
+
+= [4.7.8] 2019-09-25 =
+
+* Fix - Geolocalization from "Fix venues data" on the Settings page does a more thorough selection of missing geocoordinates.
+* Fix - Issues with Fix Venue Geolocation functionality that could result in no fixes being done or unclear communication [127876]
+* Tweak - Do not show the "Fix Venues" button when using the default Google Maps API key [127876]
+* Language - 3 new strings added, 35 updated, 0 fuzzied, and 0 obsoleted
 
 = [4.7.7] 2019-09-04 =
 

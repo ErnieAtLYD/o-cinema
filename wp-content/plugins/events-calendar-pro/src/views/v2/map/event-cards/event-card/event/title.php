@@ -9,19 +9,14 @@
  *
  * @link {INSERT_ARTCILE_LINK_HERE}
  *
- * @version 4.7.7
+ * @version 4.7.8
+ *
+ * @var WP_Post $event The event post object with properties added by the `tribe_get_event` function.
+ *
+ * @see tribe_get_event() For the format of the event object.
  *
  */
-$event    = $this->get( 'event' );
-$event_id = $event->ID;
 ?>
 <h3 class="tribe-events-pro-map__event-title tribe-common-h8 tribe-common-h7--min-medium">
-	<a
-		href="<?php echo esc_url( tribe_get_event_link( $event_id ) ); ?>"
-		title="<?php the_title_attribute( $event_id ); ?>"
-		rel="bookmark"
-		class="tribe-events-pro-map__event-title-link tribe-common-anchor"
-	>
-		<?php echo get_the_title( $event_id ); ?>
-	</a>
+	<?php echo get_the_title( $event->ID ); ?>
 </h3>

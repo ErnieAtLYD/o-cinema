@@ -47,19 +47,6 @@ tribe.events.views.monthGrid = {};
 	};
 
 	/**
-	 * State data for month grid
-	 *
-	 * @since 4.9.4
-	 *
-	 * @type {PlainObject}
-	 */
-	obj.state = {
-		grid: [],
-		currentRow: 0,
-		currentCol: 0,
-	};
-
-	/**
 	 * Object of key codes
 	 *
 	 * @since 4.9.4
@@ -395,7 +382,9 @@ tribe.events.views.monthGrid = {};
 	obj.init = function( event, index, $container, data ) {
 		var $grid = $container.find( obj.selectors.grid );
 
-		if ( ! $grid.length ) return;
+		if ( ! $grid.length ) {
+			return;
+		}
 
 		obj.initState( $grid );
 		obj.setupGrid( $grid );

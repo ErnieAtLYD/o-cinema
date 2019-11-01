@@ -16,7 +16,7 @@
  * @var string $today_url The URL to the today page, if any, or an empty string.
  * @var string $location The location of the nav.
  *
- * @version 4.7.6
+ * @version 4.7.8
  *
  */
 ?>
@@ -30,7 +30,7 @@
 		}
 		?>
 
-		<?php $this->template( 'week/nav/today', [ 'link' => '#' ] ) ?>
+		<?php $this->template( 'week/nav/today', [ 'link' => $today_url ] ); ?>
 
 		<?php
 		if ( ! empty( $next_url ) ) {

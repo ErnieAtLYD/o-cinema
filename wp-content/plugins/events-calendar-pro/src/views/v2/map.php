@@ -9,15 +9,17 @@
  *
  * @link {INSERT_ARTCILE_LINK_HERE}
  *
- * @version 4.7.7
+ * @version 4.7.8
  *
- * @var string $rest_url The REST URL.
- * @var string $rest_nonce The REST nonce.
- * @var int    $should_manage_url int containing if it should manage the URL.
- *
+ * @var  string  $rest_url The REST URL.
+ * @var  string  $rest_nonce The REST nonce.
+ * @var  int     $should_manage_url int containing if it should manage the URL.
+ * @var  array   $events An array of the week events, in sequence.
+ * @var  string  $today_url URL pointing to the today link for this view.
+ * @var  string  $prev_url URL pointing to the prev page link for this view.
+ * @var  string  $next_url URL pointing to the next page link for this view.
+ * @var  array   $providers Array with all the possible map providers available to the view.
  */
-
-$events = $this->get( 'events' );
 ?>
 <div
 	class="tribe-common tribe-events tribe-events-view tribe-events-pro tribe-events-view--map"
@@ -27,7 +29,6 @@ $events = $this->get( 'events' );
 	data-view-manage-url="<?php echo esc_attr( $should_manage_url ); ?>"
 >
 	<div class="tribe-common-l-container tribe-events-l-container">
-
 		<?php $this->template( 'loader', [ 'text' => 'Loading...' ] ); ?>
 
 		<?php $this->template( 'data' ); ?>
@@ -38,12 +39,8 @@ $events = $this->get( 'events' );
 		</header>
 
 		<div class="tribe-events-pro-map tribe-common-g-row">
-
-			<?php $this->template( 'map/map', [ 'events' => $events, 'is_premium' => $is_premium, 'map_provider_key' => $map_provider_key ] ); ?>
-
-			<?php $this->template( 'map/event-cards', [ 'events' => $events, 'map_provider_key' => $map_provider_key ] ); ?>
-
+			<?php $this->template( 'map/map' ); ?>
+			<?php $this->template( 'map/event-cards' ); ?>
 		</div>
-
 	</div>
 </div>

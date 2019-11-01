@@ -9,19 +9,15 @@
  *
  * @link {INSERT_ARTCILE_LINK_HERE}
  *
- * @version 4.7.7
+ * @version 4.7.8
  *
- */
-
-/**
- * @todo: @be: the `aria-controls` attribute must include the IDs of the div containing the overflow events for the days that have more than 3 events (3 should be a variable later on). We're hardcoding that to have the IDs of the demo data now.
- *
+ * @var string $multiday_toggle_controls A space-separated list of entries for the `aria-controls` attribute.
  */
 
 ?>
 <button
 	class="tribe-events-pro-week-grid__multiday-toggle-button"
-	aria-controls="tribe-events-pro-multiday-toggle-day-3 tribe-events-pro-multiday-toggle-day-4"
+	aria-controls="<?php echo esc_attr( $multiday_toggle_controls ) ?>"
 	aria-expanded="false"
 	aria-selected="false"
 	data-js="tribe-events-pro-week-multiday-toggle-button"
