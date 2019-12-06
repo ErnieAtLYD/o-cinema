@@ -1,0 +1,42 @@
+.tribe-events-pro {
+
+	/* -----------------------------------------------------------------------------
+	 * Event
+	 * ----------------------------------------------------------------------------- */
+
+	.tribe-events-pro-photo__event-featured-image-link {
+		transition: var(--transition-opacity);
+
+		&:hover,
+		&:focus {
+			opacity: var(--opacity-icon-hover);
+		}
+
+		&:active {
+			opacity: var(--opacity-icon-active);
+		}
+	}
+
+	.tribe-events-pro-photo__event-date-tag-month {
+		@mixin mobile-body-3;
+
+		color: var(--color-text-secondary);
+		text-transform: uppercase;
+	}
+
+	.tribe-events-pro-photo__event-datetime-featured-text {
+		color: var(--color-accent-primary);
+		font-weight: var(--font-weight-bold);
+	}
+
+	.tribe-events-pro-photo__event-datetime-recurring-link {
+
+		&:hover,
+		&:focus {
+
+			.tribe-events-pro-photo__event-datetime-recurring-icon {
+				background-image: svg-inline(recurring);
+			}
+		}
+	}
+}

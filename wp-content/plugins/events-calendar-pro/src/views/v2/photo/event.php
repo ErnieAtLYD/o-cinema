@@ -9,15 +9,15 @@
  *
  * @link {INSERT_ARTCILE_LINK_HERE}
  *
- * @version 4.7.8
+ * @version 4.7.9
  *
  * @var WP_Post $event The event post object with properties added by the `tribe_get_event` function.
+ * @var string $placeholder_url The url for the placeholder image if a featured image does not exist.
  *
  * @see tribe_get_event() For the format of the event object.
- *
  */
 
-$classes = [ 'tribe-common-g-col', 'tribe-events-pro-photo__event' ];
+$classes = get_post_class( [ 'tribe-common-g-col', 'tribe-events-pro-photo__event' ], $event->ID );
 
 if ( $event->featured ) {
 	$classes[] = 'tribe-events-pro-photo__event--featured';

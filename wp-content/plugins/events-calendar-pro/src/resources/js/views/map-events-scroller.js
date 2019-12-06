@@ -80,10 +80,6 @@ tribe.events.views.mapEventsScroller = {};
 				contentClass: obj.selectors.mapEventCardsWrapperClass.className(),
 				iOSNativeScrolling: true,
 				alwaysVisible: false,
-				/**
-				 * @todo: implement scrollTo when events are available.
-				 */
-				// scrollTo: $first_event
 			} )
 			.find( obj.selectors.mapEventCardsWrapper )
 			.addClass( obj.selectors.mapEventCardsWrapperActiveClass.className() );
@@ -118,7 +114,9 @@ tribe.events.views.mapEventsScroller = {};
 	 * @return {void}
 	 */
 	obj.init = function( event, index, $container, data ) {
-		if ( 'map' !== data.slug ) return;
+		if ( 'map' !== data.slug ) {
+			return;
+		}
 
 		obj.initScroller( $container );
 		$container.on( 'beforeAjaxSuccess.tribeEvents', { container: $container }, obj.deinit );

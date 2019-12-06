@@ -24,9 +24,6 @@ class Month_Calendar_Event_Recurring_Icon implements View_Partial_Interface {
 	 * @return string
 	 */
 	public function render( \Tribe__Template $template ) {
-		/**
-		 * @todo: @paulmskim figure out how to pass parent template context to this template.
-		 */
 		return $template->template( 'month/calendar-event/recurring', $template->get_values() );
 	}
 }

@@ -4,8 +4,8 @@ Contributors: ModernTribe, barry.hughes, bordoni, borkweb, brianjessee, brook-tr
 Tags: events, calendar, event, venue, organizer, dates, date, google maps, conference, workshop, concert, meeting, seminar, summit, class, modern tribe, tribe, widget, pro
 Donate link: http://m.tri.be/29
 Requires at least: 4.7
-Tested up to: 5.2.2
-Stable tag: 4.7.8.1
+Tested up to: 5.3
+Stable tag: 4.7.10
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -204,6 +204,18 @@ Our Premium Plugins:
 * <a href="http://m.tri.be/fa" target="_blank">The Events Calendar: Filter Bar</a>
 
 == Changelog ==
+
+= [4.7.10] 2019-11-20 =
+
+* Tweak - Remove any usage of the function `date_default_timezone_set` after WordPress 5.3 discouraged the usage across any plugins or themes. [137420]
+* Language - 0 new strings added, 4 updated, 0 fuzzied, and 0 obsoleted
+
+= [4.7.9] 2019-11-12 =
+
+* Fix - Resolved issue where non YYYY-MM-DD datepicker formats resulted in unpredictable behavior while navigating views [116086, 126472, 117909]
+* Tweak - added the `tribe_events_pro_geocode_rewrite_rules` filter to allow filtering the rewrite rules generated for the Map View [135387]
+* Tweak - Reduced the frequency of checking for venues that need geolocation to improve performance in the Dashboard [137047]\
+* Language - 12 new strings added, 89 updated, 1 fuzzied, and 6 obsoleted
 
 = [4.7.8.1] 2019-09-26 =
 

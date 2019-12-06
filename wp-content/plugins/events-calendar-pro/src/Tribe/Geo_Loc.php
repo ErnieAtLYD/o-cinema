@@ -177,8 +177,8 @@ class Tribe__Events__Pro__Geo_Loc {
 
 		if ( $id == 'general' ) {
 
-			$venues        = $this->get_venues_without_geoloc_info();
-			$fieldset_html = $this->get_fieldset_html( $venues );
+			$needs_geo_fix = get_transient( '_tribe_geoloc_fix_needed' );
+			$fieldset_html = $this->get_fieldset_html();
 
 			// we want to inject the map default distance and unit into the map section directly after "enable Google Maps"
 			$args = Tribe__Main::array_insert_after_key( 'embedGoogleMaps', $args, array(
@@ -207,7 +207,7 @@ class Tribe__Events__Pro__Geo_Loc {
 					'geoloc_fix_venues'       => array(
 						'type'        => 'html',
 						'html'        => $fieldset_html,
-						'conditional' => ( $venues->found_posts > 0 ),
+						'conditional' => ! empty( $needs_geo_fix ),
 					),
 				)
 			);
@@ -231,10 +231,9 @@ class Tribe__Events__Pro__Geo_Loc {
 	 *
 	 * @since 4.4.34
 	 *
-	 * @param object $venues A WP_Query containing the results of looking up venues with a missing _VenueGeoAddress meta field.
 	 * @return string
 	 */
-	public function get_fieldset_html( $venues ) {
+	public function get_fieldset_html() {
 		ob_start();
 		include Tribe__Events__Pro__Main::instance()->pluginPath . 'src/admin-views/geolocation-fix-text.php';
 		return ob_get_clean();
@@ -586,6 +585,23 @@ class Tribe__Events__Pro__Geo_Loc {
 			$newRules[ $baseTax . '([^/]+)/' . $rewrite_slug . '/?$' ] = 'index.php?tribe_events_cat=' . $wp_rewrite->preg_index( 2 ) . '&post_type=' . Tribe__Events__Main::POSTTYPE . '&eventDisplay=map';
 			$newRules[ $baseTag . '([^/]+)/' . $rewrite_slug . '/?$' ] = 'index.php?tag=' . $wp_rewrite->preg_index( 2 ) . '&post_type=' . Tribe__Events__Main::POSTTYPE . '&eventDisplay=map';
 		}
+
+		$bases = [
+			'base'     => $base,
+			'base_tax' => $baseTax,
+			'base_tag' => $baseTag,
+		];
+
+		/**
+		 * Filters the geocode based rewrite rules.
+		 *
+		 * @since 4.7.9
+		 *
+		 * @param array $newRules      The geocode based rewrite rules.
+		 * @param array $bases         The rewrite bases used to generate the rewrite rules.
+		 * @param array $rewrite_slugs The rewrite slugs used to generate the rewrite rules.
+		 */
+		$newRules = apply_filters( 'tribe_events_pro_geocode_rewrite_rules', $newRules, $bases, $rewrite_slugs );
 
 		return $newRules + $rules;
 	}
@@ -1381,13 +1397,20 @@ class Tribe__Events__Pro__Geo_Loc {
 			return;
 		}
 
-		$venues = $this->get_venues_without_geoloc_info();
+		$needs_fix = get_transient( '_tribe_geoloc_fix_needed' );
 
-		if ( $venues->found_posts === 0 ) {
-			// Let's run the Venue check once a day.
-			set_transient( '_tribe_geoloc_fixed', 1, DAY_IN_SECONDS );
+		if ( empty( $needs_fix ) ) {
+			$venues = $this->get_venues_without_geoloc_info();
 
-			return;
+			if ( $venues->found_posts === 0 ) {
+				// Let's run the Venue check once a day.
+				set_transient( '_tribe_geoloc_fixed', 1, DAY_IN_SECONDS );
+
+				return;
+			}
+
+			// cache this value for a day
+			set_transient( '_tribe_geoloc_fix_needed', 1, DAY_IN_SECONDS );
 		}
 
 		add_action( 'admin_notices', array( $this, 'show_offer_to_fix_notice' ) );
@@ -1483,6 +1506,9 @@ class Tribe__Events__Pro__Geo_Loc {
 
 		// For back-compatibility purposes let's remove this.
 		delete_option( '_tribe_geoloc_fixed', 1 );
+
+		// Let's remove the note that fixes are needed
+		delete_transient( '_tribe_geoloc_fix_needed' );
 
 		// Let's run the Venue check once a day.
 		set_transient( '_tribe_geoloc_fixed', 1, DAY_IN_SECONDS );

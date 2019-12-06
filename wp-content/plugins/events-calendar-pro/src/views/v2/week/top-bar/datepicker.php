@@ -9,27 +9,50 @@
  *
  * @link {INSERT_ARTCILE_LINK_HERE}
  *
- * @version 4.7.7
+ * @version 4.7.9
  *
  *
- * @var string $week_start_date The week start date, in `Y-m-d` format.
+ * @var string $week_start_date           The week start date, in `Y-m-d` format.
  * @var string $formatted_week_start_date The week start date, formatted to the user-selected format.
- * @var string $week_end_date The week end date, in `Y-m-d` format.
- * @var string $formatted_week_end_date The week end date, formatted to the user-selected format.
+ * @var string $week_end_date             The week end date, in `Y-m-d` format.
+ * @var string $formatted_week_end_date   The week end date, formatted to the user-selected format.
+ * @var obj    $date_formats              Object containing the date formats.
  */
+use Tribe__Date_Utils as Dates;
+
+$default_start_date        = $now;
+$selected_start_date_value = $this->get( [ 'bar', 'date' ], $default_start_date );
+
+$week_start_date_mobile = Dates::build_date_object( $week_start_date )->format( $date_formats->month_and_year );
+
+$datepicker_date = Dates::build_date_object( $selected_start_date_value )->format( $date_formats->compact );
 ?>
 <div class="tribe-events-c-top-bar__datepicker">
 	<button
-		class="tribe-common-h2 tribe-common-h3--min-medium tribe-common-h--alt tribe-events-c-top-bar__datepicker-button"
+		class="tribe-common-h3 tribe-common-h--alt tribe-events-c-top-bar__datepicker-button"
 		data-js="tribe-events-top-bar-datepicker-button"
 	>
-		<time datetime="<?php echo esc_attr( $week_start_date ); ?>">
-			<?php echo esc_html( $formatted_week_start_date ); ?>
+		<time
+			datetime="<?php echo esc_attr( $week_start_date ); ?>"
+			class="tribe-events-c-top-bar__datepicker-time"
+		>
+			<span class="tribe-events-c-top-bar__datepicker-mobile">
+				<?php echo esc_html( $week_start_date_mobile ); ?>
+			</span>
+			<span class="tribe-events-c-top-bar__datepicker-desktop tribe-common-a11y-hidden">
+				<?php echo esc_html( $formatted_week_start_date ); ?>
+			</span>
 		</time>
-		&mdash;
-		<time datetime="<?php echo esc_attr( $week_end_date ); ?>">
-			<?php echo esc_html( $formatted_week_end_date ); ?>
+		<span class="tribe-events-c-top-bar__datepicker-separator tribe-events-c-top-bar__datepicker-desktop tribe-common-a11y-hidden">&mdash;</span>
+		<time
+			datetime="<?php echo esc_attr( $week_end_date ); ?>"
+			class="tribe-events-c-top-bar__datepicker-time"
+		>
+			<span class="tribe-events-c-top-bar__datepicker-desktop tribe-common-a11y-hidden">
+				<?php echo esc_html( $formatted_week_end_date ); ?>
+			</span>
 		</time>
+
 	</button>
 	<label
 		class="tribe-events-c-top-bar__datepicker-label tribe-common-a11y-visual-hide"
@@ -43,7 +66,7 @@
 		data-js="tribe-events-top-bar-date"
 		id="tribe-events-top-bar-date"
 		name="tribe-events-views[tribe-bar-search]"
-		value="<?php echo esc_attr( tribe_events_template_var( [ 'bar', 'date' ], '' ) ); ?>"
+		value="<?php echo esc_attr( $datepicker_date ); ?>"
 		tabindex="-1"
 		autocomplete="off"
 	/>

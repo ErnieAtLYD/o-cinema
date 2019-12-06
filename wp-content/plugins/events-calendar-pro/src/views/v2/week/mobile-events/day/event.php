@@ -9,7 +9,7 @@
  *
  * @link {INSERT_ARTCILE_LINK_HERE}
  *
- * @version 4.7.7
+ * @version 4.7.9
  *
  *
  * @var WP_Post $event The event post object, decorated with additional properties by the `tribe_get_event` function.
@@ -18,13 +18,14 @@
  */
 
 $classes = [ 'tribe-common-g-row', 'tribe-common-g-row--gutters', 'tribe-events-pro-week-mobile-events__event' ];
+$classes = get_post_class( $classes, $event->ID );
 
 if ( ! empty( $event->featured ) ) {
 	$classes[] = 'tribe-events-pro-week-mobile-events__event--featured';
 }
 
 ?>
-<article class="<?php echo esc_attr( implode( ' ', $classes ) ); ?>">
+<article <?php tribe_classes( $classes ) ?>>
 
 	<?php $this->template( 'week/mobile-events/day/event/featured-image', [ 'event' => $event ] ); ?>
 

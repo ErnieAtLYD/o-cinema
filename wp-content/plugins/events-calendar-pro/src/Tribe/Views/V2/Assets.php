@@ -12,8 +12,8 @@
 namespace Tribe\Events\Pro\Views\V2;
 
 use Tribe__Events__Pro__Main as Plugin;
+use Tribe\Events\Views\V2\Assets as TEC_Assets;
 use Tribe\Events\Views\V2\Template_Bootstrap;
-
 /**
  * Register the Assets for Events Pro View V2.
  *
@@ -42,13 +42,30 @@ class Assets extends \tad_DI52_ServiceProvider {
 
 		tribe_asset(
 			$plugin,
-			'tribe-events-pro-views-v2-full',
-			'views-full.css',
-			[ 'tribe-common-style', 'tribe-events-views-v2-full' ],
+			'tribe-events-pro-views-v2-skeleton',
+			'views-skeleton.css',
+			[ 'tribe-events-views-v2-skeleton' ],
 			'wp_enqueue_scripts',
 			[
 				'priority'     => 10,
 				'conditionals' => [ $this, 'should_enqueue_frontend' ],
+				'groups'       => [ static::$group_key ],
+			]
+		);
+
+		tribe_asset(
+			$plugin,
+			'tribe-events-pro-views-v2-full',
+			'views-full.css',
+			[ 'tribe-events-views-v2-full' ],
+			'wp_enqueue_scripts',
+			[
+				'priority'     => 10,
+				'conditionals' => [
+					'operator' => 'AND',
+					[ $this, 'should_enqueue_frontend' ],
+					[ tribe( TEC_Assets::class ), 'should_enqueue_full_styles' ],
+				],
 				'groups'       => [ static::$group_key ],
 			]
 		);
@@ -82,7 +99,11 @@ class Assets extends \tad_DI52_ServiceProvider {
 			$plugin,
 			'tribe-events-pro-views-v2-week-day-selector',
 			'views/week-day-selector.js',
-			[ 'tribe-events-views-v2-accordion' ],
+			[
+				'jquery',
+				'tribe-common',
+				'tribe-events-views-v2-accordion',
+			],
 			'wp_enqueue_scripts',
 			[
 				'priority'     => 10,
@@ -99,6 +120,22 @@ class Assets extends \tad_DI52_ServiceProvider {
 				'jquery',
 				'tribe-common',
 				'tribe-events-views-v2-accordion',
+			],
+			'wp_enqueue_scripts',
+			[
+				'priority'     => 10,
+				'conditionals' => [ $this, 'should_enqueue_frontend' ],
+				'groups'       => [ static::$group_key ],
+			]
+		);
+
+		tribe_asset(
+			$plugin,
+			'tribe-events-pro-views-v2-week-event-link',
+			'views/week-event-link.js',
+			[
+				'jquery',
+				'tribe-common',
 			],
 			'wp_enqueue_scripts',
 			[
@@ -130,27 +167,8 @@ class Assets extends \tad_DI52_ServiceProvider {
 			'tribe-events-pro-views-v2-map-events',
 			'views/map-events.js',
 			[
-				'jquery',
-				'tribe-common',
 				'tribe-events-pro-views-v2-map-provider-google-maps',
 				'tribe-events-views-v2-accordion',
-			],
-			'wp_enqueue_scripts',
-			[
-				'priority'     => 10,
-				'conditionals' => [ $this, 'should_enqueue_frontend' ],
-				'groups'       => [ static::$group_key ],
-			]
-		);
-
-		tribe_asset(
-			$plugin,
-			'tribe-events-pro-views-v2-map-provider-google-maps',
-			'views/map-provider-google-maps.js',
-			[
-				'jquery',
-				'tribe-common',
-				'swiper',
 			],
 			'wp_enqueue_scripts',
 			[
@@ -165,6 +183,34 @@ class Assets extends \tad_DI52_ServiceProvider {
 			'swiper',
 			'vendor/swiper/dist/js/swiper.js',
 			[],
+			null,
+			[]
+		);
+
+		tribe_asset(
+			$plugin,
+			'tribe-events-pro-views-v2-map-provider-google-maps',
+			'views/map-provider-google-maps.js',
+			[
+				'swiper',
+				'tribe-events-pro-views-v2-map-no-venue-modal',
+			],
+			'wp_enqueue_scripts',
+			[
+				'priority'     => 10,
+				'conditionals' => [ $this, 'should_enqueue_frontend' ],
+				'groups'       => [ static::$group_key ],
+			]
+		);
+
+		tribe_asset(
+			$plugin,
+			'tribe-events-pro-views-v2-map-no-venue-modal',
+			'views/map-no-venue-modal.js',
+			[
+				'jquery',
+				'tribe-common',
+			],
 			'wp_enqueue_scripts',
 			[
 				'priority'     => 10,
@@ -207,7 +253,39 @@ class Assets extends \tad_DI52_ServiceProvider {
 			]
 		);
 
-		add_action( 'wp_enqueue_scripts', [ $this, 'disable_v1' ], 200 );
+		tribe_asset(
+			$plugin,
+			'tribe-events-pro-views-v2-toggle-recurrence',
+			'views/toggle-recurrence.js',
+			[
+				'jquery',
+				'tribe-common',
+			],
+			'wp_enqueue_scripts',
+			[
+				'priority'     => 10,
+				'conditionals' => [ $this, 'should_enqueue_frontend' ],
+				'groups'       => [ static::$group_key ],
+			]
+		);
+
+		tribe_asset(
+			$plugin,
+			'tribe-events-pro-views-v2-datepicker-pro',
+			'views/datepicker-pro.js',
+			[
+				'jquery',
+				'tribe-common',
+				'tribe-events-views-v2-bootstrap-datepicker',
+				'tribe-events-views-v2-datepicker',
+			],
+			'wp_enqueue_scripts',
+			[
+				'priority'     => 10,
+				'conditionals' => [ $this, 'should_enqueue_frontend' ],
+				'groups'       => [ static::$group_key ],
+			]
+		);
 	}
 
 	/**
@@ -218,7 +296,6 @@ class Assets extends \tad_DI52_ServiceProvider {
 	 * @return bool
 	 */
 	public function should_enqueue_frontend() {
-
 		$should_enqueue = tribe( Template_Bootstrap::class )->should_load();
 
 		/**
@@ -239,14 +316,23 @@ class Assets extends \tad_DI52_ServiceProvider {
 	 * @return void
 	 */
 	public function disable_v1() {
-		$should_enqueue = tribe( Template_Bootstrap::class )->should_load();
-
-		// Deactivate the old V1 assets.
-		if ( ! $should_enqueue ) {
+		// Dont disable V1 on Single Event page
+		if ( tribe( Template_Bootstrap::class )->is_single_event() ) {
 			return;
 		}
 
-		wp_deregister_script( 'tribe-events-pro-slimscroll' );
-		wp_deregister_script( 'tribe-events-pro-geoloc' );
+		add_filter( 'tribe_asset_enqueue_tribe-events-pro-slimscroll', '__return_false' );
+		add_filter( 'tribe_asset_enqueue_tribe-events-pro-geoloc', '__return_false' );
+		add_filter( 'tribe_asset_enqueue_tribe-events-pro-week', '__return_false' );
+		add_filter( 'tribe_asset_enqueue_tribe-events-pro-photo', '__return_false' );
+		add_filter( 'tribe_asset_enqueue_tribe-events-pro', '__return_false' );
+
+		add_filter( 'tribe_asset_enqueue_tribe-events-calendar-pro-override-style', '__return_false' );
+		add_filter( 'tribe_asset_enqueue_tribe-events-calendar-pro-style', '__return_false' );
+		add_filter( 'tribe_asset_enqueue_tribe-events-full-pro-calendar-style', '__return_false' );
+		add_filter( 'tribe_asset_enqueue_tribe-events-calendar-pro-mobile-style', '__return_false' );
+		add_filter( 'tribe_asset_enqueue_tribe-events-calendar-full-pro-mobile-style', '__return_false' );
+
+		remove_action( 'wp_enqueue_scripts', [ Plugin::instance(), 'enqueue_pro_scripts' ], 8 );
 	}
 }

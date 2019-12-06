@@ -9,7 +9,7 @@
  *
  * @link {INSERT_ARTCILE_LINK_HERE}
  *
- * @version 4.7.8
+ * @version 4.7.9
  *
  * @var WP_Post $event The event post object with properties added by the `tribe_get_event` function.
  *
@@ -19,15 +19,14 @@
 
 use Tribe__Date_Utils as Date;
 
-$event = $this->get( 'event' );
-$event_week_day  = $event->dates->start->format( 'D' );
-$event_day_num   = $event->dates->start->format( 'j' );
-$event_date_attr = $event->dates->start->format( Date::DBDATEFORMAT );
+$event_month     = $event->dates->start_display->format( 'M' );
+$event_day_num   = $event->dates->start_display->format( 'j' );
+$event_date_attr = $event->dates->start_display->format( Date::DBDATEFORMAT );
 ?>
 <div class="tribe-events-pro-map__event-date-tag tribe-common-g-col">
 	<time class="tribe-events-pro-map__event-date-tag-datetime" datetime="<?php echo esc_attr( $event_date_attr ); ?>">
-		<span class="tribe-events-pro-map__event-date-tag-weekday">
-			<?php echo esc_html( $event_week_day ); ?>
+		<span class="tribe-events-pro-map__event-date-tag-month">
+			<?php echo esc_html( $event_month ); ?>
 		</span>
 		<span class="tribe-events-pro-map__event-date-tag-daynum tribe-common-h5">
 			<?php echo esc_html( $event_day_num ); ?>

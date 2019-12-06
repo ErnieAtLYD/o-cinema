@@ -10,35 +10,50 @@
  * @link {INSERT_ARTCILE_LINK_HERE}
  *
  *
- * @version 4.7.7
+ * @version 4.7.9
  *
  * @var string $day_date The day date, in the `Y-m-d` format.
- * @var array $day The data for the day.
+ * @var array  $day The data for the day.
+ * @var bool   $is_current_week boolean containing if the selected week is the current week.
+ * @var string $today_date      Today's date in `Y-m-d`.
+ * @var string $week_start_date The week start date, in `Y-m-d` format.
  */
 
 $hidden      = 'true';
 $day_classes = [ 'tribe-events-pro-week-mobile-events__day' ];
 
-if ( $day[ 'found_events' ] ) {
+// If in the current week, and today's is the day.
+// Or for the rest of the weeks, if it's the first day of the week.
+if (
+	( $is_current_week && $today_date === $day_date )
+	|| ( ! $is_current_week && $day_date === $week_start_date )
+) {
 	$hidden        = 'false';
 	$day_classes[] = 'tribe-events-pro-week-mobile-events__day--active';
 }
 ?>
 
 <div
-	class="<?php echo esc_attr( implode( ' ', $day_classes ) ); ?>"
+	<?php tribe_classes( $day_classes ) ?>
 	id="tribe-events-pro-week-mobile-events-day-<?php echo esc_attr( $day_date ); ?>"
 	aria-hidden="<?php echo esc_attr( $hidden ); ?>"
 >
 
-	<?php
-	 foreach ( $day[ 'event_times' ] as $event_time ) {
-		 $this->template(
-			 'week/mobile-events/day/time-separator',
-			 [ 'time' => $event_time['time'], 'datetime' => $event_time['datetime'] ]
-		 );
+	<?php foreach ( $day['event_times'] as $event_time => $time_content ) {
 
-		 foreach( $event_time[ 'events' ] as $event ) {
+		if ( ! empty( $time_content['time'] ) ) {
+			$this->template(
+				'week/mobile-events/day/time-separator',
+				[ 'time' => $time_content['time'], 'datetime' => $time_content['datetime'] ]
+			);
+		} else {
+			$this->template(
+				'week/mobile-events/day/type-separator',
+				[ 'type' => $event_time ]
+			);
+		}
+
+		foreach ( $time_content[ 'events' ] as $event ) {
 	 		$this->template( 'week/mobile-events/day/event', [ 'event' => $event ] );
 	 	}
 	 }

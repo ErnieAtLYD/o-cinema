@@ -9,16 +9,16 @@
  *
  * @link {INSERT_ARTCILE_LINK_HERE}
  *
- * @version 4.7.8
+ * @version 4.7.9
  *
  * @var WP_Post $event The event post object with properties added by the `tribe_get_event` function.
  *
  * @see tribe_get_event() For the format of the event object.
  */
+// Only display the featured image on events that last more than 2:30h
+$should_display = $event->duration > 2.5 * HOUR_IN_SECONDS;
 
-$should_display = $event->duration >= 2 * HOUR_IN_SECONDS;
-
-if ( ! $should_display  || empty( $event->featured ) || ! $event->thumbnail->exists ) {
+if ( ! $should_display || empty( $event->featured ) || ! $event->thumbnail->exists ) {
 	return;
 }
 ?>

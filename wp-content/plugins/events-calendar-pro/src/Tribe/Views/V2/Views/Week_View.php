@@ -8,7 +8,7 @@
 
 namespace Tribe\Events\Pro\Views\V2\Views;
 
-use DateInterval;
+use Tribe\Events\Views\V2\Messages;
 use Tribe\Events\Views\V2\Views\By_Day_View;
 use Tribe__Context as Context;
 use Tribe__Date_Utils as Dates;
@@ -36,10 +36,11 @@ class Week_View extends By_Day_View {
 	 * Visibility for this view.
 	 *
 	 * @since 4.7.5
+	 * @since 4.7.9 Made the property static.
 	 *
 	 * @var bool
 	 */
-	protected $publicly_visible = true;
+	protected static $publicly_visible = true;
 
 	/**
 	 * {@inheritDoc}
@@ -74,36 +75,54 @@ class Week_View extends By_Day_View {
 		$stack_toggle_threshold = $this->get_stack_toggle_threshold();
 		$stack                  = $this->get_stack( $user_date, $stack_toggle_threshold );
 		// Prepare a modified version of the stack made of numeric arrays, not associative ones, to allow `list` calls.
-		$list_ready_stack = array_combine( array_keys( $stack ), array_map( static function ( array $day_stack ) {
-			return array_values( $day_stack );
-		}, $stack ) );
+		$list_ready_stack = array_combine(
+			array_keys( $stack ),
+			array_map(
+				static function ( array $day_stack ) {
+					return array_values( $day_stack );
+				},
+				$stack )
+		);
 
-		$today                                      = $this->context->get( 'today' );
+		$events = $this->get_events( $user_date );
+
+		// Set up the messages using the union of stack events and non-stack events: both apply.
+		$non_stack_events = $events;
+		$stack_events     = array_map( static function ( $day_events ) {
+			return wp_list_pluck( $day_events, 'ID' );
+		}, array_column( $list_ready_stack, 0 ) );
+		$msg_events       = array_merge_recursive( $non_stack_events, $stack_events );
+		$this->setup_messages( $msg_events );
+
+		$today      = $this->context->get( 'today' );
+		$today_date = Dates::build_date_object( $today );
 
 		$template_vars['today']                     = tribe_beginning_of_day( $today );
-		$template_vars['today_date']                = Dates::build_date_object( $today )->format( 'Y-m-d' );
+		$template_vars['today_date']                = $today_date->format( 'Y-m-d' );
 		$template_vars['week_start']                = $week_start;
 		$template_vars['week_end']                  = $week_end;
 		$template_vars['week_start_date']           = $week_start->format( Dates::DBDATEFORMAT );
 		$template_vars['week_end_date']             = $week_end->format( Dates::DBDATEFORMAT );
 		$template_vars['days_of_week']              = $this->get_header_grid( $week_start, $week_end );
+		$template_vars['is_current_week']           = $this->is_current_week( $today_date, $week_start, $week_end );
 		$date_format                                = tribe_get_option( 'dateWithoutYearFormat', 'F Y' );
 		$template_vars['formatted_week_start_date'] = $week_start->format( $date_format );
 		$template_vars['formatted_week_end_date']   = $week_end->format( $date_format );
 		$template_vars['mobile_days']               = $this->get_mobile_days( $user_date );
 		$template_vars['days']                      = $this->get_grid_days( $user_date );
 		$template_vars['multiday_events']           = $list_ready_stack;
-		$template_vars['events']                    = $this->get_events( $user_date );
+		$template_vars['events']                    = $events;
 
-		$template_vars['multiday_min_toggle']     = $stack_toggle_threshold;
+		$template_vars['multiday_min_toggle'] = $stack_toggle_threshold;
 
 		// If any of the days in the stack has more events than the threshold, then show the toggle.
-		$highest_stack = max( ... array_map( 'count', array_column( $stack, 'events' ) ) );
-		$show_stack_toggle = $highest_stack > $stack_toggle_threshold;
+		$highest_stack                             = max( ... array_map( 'count', array_column( $stack, 'events' ) ) );
+		$show_stack_toggle                         = $highest_stack > $stack_toggle_threshold;
 		$template_vars['multiday_display_toggle']  = $show_stack_toggle;
 		$template_vars['multiday_toggle_controls'] = $show_stack_toggle
 			? $this->build_stack_toggle_controls( $stack )
 			: '';
+		$template_vars['messages']                 = $this->get_messages( $events );
 
 		return $template_vars;
 	}
@@ -112,29 +131,22 @@ class Week_View extends By_Day_View {
 	 * {@inheritDoc}
 	 */
 	protected function calculate_grid_start_end( $date ) {
-		$week_start = Dates::build_date_object( $date );
-		$week_start->setTime( 0, 0, 0 );
+		return Dates::get_week_start_end( $date, (int) $this->context->get( 'start_of_week', 0 ) );
+	}
 
-		// Sunday is 0.
-		$week_start_day = $this->context->get( 'start_of_week', 0 );
-		$offset         = (int) $week_start->format( 'N' ) >= $week_start_day
-			? $week_start_day
-			: $week_start->format( 'N' ) - $week_start_day;
-
-		$week_start->setISODate(
-			(int) $week_start->format( 'o' ),
-			(int) $week_start->format( 'W' ),
-			$offset
-		);
-
-		$week_start->format( 'Y-m-d' );
-
-		$week_end = clone $week_start;
-		$week_end->add( new DateInterval( 'P6D' ) );
-		$week_end_string = tribe_end_of_day( $week_end->format( 'Y-m-d' ) );
-		$week_end        = Dates::build_date_object( $week_end_string );
-
-		return [ $week_start, $week_end ];
+	/**
+	 * Returns if it's the current week.
+	 *
+	 * @since 4.7.9
+	 *
+	 * @param \DateTime $today_date Today's date object.
+	 * @param \DateTime $week_start The week start date object.
+	 * @param \DateTime $week_end The week end date object.
+	 *
+	 * @return bool True if $today is part of the week.
+	 */
+	protected function is_current_week( $today, $week_start, $week_end ) {
+		return $week_start <= $today && $today <= $week_end;
 	}
 
 	/**
@@ -152,19 +164,11 @@ class Week_View extends By_Day_View {
 
 		$grid_days = parent::get_grid_days( $user_date );
 
-		// Events should appear once in the mobile version of the view.
-		$acc = [];
-		foreach ( $grid_days as $day => &$the_day_event_ids ) {
-			$the_day_event_ids = array_values( array_diff( $the_day_event_ids, $acc ) );
-			$acc               = array_merge( $acc, $the_day_event_ids );
-		}
-		unset( $the_day_event_ids );
-
 		foreach ( $grid_days as $date_string => $event_ids ) {
 			$mobile_days[ $date_string ] = [
-				'date'        => $date_string,
+				'date'         => $date_string,
 				'found_events' => count( $event_ids ),
-				'event_times' => $this->parse_event_times( $event_ids),
+				'event_times'  => $this->parse_event_times( $event_ids ),
 			];
 		}
 
@@ -195,9 +199,25 @@ class Week_View extends By_Day_View {
 		$site_timezone     = Timezones::build_timezone_object();
 		$time_format       = get_option( 'time_format', Dates::TIMEFORMAT );
 		$event_times       = [];
+		$all_day           = [];
+		$ongoing           = [];
 
 		foreach ( $event_ids as $event_id ) {
 			$event = tribe_get_event( $event_id );
+
+			if ( ! $event instanceof \WP_Post ) {
+				continue;
+			}
+
+			if ( ! empty( $event->all_day ) ) {
+				$all_day['all_day']['events'][] = $event;
+				continue;
+			}
+
+			if ( ! empty( $event->multiday ) ) {
+				$ongoing['ongoing']['events'][] = $event;
+				continue;
+			}
 
 			/** @var \DateTimeImmutable $start */
 			$start = $use_site_timezone ? $event->dates->start->setTimezone( $site_timezone ) : $event->dates->start;
@@ -213,7 +233,7 @@ class Week_View extends By_Day_View {
 			$event_times[ $time ]['events'][] = $event;
 		}
 
-		return $event_times;
+		return $all_day + $ongoing + $event_times;
 	}
 
 	/**
@@ -235,12 +255,12 @@ class Week_View extends By_Day_View {
 		$raw_grid_days = parent::get_grid_days( $date, $force );
 
 		foreach ( $raw_grid_days as $date_string => $event_ids ) {
-			$day_date = Dates::build_date_object($date_string);
+			$day_date = Dates::build_date_object( $date_string );
 
 			$grid_days[ $date_string ] = [
 				'datetime' => $date_string,
 				'weekday'  => date_i18n( 'D', $day_date->getTimestamp() ),
-				'daynum' => $day_date->format('d'),
+				'daynum'   => $day_date->format( 'j' ),
 			];
 		}
 
@@ -353,15 +373,22 @@ class Week_View extends By_Day_View {
 			return [];
 		}
 
+		$user_date = $this->context->get( 'event_date', 'now' );
+		$events    = $this->get_events( $user_date );
+		$stack     = $this->get_stack( $user_date );
+
 		/** @var \DateTime $day */
 		foreach ( $interval as $day ) {
 			$day_y_m_d          = $day->format( 'Y-m-d' );
+			$day_url            = tribe_events_get_url( [ 'eventDisplay' => 'day', 'eventDate' => $day_y_m_d ] );
 
 			$grid[ $day_y_m_d ] = [
-				'full_date' => $day->format( tribe_get_option( 'date_with_year', Dates::DATEONLYFORMAT ) ),
-				'datetime'  => $day_y_m_d,
-				'weekday'   => date_i18n( 'D', $day->getTimestamp() + $day->getOffset() ),
-				'daynum'    => $day->format( 'd' ),
+				'full_date'    => $day->format( tribe_get_option( 'date_with_year', Dates::DATEONLYFORMAT ) ),
+				'datetime'     => $day_y_m_d,
+				'weekday'      => date_i18n( 'D', $day->getTimestamp() + $day->getOffset() ),
+				'daynum'       => $day->format( 'j' ),
+				'day_url'      => $day_url,
+				'found_events' => count( $events[ $day_y_m_d ] ) + count( $stack[ $day_y_m_d ]['events'] ),
 			];
 		}
 
@@ -570,7 +597,9 @@ class Week_View extends By_Day_View {
 			return $this->build_url_for_date( $prev_date, $canonical, $passthru_vars );
 		} );
 
-		return $this->filter_prev_url( $canonical, $url );
+		$url = $this->filter_prev_url( $canonical, $url );
+
+		return $url;
 	}
 
 	/**
@@ -606,7 +635,9 @@ class Week_View extends By_Day_View {
 			return $this->build_url_for_date( $next_date, $canonical, $passthru_vars );
 		} );
 
-		return $this->filter_next_url( $canonical, $url );
+		$url =  $this->filter_next_url( $canonical, $url );
+
+		return $url;
 	}
 
 	/**
@@ -643,4 +674,36 @@ class Week_View extends By_Day_View {
 
 		return $result;
 	}
+
+	/**
+	 * Overrides the base View method to implement logic tailored to the Week View.
+	 *
+	 * @since 4.7.9
+	 *
+	 * @param array $events An array of the View events, if any.
+	 */
+	protected function setup_messages( array $events ) {
+		if ( empty( $events ) || 0 === count( array_filter( $events ) ) ) {
+			$keyword  = $this->context->get( 'keyword', false );
+			$location = $this->context->get( 'geoloc_search', false );
+
+			if ( $location ) {
+				$this->messages->insert(
+					Messages::TYPE_NOTICE,
+					Messages::for_key( 'week_no_results_found_w_location', trim( $location ) )
+				);
+			} elseif ( $keyword ) {
+				$this->messages->insert(
+					Messages::TYPE_NOTICE,
+					Messages::for_key( 'week_no_results_found_w_keyword', trim( $keyword ) )
+				);
+			} else {
+				$this->messages->insert(
+					Messages::TYPE_NOTICE,
+					Messages::for_key( 'week_no_results_found' )
+				);
+			}
+		}
+	}
+
 }

@@ -1,0 +1,83 @@
+.tribe-events-pro {
+
+	/* -----------------------------------------------------------------------------
+	 * No Venue Modal
+	 * ----------------------------------------------------------------------------- */
+
+	.tribe-events-pro-map__no-venue-modal {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		background-color: var(--color-background);
+		max-width: 333px;
+		width: calc(100% - (2 * var(--spacer-6)));
+	}
+
+	.tribe-events-pro-map__no-venue-modal-close {
+		position: absolute;
+		padding: var(--spacer-1);
+		top: var(--spacer-1);
+		right: var(--spacer-1);
+
+		&:hover,
+		&:focus {
+
+			.tribe-events-pro-map__no-venue-modal-close-icon {
+				background-image: svg-inline(close);
+			}
+		}
+	}
+
+	.tribe-events-pro-map__no-venue-modal-close-icon {
+		display: block;
+		height: 10px;
+		width: 10px;
+	}
+
+	.tribe-events-pro-map__no-venue-modal-content {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		padding: var(--spacer-9) var(--spacer-5) var(--spacer-5);
+
+		@media (--viewport-medium) {
+			padding: var(--spacer-8) var(--spacer-9);
+		}
+	}
+
+	.tribe-events-pro-map__no-venue-modal-icon {
+		height: 64px;
+		width: 64px;
+		align-self: center;
+		margin-bottom: var(--spacer-5);
+	}
+
+	.tribe-events-pro-map__no-venue-modal-text {
+		margin-bottom: var(--spacer-1);
+	}
+
+	.tribe-events-pro-map__no-venue-modal--default {
+		background-color: var(--color-background-secondary);
+		height: 100%;
+		width: 100%;
+		max-width: none;
+
+		.tribe-events-pro-map__no-venue-modal-content {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			max-width: 333px;
+			width: 100%;
+		}
+
+		.tribe-events-pro-map__no-venue-modal-icon {
+			margin-bottom: var(--spacer-6);
+		}
+
+		.tribe-events-pro-map__no-venue-modal-text {
+			margin-bottom: var(--spacer-3);
+		}
+	}
+}

@@ -114,12 +114,13 @@
 				if ( ts.updating_picker ) {
 					return;
 				}
-				var date = tribeDateFormat( e.date, "tribeQuery" );
-				ts.date  = date;
+				let maskKey = ts.datepicker_format.toString();
+
+				ts.date = tribeUtils.formatDateWithMoment( e.date, "tribeQuery", maskKey );
 				date_mod = true;
 				if ( tt.no_bar() || tt.live_ajax() && tt.pushstate ) {
 					if ( ! tt.reset_on() ) {
-						tribe_events_bar_weekajax_actions( e, date );
+						tribe_events_bar_weekajax_actions( e, ts.date );
 					}
 				}
 
@@ -462,11 +463,7 @@
 				// Update the baseurl
 				tf.update_base_url( $this.attr( 'href' ) );
 
-				if ( '0' !== ts.datepicker_format ) {
-					tf.update_picker( tribeDateFormat( ts.date, td.datepicker_formats.main[ts.datepicker_format] ) );
-				} else {
-					tf.update_picker( ts.date );
-				}
+				tf.update_picker( ts.date );
 
 				tf.pre_ajax( function() {
 					tribe_events_week_ajax_post();
@@ -497,9 +494,10 @@
 					td.cur_url = base_url + ts.date + '/';
 
 				} else if ( $tdate.length && '' !== $tdate.val() ) {
+					let maskKey = ts.datepicker_format.toString();
 
 					if ( '0' !== ts.datepicker_format ) {
-						ts.date = tribeDateFormat( $tdate.bootstrapDatepicker( 'getDate' ), "tribeQuery" );
+						ts.date = tribeUtils.formatDateWithMoment( $tdate.bootstrapDatepicker( 'getDate' ), "tribeQuery", maskKey );
 					} else {
 						ts.date = $tdate.val();
 					}

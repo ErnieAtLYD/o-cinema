@@ -1,0 +1,75 @@
+.tribe-events-pro {
+
+	/* -----------------------------------------------------------------------------
+	 * Event Card
+	 * ----------------------------------------------------------------------------- */
+
+	.tribe-events-pro-map__event-card-wrapper {
+
+		&:not(:first-child) {
+			margin-top: -1px;
+		}
+	}
+
+	.tribe-events-pro-map__event-card {
+		border: 1px solid transparent;
+	}
+
+	.tribe-events-pro-map__event-card-button {
+		border: 1px solid var(--color-border-default);
+
+		&:hover,
+		&:focus {
+			border: 1px solid var(--color-border-hover);
+		}
+	}
+
+	.tribe-events-pro-map__event-card-wrapper--active {
+
+		.tribe-events-pro-map__event-card-button {
+			border: 1px solid var(--color-accent-primary);
+			box-shadow: var(--box-shadow-card);
+		}
+	}
+
+	.tribe-events-pro-map__event-date-tag-month {
+		@mixin mobile-body-3;
+
+		color: var(--color-text-secondary);
+		text-transform: uppercase;
+	}
+
+	.tribe-events-pro-map__event-featured-image-link {
+		transition: var(--transition-opacity);
+
+		&:hover,
+		&:focus {
+			opacity: var(--opacity-icon-hover);
+		}
+
+		&:active {
+			opacity: var(--opacity-icon-active);
+		}
+	}
+
+	.tribe-events-pro-map__event-datetime-featured-text {
+		@media (--viewport-medium) {
+			color: var(--color-accent-primary);
+			font-weight: var(--font-weight-bold);
+		}
+	}
+
+	.tribe-events-pro-map__event-title {
+		line-height: var(--line-height-0);
+	}
+
+	.tribe-events-pro-map__event-venue {
+		font-style: normal;
+	}
+
+	.tribe-events-pro-map__event-distance {
+		@media (--viewport-medium) {
+			color: var(--color-text-secondary);
+		}
+	}
+}

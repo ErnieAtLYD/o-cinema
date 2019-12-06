@@ -9,7 +9,7 @@
  *
  * @link {INSERT_ARTCILE_LINK_HERE}
  *
- * @version 4.7.8
+ * @version 4.7.9
  *
  * @var WP_Post $event The event post object, decorated with additional properties by the `tribe_get_event` function.
  *
@@ -33,11 +33,16 @@
 		<?php echo $event->schedule_details->escaped(); // Already escaped. ?>
 	</time>
 	<?php if ( ! empty( $event->recurring ) ) : ?>
-		<em
-			class="tribe-events-pro-week-mobile-events__event-datetime-recurring-icon tribe-common-svgicon tribe-common-svgicon--recurring"
-			aria-label="<?php esc_attr_e( 'Recurring', 'tribe-events-calendar-pro' ) ?>"
-			title="<?php esc_attr_e( 'Recurring', 'tribe-events-calendar-pro' ) ?>"
+		<a
+			href="<?php echo esc_url( $event->permalink_all ); ?>"
+			class="tribe-events-pro-week-mobile-events__event-datetime-recurring-link"
 		>
-		</em>
+			<em
+				class="tribe-events-pro-week-mobile-events__event-datetime-recurring-icon tribe-common-svgicon tribe-common-svgicon--recurring"
+				aria-label="<?php esc_attr_e( 'Recurring', 'tribe-events-calendar-pro' ) ?>"
+				title="<?php esc_attr_e( 'Recurring', 'tribe-events-calendar-pro' ) ?>"
+			>
+			</em>
+		</a>
 	<?php endif; ?>
 </div>

@@ -45,10 +45,10 @@ $classes['tribe-events-pro-map__event-tooltip--has-slider'] = $has_multiple_even
 			>
 				<div class="tribe-events-pro-map__event-tooltip-slider-wrapper swiper-wrapper tribe-common-g-row">
 
-					<?php foreach( $tooltip_events as $slide_index => $tooltip_event ) : ?>
+					<?php foreach( $events as $slide_index => $tooltip_event ) : ?>
 						<?php
 						// Skip any events not in this particular venue.
-						if ( in_array( $tooltip_event->ID, $selected_venue_obj->event_ids ) ) {
+						if ( ! in_array( $tooltip_event->ID, $selected_venue_obj->event_ids ) ) {
 							continue;
 						}
 						?>

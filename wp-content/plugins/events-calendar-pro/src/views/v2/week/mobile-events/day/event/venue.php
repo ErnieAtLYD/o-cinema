@@ -9,24 +9,27 @@
  *
  * @link {INSERT_ARTCILE_LINK_HERE}
  *
- * @version 4.7.5
+ * @version 4.7.9
  *
  */
-$event    = $this->get( 'event' );
-$event_id = $event->ID;
 
-// Setup an array of venue details for use later in the template
-$venue_details = tribe_get_venue_details( $event_id );
-
-if ( ! $venue_details ) {
+if ( ! $event->venues->count() ) {
 	return;
 }
+
+$separator            = esc_html_x( ', ', 'Address separator', 'events-calendar-pro' );
+$venue                = $event->venues[0];
+$append_after_address = array_filter( array_map( 'trim', [ $venue->city, $venue->state_province, $venue->state, $venue->province ] ) );
+$address              = $venue->address . ( $venue->address && $append_after_address ? $separator : '' );
 ?>
 <address class="tribe-events-pro-week-mobile-events__event-venue tribe-common-b2">
 	<span class="tribe-events-pro-week-mobile-events__event-venue-title tribe-common-b2--bold">
-		<?php echo isset( $venue_details['linked_name'] ) ? $venue_details['linked_name'] : esc_html__( 'Venue Name', 'tribe-events-calendar-pro' ); ?>
+		<?php echo wp_kses_post( $venue->post_title ); ?>
 	</span>
 	<span class="tribe-events-pro-week-mobile-events__event-venue-address">
-		<?php echo isset( $venue_details['address'] ) ? $venue_details['address'] : ''; ?>
+		<?php echo esc_html( $address ); ?>
+		<?php if ( $append_after_address ) : ?>
+			<?php echo esc_html( reset( $append_after_address ) ); ?>
+		<?php endif; ?>
 	</span>
 </address>

@@ -21,6 +21,6 @@
 		<?php $this->template( 'week/mobile-events/day', [ 'day_date' => $day_date, 'day' => $day ] ); ?>
 	<?php endforeach; ?>
 
-	<?php $this->template( 'week/nav', [ 'location' => 'mobile' ] ); ?>
+	<?php $this->template( 'week/mobile-events/nav' ); ?>
 
 </section>

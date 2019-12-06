@@ -9,10 +9,9 @@
  *
  * @link {INSERT_ARTCILE_LINK_HERE}
  *
- * @version 4.7.5
+ * @version 4.7.9
  *
  */
-$event    = $this->get( 'event' );
 $event_id = $event->ID;
 ?>
 <h3 class="tribe-events-pro-week-mobile-events__event-title tribe-common-h6 tribe-common-h5--min-medium">
@@ -22,6 +21,6 @@ $event_id = $event->ID;
 		rel="bookmark"
 		class="tribe-events-pro-week-mobile-events__event-title-link tribe-common-anchor-thin"
 	>
-		<?php echo get_the_title( $event_id ); ?>
+		<?php echo wp_kses_post( get_the_title( $event->ID ) ); ?>
 	</a>
 </h3>

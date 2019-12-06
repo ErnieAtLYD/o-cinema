@@ -9,19 +9,18 @@
  *
  * @link {INSERT_ARTCILE_LINK_HERE}
  *
- * @version 4.7.8
+ * @version 4.7.9
  *
  * @var array $day Array of data for the day.
  * @var string $today_date Today's date in the `Y-m-d` format.
  */
-$day_classes = [ 'tribe-events-pro-week-grid__header-column-daynum', 'tribe-common-h4' ];
-
-if ( $today_date === $day['datetime'] ) {
-	$day_classes[] = 'tribe-events-pro-week-grid__header-column-daynum--current';
-}
+$classes = [
+	'tribe-events-pro-week-grid__header-column'          => true,
+	'tribe-events-pro-week-grid__header-column--current' => $today_date === $day['datetime'],
+];
 ?>
 <div
-	class="tribe-events-pro-week-grid__header-column"
+	<?php tribe_classes( $classes ); ?>
 	role="columnheader"
 	aria-label="<?php echo esc_attr( $day[ 'full_date' ] ); ?>"
 >
@@ -33,8 +32,17 @@ if ( $today_date === $day['datetime'] ) {
 			<span class="tribe-events-pro-week-grid__header-column-weekday tribe-common-h8 tribe-common-h--alt">
 				<?php echo esc_html( $day[ 'weekday' ] ); ?>
 			</span>
-			<span <?php tribe_classes( $day_classes ); ?>>
-				<?php echo esc_html( $day[ 'daynum' ] ); ?>
+			<span class="tribe-events-pro-week-grid__header-column-daynum tribe-common-h4">
+				<?php if ( ! empty( $day['found_events'] ) ) : ?>
+					<a
+						class="tribe-events-pro-week-grid__header-column-daynum-link"
+						href="<?php echo esc_url( $day['day_url'] ); ?>"
+					>
+						<?php echo esc_html( $day[ 'daynum' ] ); ?>
+					</a>
+				<?php else : ?>
+					<?php echo esc_html( $day[ 'daynum' ] ); ?>
+				<?php endif; ?>
 			</span>
 		</time>
 	</h3>

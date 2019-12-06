@@ -9,13 +9,15 @@
 namespace Tribe\Events\Pro\Views\V2\Views;
 
 use Tribe\Events\Views\V2\View;
+use Tribe\Events\Views\V2\Views\List_Behavior;
+use Tribe__Events__Google__Maps_API_Key as GMaps;
 use Tribe__Events__Main as TEC;
 use Tribe__Events__Rewrite as Rewrite;
 use Tribe__Utils__Array as Arr;
-use Tribe__Events__Google__Maps_API_Key as GMaps;
-use Tribe__Events__Pro__Geo_Loc as Event_Geolocation;
 
 class Map_View extends View {
+	use List_Behavior;
+
 	/**
 	 * Slug for this view
 	 *
@@ -29,10 +31,11 @@ class Map_View extends View {
 	 * Visibility for this view.
 	 *
 	 * @since 4.7.7
+	 * @since 4.7.9 Made the property static.
 	 *
 	 * @var bool
 	 */
-	protected $publicly_visible = true;
+	protected static $publicly_visible = true;
 
 	/**
 	 * {@inheritDoc}
@@ -90,8 +93,8 @@ class Map_View extends View {
 		$event_date_var = $default_date === $date ? '' : $date;
 
 		$past = tribe_events()->by_args( $this->setup_repository_args( $this->context->alter( [
-			'eventDisplay' => 'past',
-			'paged'        => $page,
+			'event_display_mode' => 'past',
+			'paged'              => $page,
 		] ) ) );
 
 		if ( $past->count() > 0 ) {
@@ -199,9 +202,9 @@ class Map_View extends View {
 		$context_arr = $context->to_array();
 
 		$date = Arr::get( $context_arr, 'event_date', 'now' );
-		$event_display = Arr::get( $context_arr, 'event_display_mode', Arr::get( $context_arr, 'event_display' ), 'current' );
+		$event_display_mode = Arr::get( $context_arr, 'event_display_mode', Arr::get( $context_arr, 'event_display' ), 'current' );
 
-		if ( 'past' !== $event_display ) {
+		if ( 'past' !== $event_display_mode ) {
 			$args['ends_after'] = $date;
 		} else {
 			$args['order']       = 'DESC';
@@ -217,8 +220,18 @@ class Map_View extends View {
 	protected function setup_template_vars() {
 		$template_vars = parent::setup_template_vars();
 
+		// While we fetch events in DESC order, we want to show the results in ASC order in `past` display mode.
+		if (
+			! empty( $template_vars['events'] )
+			&& is_array( $template_vars['events'] )
+			&& 'past' === $this->context->get( 'event_display_mode', 'map' )
+		) {
+			$template_vars['events'] = array_reverse( $template_vars['events'] );
+		}
+
 		$template_vars = $this->setup_map_provider( $template_vars );
 		$template_vars = $this->setup_events_by_venue( $template_vars );
+		$template_vars = $this->setup_datepicker_template_vars($template_vars);
 
 		return $template_vars;
 	}
@@ -233,9 +246,18 @@ class Map_View extends View {
 	 * @return array
 	 */
 	protected function setup_map_provider( $template_vars ) {
-		$map_provider = (object) [
+		$default_api_key = GMaps::$default_api_key;
+		$api_key         = (string) tribe_get_option( GMaps::$api_key_option_name, false );
+
+		if ( empty( $api_key ) ) {
+			// If an API key has not been set yet, set it now.
+			tribe_update_option( GMaps::$api_key_option_name, $default_api_key );
+			$api_key = $default_api_key;
+		}
+
+		$map_provider    = (object) [
 			'ID' => 'google_maps',
-			'api_key' => (string) tribe_get_option( GMaps::$api_key_option_name, GMaps::$default_api_key ),
+			'api_key' => $api_key,
 			'is_premium' => ! tribe_is_using_basic_gmaps_api(),
 			'javascript_url' => 'https://maps.googleapis.com/maps/api/js',
 			'iframe_url' => 'https://www.google.com/maps/embed/v1/place',
@@ -271,5 +293,15 @@ class Map_View extends View {
 		}
 
 		return $template_vars;
+	}
+
+	/**
+	 * Overrides the base implementation to remove notions of a "past" events request on page reset.
+	 *
+	 * @since 4.7.9
+	 */
+	protected function on_page_reset() {
+		parent::on_page_reset();
+		$this->remove_past_query_args();
 	}
 }

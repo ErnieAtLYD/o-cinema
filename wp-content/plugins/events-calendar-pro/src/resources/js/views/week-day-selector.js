@@ -210,7 +210,9 @@ tribe.events.views.weekDaySelector = {};
 	 * @return {void}
 	 */
 	obj.init = function( event, index, $container, data ) {
-		if ( 'week' !== data.slug ) return;
+		if ( 'week' !== data.slug ) {
+			return;
+		}
 
 		obj.initDaySelector( $container );
 		$container.on( 'beforeAjaxSuccess.tribeEvents', { container: $container }, obj.deinit );

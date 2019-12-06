@@ -9,12 +9,11 @@
  *
  * @link {INSERT_ARTCILE_LINK_HERE}
  *
- * @version 4.7.8
+ * @version 4.7.9
  *
  * @var WP_Post $event The event post object with properties added by the `tribe_get_event` function.
  *
  * @see tribe_get_event() For the format of the event object.
- *
  */
 ?>
 <h3 class="tribe-events-pro-photo__event-title tribe-common-h6">
@@ -24,6 +23,6 @@
 		rel="bookmark"
 		class="tribe-events-pro-photo__event-title-link tribe-common-anchor-thin"
 	>
-		<?php echo get_the_title( $event->ID ); ?>
+		<?php echo wp_kses_post( get_the_title( $event->ID ) ); ?>
 	</a>
 </h3>

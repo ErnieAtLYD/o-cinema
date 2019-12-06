@@ -1,0 +1,49 @@
+.tribe-events-pro {
+
+	/* -----------------------------------------------------------------------------
+	 * Week Grid Body
+	 * ----------------------------------------------------------------------------- */
+
+	.tribe-events-pro-week-grid__multiday-events-row-wrapper {
+		box-shadow: var(--box-shadow-multiday);
+	}
+
+	.tribe-events-pro-week-grid__events-row-wrapper {
+
+		&:focus + .tribe-events-pro-week-grid__events-row-scroll-pane {
+			opacity: var(--opacity-default);
+		}
+	}
+
+	.tribe-events-pro-week-grid__multiday-toggle-button {
+
+		&:hover,
+		&:focus {
+			opacity: var(--opacity-icon-hover);
+		}
+
+		&:active {
+			opacity: var(--opacity-icon-active);
+		}
+	}
+
+	.tribe-events-pro-week-grid__events-scroll-wrapper {
+
+		&:hover .tribe-events-pro-week-grid__events-row-scroll-pane {
+			opacity: var(--opacity-default);
+		}
+	}
+
+	.tribe-events-pro-week-grid__events-time-tag {
+		@mixin mobile-body-3;
+	}
+
+	.tribe-events-pro-week-grid__events-row-scroll-pane {
+		opacity: 0;
+		transition: var(--transition-opacity);
+
+		&.active {
+			opacity: var(--opacity-default);
+		}
+	}
+}

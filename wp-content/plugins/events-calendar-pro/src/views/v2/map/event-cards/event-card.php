@@ -9,7 +9,7 @@
  *
  * @link {INSERT_ARTCILE_LINK_HERE}
  *
- * @version 4.7.8
+ * @version 4.7.9
  *
  * @var WP_Post $event The event post object with properties added by the `tribe_get_event` function.
  *
@@ -18,6 +18,8 @@
  */
 $wrapper_classes = [ 'tribe-events-pro-map__event-card-wrapper' ];
 $wrapper_classes['tribe-events-pro-map__event-card-wrapper--featured'] = $event->featured;
+
+$article_classes = get_post_class( [ 'tribe-events-pro-map__event-card' ], $event->ID );
 
 $classes = [ 'tribe-common-g-row', 'tribe-events-pro-map__event-row', 'tribe-events-pro-map__event-row--gutters' ];
 
@@ -42,7 +44,7 @@ if ( empty( $map_provider->is_premium ) && $event->venues->count() ) {
 
 	<?php $this->template( 'map/event-cards/event-card/event-button', [ 'event' => $event, 'index' => $index ] ); ?>
 
-	<div class="tribe-events-pro-map__event-card">
+	<article <?php tribe_classes( $article_classes ); ?>>
 		<div <?php tribe_classes( $classes ) ?>>
 
 			<?php $this->template( 'map/event-cards/event-card/date-tag', [ 'event' => $event ] ); ?>
@@ -50,7 +52,7 @@ if ( empty( $map_provider->is_premium ) && $event->venues->count() ) {
 			<?php $this->template( 'map/event-cards/event-card/event', [ 'event' => $event, 'index' => $index ] ); ?>
 
 		</div>
-	</div>
+	</article>
 
 	<?php $this->template( 'map/event-cards/event-card/tooltip', [ 'event' => $event ] ); ?>
 

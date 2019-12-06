@@ -9,22 +9,23 @@
  *
  * @link {INSERT_ARTCILE_LINK_HERE}
  *
- * @var array $day Array of data of the day
+ * @var array  $day             Array of data of the day
+ * @var bool   $is_current_week boolean containing if the selected week is the current week.
+ * @var string $today_date      Today's date in `Y-m-d`.
+ * @var string $week_start_date The week start date, in `Y-m-d` format.
  *
- * @version 4.7.7
+ * @version 4.7.9
  *
- */
-
-/**
- * @todo: @be Luca or Gustavo
- *        Add active class.
- *        If base URL (/events/week/), then active class should be on today.
- *        If on specific week (/events/week/?tribe-bar-date=2019-07-14), then active class should be first day.
  */
 $selected    = 'false';
 $day_classes = [ 'tribe-events-pro-week-day-selector__day' ];
 
-if ( ! empty( $day[ 'is_active' ] ) ) {
+// If in the current week, and today's is the day.
+// Or for the rest of the weeks, if it's the first day of the week.
+if (
+	( $is_current_week && $today_date === $day['datetime'] )
+	|| ( ! $is_current_week && $day['datetime'] === $week_start_date )
+) {
 	$selected      = 'true';
 	$day_classes[] = 'tribe-events-pro-week-day-selector__day--active';
 }
@@ -32,7 +33,7 @@ if ( ! empty( $day[ 'is_active' ] ) ) {
 ?>
 <li class="tribe-events-pro-week-day-selector__days-list-item">
 	<button
-		class="<?php echo esc_attr( implode( ' ', $day_classes ) ); ?>"
+		<?php tribe_classes( $day_classes ) ?>
 		aria-expanded="<?php echo esc_attr( $selected ); ?>"
 		aria-selected="<?php echo esc_attr( $selected ); ?>"
 		aria-controls="tribe-events-pro-week-mobile-events-day-<?php echo esc_attr( $day[ 'datetime' ] ); ?>"
@@ -42,8 +43,8 @@ if ( ! empty( $day[ 'is_active' ] ) ) {
 		<?php if ( ! empty( $day['found_events'] ) ) : ?>
 			<em
 				class="tribe-events-pro-week-day-selector__events-icon"
-				aria-label="<?php esc_attr_e( 'Has events', 'the-events-calendar' ); ?>"
-				title="<?php esc_attr_e( 'Has events', 'the-events-calendar' ); ?>"
+				aria-label="<?php esc_attr_e( 'Has events', 'tribe-events-calendar-pro' ); ?>"
+				title="<?php esc_attr_e( 'Has events', 'tribe-events-calendar-pro' ); ?>"
 			>
 			</em>
 		<?php endif; ?>

@@ -9,18 +9,25 @@
  *
  * @link {INSERT_ARTCILE_LINK_HERE}
  *
- * @version 4.7.8
+ * @version 4.7.9
  *
  * @var WP_Post $event The event post object with properties added by the `tribe_get_event` function.
  *
  * @see tribe_get_event() For the format of the event object.
  */
+
+if ( empty( $event->recurring ) ) {
+	return;
+}
 ?>
-<?php if ( ! empty( $event->recurring ) ) : ?>
+<a
+	href="<?php echo esc_url( $event->permalink_all ); ?>"
+	class="tribe-events-calendar-month__calendar-event-datetime-recurring-link"
+>
 	<em
-		class="tribe-events-calendar-month__calendar-event-datetime-recurring tribe-common-svgicon tribe-common-svgicon--recurring"
+		class="tribe-events-calendar-month__calendar-event-datetime-recurring-icon tribe-common-svgicon tribe-common-svgicon--recurring"
 		aria-label="<?php esc_attr_e( 'Recurring', 'tribe-events-calendar-pro' ) ?>"
 		title="<?php esc_attr_e( 'Recurring', 'tribe-events-calendar-pro' ) ?>"
 	>
 	</em>
-<?php endif; ?>
+</a>

@@ -46,7 +46,10 @@ class Service_Provider extends \tad_DI52_ServiceProvider {
 	 *                  properties.
 	 */
 	public function filter_tribe_get_event( \WP_Post $post ) {
-		$post->recurring = tribe_is_recurring_event( $post->ID );
+		$is_recurring = tribe_is_recurring_event( $post->ID );
+
+		$post->recurring     = $is_recurring;
+		$post->permalink_all = $is_recurring ? tribe_all_occurences_link( $post->ID, false ) : null;
 
 		return $post;
 	}
@@ -72,6 +75,22 @@ class Service_Provider extends \tad_DI52_ServiceProvider {
 			 */
 			'distance'              => false,
 		];
+
+		// if there isn't any geolocation data, let's try to fake it with the address that we do have
+		if ( empty( $post->geolocation->address ) ) {
+			$address = [];
+			foreach ( [ 'address', 'city', 'state_province', 'zip', 'country' ] as $part ) {
+				if ( empty( $post->$part ) ) {
+					continue;
+				}
+
+				$address[] = $post->$part;
+			}
+
+			$address = implode( ', ', $address );
+
+			$post->geolocation->address = empty( $address ) ? '*' : $address;
+		}
 
 		return $post;
 	}

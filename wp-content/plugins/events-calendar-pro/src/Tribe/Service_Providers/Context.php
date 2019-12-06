@@ -45,6 +45,24 @@ class Context extends \tad_DI52_ServiceProvider {
 					Tribe__Context::QUERY_VAR   => [ 'hide_subsequent_recurrences' ],
 				],
 			],
+			'geoloc_search' => [
+				'read' => [
+					Tribe__Context::REQUEST_VAR => [ 'tribe-bar-location', 'tribe_geoloc_location' ],
+					Tribe__Context::QUERY_VAR   => [ 'tribe_geoloc_location' ],
+				],
+			],
+			'geoloc_lat' => [
+				'read' => [
+					Tribe__Context::REQUEST_VAR => [ 'tribe-bar-geoloc-lat', 'tribe_geoloc_lat' ],
+					Tribe__Context::QUERY_VAR   => [ 'tribe_geoloc_lat' ],
+				],
+			],
+			'geoloc_lng' => [
+				'read' => [
+					Tribe__Context::REQUEST_VAR => [ 'tribe-bar-geoloc-lat', 'tribe_geoloc_lat' ],
+					Tribe__Context::QUERY_VAR   => [ 'tribe_geoloc_lat' ],
+				],
+			],
 		] );
 
 		return $locations;

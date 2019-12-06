@@ -64,7 +64,7 @@ abstract class Shortcode_Abstract implements Shortcode_Interface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function setup( array $arguments, string $content ) {
+	public function setup( $arguments, $content ) {
 		$this->arguments = $this->parse_arguments( $arguments );
 		$this->content   = $content;
 	}
@@ -72,7 +72,7 @@ abstract class Shortcode_Abstract implements Shortcode_Interface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function parse_arguments( array $arguments ) {
+	public function parse_arguments( $arguments ) {
 		$arguments = shortcode_atts( $this->get_default_arguments(), $arguments, $this->slug );
 		return $this->validate_arguments( $arguments );
 	}
@@ -80,7 +80,7 @@ abstract class Shortcode_Abstract implements Shortcode_Interface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function validate_arguments( array $arguments ) {
+	public function validate_arguments( $arguments ) {
 		$validate_arguments_map = $this->get_validate_arguments_map();
 		foreach ( $validate_arguments_map as $key => $callback ) {
 			$arguments[ $key ] = $callback( isset( $arguments[ $key ] ) ? $arguments[ $key ] : null );

@@ -1,0 +1,54 @@
+.tribe-events-pro {
+
+	/* -----------------------------------------------------------------------------
+	 * Event Cards
+	 * ----------------------------------------------------------------------------- */
+
+	.tribe-events-pro-map__event-column {
+		display: flex;
+		flex-direction: column;
+		height: 290px;
+		position: relative;
+
+		@media (--viewport-medium) {
+			height: 720px;
+			width: 40%;
+		}
+	}
+
+	.tribe-events-pro-map__event-cards-wrapper {
+		flex: auto;
+		overflow: hidden;
+		position: relative;
+	}
+
+	.tribe-events-pro-map__event-cards {
+		height: 100%;
+		left: 0;
+		overflow-y: hidden;
+		overflow-x: hidden;
+		position: absolute;
+		right: 0;
+	}
+
+	.tribe-events-pro-map__event-cards--active {
+		overflow-y: scroll;
+	}
+
+	.tribe-events-pro-map__event-cards-scroll-pane {
+		background-color: var(--color-scroll-track);
+		border-radius: 3px;
+		bottom: 0;
+		position: absolute;
+		right: 0;
+		top: 0;
+		width: 3px;
+		z-index: var(--z-index-scroller);
+	}
+
+	.tribe-events-pro-map__event-cards-scroll-slider {
+		background: var(--color-scroll-bar);
+		border-radius: 3px;
+		position: relative;
+	}
+}

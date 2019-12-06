@@ -9,16 +9,14 @@
  *
  * @link {INSERT_ARTCILE_LINK_HERE}
  *
- * @version 4.7.8
+ * @version 4.7.9
  *
  * @var WP_Post $event The event post object with properties added by the `tribe_get_event` function.
+ * @var string $placeholder_url The url for the placeholder image if a featured image does not exist.
  *
  * @see tribe_get_event() For the format of the event object.
- *
  */
-
-$placeholder = trailingslashit( Tribe__Events__Pro__Main::instance()->pluginUrl ) . 'src/resources/images/tribe-event-placeholder-image.svg';
-$image_url = $event->thumbnail->exists ? $event->thumbnail->full->url : $placeholder;
+$image_url = $event->thumbnail->exists ? $event->thumbnail->full->url : $placeholder_url;
 
 ?>
 <div class="tribe-events-pro-photo__event-featured-image-wrapper">
@@ -28,14 +26,18 @@ $image_url = $event->thumbnail->exists ? $event->thumbnail->full->url : $placeho
 		rel="bookmark"
 		class="tribe-events-pro-photo__event-featured-image-link"
 	>
-		<div class="tribe-events-pro-photo__event-featured-image tribe-common-c-image tribe-common-c-image--bg">
-			<div
-				class="tribe-common-c-image__bg"
-				style="background-image: url('<?php echo esc_url( $image_url ); ?>');"
-				role="img"
-				aria-label="<?php echo esc_attr( get_the_title( $event ) ); ?>"
-			>
-			</div>
-		</div>
+		<img
+			src="<?php echo esc_url( $image_url ); ?>"
+			<?php if ( ! empty( $event->thumbnail->srcset ) ) : ?>
+				srcset="<?php echo esc_attr( $event->thumbnail->srcset ); ?>"
+			<?php endif; ?>
+			<?php if ( ! empty( $event->thumbnail->alt ) ) : ?>
+				alt="<?php echo esc_attr( $event->thumbnail->alt ); ?>"
+			<?php endif; ?>
+			<?php if ( ! empty( $event->thumbnail->title ) ) : ?>
+				title="<?php echo esc_attr( $event->thumbnail->title ); ?>"
+			<?php endif; ?>
+			class="tribe-events-pro-photo__event-featured-image"
+		/>
 	</a>
 </div>

@@ -16,9 +16,12 @@
  * @see tribe_get_event() For the format of the event object.
  *
  */
+
+$event_row_thumbnail_class = $event->thumbnail->exists ? 'tribe-events-pro-map__event-row--has-thumbnail' : '';
+
 ?>
 <div class="tribe-events-pro-map__event-wrapper tribe-common-g-col">
-	<article class="tribe-events-pro-map__event tribe-common-g-row tribe-events-pro-map__event-row--gutters">
+	<article class="tribe-events-pro-map__event tribe-common-g-row tribe-events-pro-map__event-row--gutters <?php echo esc_attr( $event_row_thumbnail_class ); ?>">
 
 		<div class="tribe-events-pro-map__event-details tribe-common-g-col">
 

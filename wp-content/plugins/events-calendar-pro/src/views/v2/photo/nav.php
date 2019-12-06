@@ -27,7 +27,7 @@
 		}
 		?>
 
-		<?php $this->template( 'photo/nav/today', [ 'link' => $today_url ] ); ?>
+		<?php $this->template( 'photo/nav/today' ); ?>
 
 		<?php
 		if ( ! empty( $next_url ) ) {

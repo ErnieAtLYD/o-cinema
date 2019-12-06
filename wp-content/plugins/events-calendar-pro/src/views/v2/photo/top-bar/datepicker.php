@@ -7,51 +7,58 @@
  *
  * See more documentation about our views templating system.
  *
- * @link {INSERT_ARTCILE_LINK_HERE}
+ * @link    {INSERT_ARTCILE_LINK_HERE}
  *
- * @version 4.7.7
+ * @version 4.7.9
  *
- * @var string $today Today's date in the `Y-m-d` format.
- * @var string $now  The current date and time in the `Y-m-d H:i:s` format.
+ * @var bool   $is_now                     Whether the date selected in the datepicker is "now" or not.
+ * @var bool   $show_now                   Whether to show the "Now" label as range start or not.
+ * @var string $now_label                  The "Now" text label.
+ * @var bool   $show_end                   Whether to show the end part of the range or not.
+ * @var string $selected_start_datetime    The selected start date and time in the localized `Y-m-d` format.
+ * @var string $selected_start_date_mobile The formatted date that will show in the datepicker mobile version.
+ * @var string $selected_start_date_label  The label of the datepicker interval start.
+ * @var string $selected_end_datetime      The selected end date and time in the localized `Y-m-d` format.
+ * @var string $selected_end_date_mobile   The formatted date that will show in the datepicker mobile version.
+ * @var string $selected_end_date_label    The label of the datepicker interval end.
+ * @var string $datepicker_date            The datepicker selected date, in the `Y-m-d` format.
  */
-
-$default_start_date = $now;
-$selected_start_date_value = $this->get( [ 'bar', 'date' ], $default_start_date );
-if ( empty( $selected_start_date_value ) ) {
-	$selected_start_date_value = $default_start_date;
-}
-
-$selected_start_datetime = strtotime( $selected_start_date_value );
-$is_now = date( 'Y-m-d', $selected_start_datetime ) === date( 'Y-m-d', strtotime( $default_start_date ) );
-
-$selected_start_date_label = date_i18n( tribe_get_date_format( true ), $selected_start_datetime );
-
-$selected_end_date_value = $today;
-$last_event = $this->get( 'view' )->get_repository()->last();
-
-if ( $last_event instanceof WP_Post ) {
-	$selected_end_date_value = $last_event->EventEndDate;
-}
-$selected_end_datetime = strtotime( $selected_end_date_value );
-$selected_end_date_label = date_i18n( tribe_get_date_format( true ), $selected_end_datetime );
 
 ?>
 <div class="tribe-events-c-top-bar__datepicker">
 	<button
-		class="tribe-common-h2 tribe-common-h3--min-medium tribe-common-h--alt tribe-events-c-top-bar__datepicker-button"
+		class="tribe-common-h3 tribe-common-h--alt tribe-events-c-top-bar__datepicker-button"
 		data-js="tribe-events-top-bar-datepicker-button"
 	>
-		<?php if ( $is_now ) : ?>
-			<?php esc_html_e( 'Now', 'tribe-events-calendar-pro' ); ?>
-		<?php else: ?>
-			<time datetime="<?php echo esc_attr( date_i18n( 'Y-m-d', $selected_start_datetime ) ); ?>">
-				<?php echo esc_html( $selected_start_date_label ); ?>
+		<?php if ( $show_now ) : ?>
+			<?php echo esc_html( $now_label ); ?>
+		<?php else : ?>
+			<time
+				datetime="<?php echo esc_attr( $selected_start_datetime ); ?>"
+				class="tribe-events-c-top-bar__datepicker-time"
+			>
+				<span class="tribe-events-c-top-bar__datepicker-mobile">
+					<?php echo esc_html( $selected_start_date_mobile ); ?>
+				</span>
+				<span class="tribe-events-c-top-bar__datepicker-desktop tribe-common-a11y-hidden">
+					<?php echo esc_html( $selected_start_date_label ); ?>
+				</span>
 			</time>
 		<?php endif; ?>
-		&mdash;
-		<time datetime="<?php echo esc_attr( date_i18n( 'Y-m-d', $selected_end_datetime ) ); ?>">
-			<?php echo esc_html( $selected_end_date_label ); ?>
-		</time>
+		<?php if ( $show_end ) : ?>
+			<span class="tribe-events-c-top-bar__datepicker-separator">&mdash;</span>
+			<time
+				datetime="<?php echo esc_attr( $selected_end_datetime ); ?>"
+				class="tribe-events-c-top-bar__datepicker-time"
+			>
+				<span class="tribe-events-c-top-bar__datepicker-mobile">
+					<?php echo esc_html( $selected_end_date_mobile ); ?>
+				</span>
+				<span class="tribe-events-c-top-bar__datepicker-desktop tribe-common-a11y-hidden">
+					<?php echo esc_html( $selected_end_date_label ); ?>
+				</span>
+			</time>
+		<?php endif; ?>
 	</button>
 	<label
 		class="tribe-events-c-top-bar__datepicker-label tribe-common-a11y-visual-hide"
@@ -65,7 +72,7 @@ $selected_end_date_label = date_i18n( tribe_get_date_format( true ), $selected_e
 		data-js="tribe-events-top-bar-date"
 		id="tribe-events-top-bar-date"
 		name="tribe-events-views[tribe-bar-search]"
-		value="<?php echo esc_attr( tribe_events_template_var( [ 'bar', 'date' ], '' ) ); ?>"
+		value="<?php echo esc_attr( $datepicker_date ); ?>"
 		tabindex="-1"
 		autocomplete="off"
 	/>

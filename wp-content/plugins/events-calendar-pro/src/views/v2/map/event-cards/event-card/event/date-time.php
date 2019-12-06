@@ -9,7 +9,7 @@
  *
  * @link {INSERT_ARTCILE_LINK_HERE}
  *
- * @version 4.7.8
+ * @version 4.7.9
  *
  * @var WP_Post $event The event post object with properties added by the `tribe_get_event` function.
  *
@@ -20,24 +20,23 @@
 use Tribe__Date_Utils as Dates;
 
 $time_format = tribe_get_time_format();
+$display_end_date = $event->dates->start_display->format( 'H:i' ) !== $event->dates->end_display->format( 'H:i' );
 
 /**
  * @todo: @be @bordoni
  *        various cases for event date time
  */
 if ( $event->all_day ) {
-	$start = __( 'All Day', 'tribe-events-calendar-pro' );
-	$start_attr = $event->dates->start->format( Dates::DBDATEFORMAT );
+	$start      = __( 'All Day', 'tribe-events-calendar-pro' );
+	$start_attr = $event->dates->start_display->format( Dates::DBDATEFORMAT );
 } elseif ( $event->multiday ) {
-	$start = $event->dates->start->format( 'F j' );
-	$start_attr = $event->dates->start->format( Dates::DBDATEFORMAT );
-	$end = $event->dates->end->format( 'F j' );
-	$end_attr = $event->dates->end->format( Dates::DBDATEFORMAT );
+	$start      = $event->schedule_details->value();
+	$start_attr = $event->dates->start_display->format( Dates::DBDATEFORMAT );
 } else {
-	$start = $event->dates->start->format( $time_format );
-	$start_attr = $event->dates->start->format( Dates::DBTIMEFORMAT );
-	$end = $event->dates->end->format( $time_format );
-	$end_attr = $event->dates->end->format( Dates::DBTIMEFORMAT );
+	$start      = $event->dates->start_display->format( $time_format );
+	$start_attr = $event->dates->start_display->format( Dates::DBTIMEFORMAT );
+	$end        = $event->dates->end_display->format( $time_format );
+	$end_attr   = $event->dates->end_display->format( Dates::DBTIMEFORMAT );
 }
 ?>
 <div class="tribe-events-pro-map__event-datetime-wrapper tribe-common-b2 tribe-common-b3--min-medium">
@@ -56,9 +55,13 @@ if ( $event->all_day ) {
 		class="tribe-events-pro-map__event-start-datetime"
 		datetime="<?php echo esc_attr( $start_attr ); ?>"
 	>
-		<?php echo esc_html( $start ); ?>
+		<?php if ( $event->multiday ) : ?>
+			<?php echo $start; ?>
+		<?php else : ?>
+			<?php echo esc_html( $start ); ?>
+		<?php endif; ?>
 	</time>
-	<?php if ( ! $event->all_day ) : ?>
+	<?php if ( ( ! $event->all_day && ! $event->multiday ) && $display_end_date ) : ?>
 		<span class="tribe-events-pro-map__event-datetime-separator"> &mdash; </span>
 		<time
 			class="tribe-events-pro-map__event-end-datetime"

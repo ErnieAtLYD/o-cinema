@@ -9,10 +9,11 @@
  *
  * @link {INSERT_ARTCILE_LINK_HERE}
  *
- * @version 4.7.7
+ * @version 4.7.9
  *
  */
 ?>
 <div class="tribe-events-pro-map__map tribe-common-g-col" data-js="tribe-events-pro-map-map">
 	<?php $this->template( 'map/map/google-maps' ); ?>
+	<?php $this->template( 'map/map/no-venue-modal' ); ?>
 </div>

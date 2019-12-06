@@ -237,7 +237,9 @@ tribe.events.views.mapEvents = {};
 	 * @return {void}
 	 */
 	obj.init = function( event, index, $container, data ) {
-		if ( 'map' !== data.slug ) return;
+		if ( 'map' !== data.slug ) {
+			return;
+		}
 
 		obj.initMap( index, $container, data );
 		obj.bindEvents( index, $container, data );
@@ -245,7 +247,7 @@ tribe.events.views.mapEvents = {};
 	};
 
 	/**
-	 * Handles the initialization of the week grid scroller when Document is ready
+	 * Handles the initialization of the map events when Document is ready
 	 *
 	 * @since 4.7.7
 	 *

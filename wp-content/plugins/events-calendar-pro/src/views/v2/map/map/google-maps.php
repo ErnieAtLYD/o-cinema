@@ -10,10 +10,10 @@
  *
  * @link {INSERT_ARTCILE_LINK_HERE}
  *
- * @version 4.7.8
+ * @version 4.7.9
  *
- * @var  array   $events An array of the week events, in sequence.
- * @var  array   $providers Array with all the possible map providers available to the view.
+ * @var array $events       An array of the week events, in sequence.
+ * @var array $map_provider Array with data of map provider.
  */
 ?>
 <?php if ( empty( $map_provider->is_premium ) ) : ?>

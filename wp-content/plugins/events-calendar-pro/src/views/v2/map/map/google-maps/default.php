@@ -16,15 +16,17 @@
 // Gets the first event.
 $event = reset( $events );
 
+$url = '';
 // Verifies if that event has a venue.
-if ( ! isset( $event->venues ) || ! $event->venues->count() ) {
-	return;
+if ( isset( $event->venues ) && $event->venues->count() ) {
+	$url = add_query_arg(
+		[
+			'key' => $map_provider->api_key,
+			'q'   => urlencode( $event->venues->first()->geolocation->address ),
+		],
+		$map_provider->iframe_url
+	);
 }
-
-$url = add_query_arg( [
-	'key' => $map_provider->api_key,
-	'q'   => urlencode( $event->venues->first()->geolocation->address ),
-], $map_provider->iframe_url );
 ?>
 <iframe
 	class="tribe-events-pro-map__google-maps-default"

@@ -1,0 +1,127 @@
+.tribe-events-pro {
+
+	.tribe-events-pro-week-grid__event--featured {
+
+		.tribe-events-pro-week-grid__event-link-inner {
+			background-color: var(--color-accent-primary-week-event-featured);
+
+			&:before {
+				background: var(--color-accent-primary);
+				content: '';
+				height: 100%;
+				left: 0;
+				top: 0;
+				position: absolute;
+				width: 2px;
+			}
+		}
+
+		.tribe-events-pro-week-grid__event-link {
+
+			&:hover,
+			&:focus {
+
+				.tribe-events-pro-week-grid__event-link-inner {
+					background-color: var(--color-accent-primary-week-event-featured-hover);
+				}
+			}
+		}
+	}
+
+	.tribe-events-pro-week-grid__event--past {
+
+		.tribe-events-pro-week-grid__event-link-inner {
+			background-color: var(--color-background-secondary);
+		}
+
+		.tribe-events-pro-week-grid__event-link {
+
+			&:hover,
+			&:focus {
+
+				.tribe-events-pro-week-grid__event-link-inner {
+					background-color: var(--color-background-secondary-hover);
+				}
+			}
+		}
+	}
+
+	.tribe-events-pro-week-grid__event-link {
+		border: var(--border-width-week-event) solid var(--color-background);
+		border-radius: calc(var(--border-radius-default) + var(--border-width-week-event));
+
+		&:hover,
+		&:focus {
+
+			.tribe-events-pro-week-grid__event-link-inner {
+				background-color: var(--color-accent-primary-week-event-hover);
+			}
+		}
+	}
+
+	.tribe-events-pro-week-grid__event-link-inner {
+		background-color: var(--color-accent-primary-week-event);
+		transition: var(--transition-background-color);
+	}
+
+	/* -----------------------------------------------------------------------------
+	 * Event Sequence
+	 * ----------------------------------------------------------------------------- */
+
+	/* -----------------------------------------------------------------------------
+	 * Event Height / Duration
+	 * ----------------------------------------------------------------------------- */
+
+	/* -----------------------------------------------------------------------------
+	 * Event time positioning (top)
+	 * ----------------------------------------------------------------------------- */
+
+	/* -----------------------------------------------------------------------------
+	 * Event details
+	 * ----------------------------------------------------------------------------- */
+
+	.tribe-events-pro-week-grid__event-title {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.tribe-events-pro-week-grid__event-datetime {
+		@mixin mobile-body-3;
+
+		color: var(--color-text-secondary);
+		white-space: nowrap;
+	}
+
+	/* -----------------------------------------------------------------------------
+	 * Event Tooltip
+	 * ----------------------------------------------------------------------------- */
+
+	.tribe-events-pro-week-grid__event-tooltip-featured-image-link {
+		transition: var(--transition-opacity);
+
+		&:hover,
+		&:focus {
+			opacity: var(--opacity-icon-hover);
+		}
+
+		&:active {
+			opacity: var(--opacity-icon-active);
+		}
+	}
+
+	.tribe-events-calendar-month__calendar-event-tooltip-datetime {
+		@mixin mobile-body-3;
+	}
+
+	.tribe-events-pro-week-grid__event-tooltip-datetime-recurring-link {
+
+		&:hover,
+		&:focus {
+
+			.tribe-events-pro-week-grid__event-tooltip-datetime-recurring-icon {
+				background-image: svg-inline(recurring);
+			}
+		}
+	}
+}

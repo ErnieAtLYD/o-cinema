@@ -9,11 +9,14 @@
 namespace Tribe\Events\Pro\Views\V2\Views;
 
 use Tribe\Events\Views\V2\View;
+use Tribe\Events\Views\V2\Views\List_Behavior;
 use Tribe__Events__Main as TEC;
 use Tribe__Events__Rewrite as Rewrite;
 use Tribe__Utils__Array as Arr;
 
 class Photo_View extends View {
+	use List_Behavior;
+
 	/**
 	 * Slug for this view
 	 *
@@ -27,10 +30,11 @@ class Photo_View extends View {
 	 * Visibility for this view.
 	 *
 	 * @since 4.7.5
+	 * @since 4.7.9 Made the property static.
 	 *
 	 * @var bool
 	 */
-	protected $publicly_visible = true;
+	protected static $publicly_visible = true;
 
 	/**
 	 * {@inheritDoc}
@@ -88,8 +92,8 @@ class Photo_View extends View {
 		$event_date_var = $default_date === $date ? '' : $date;
 
 		$past = tribe_events()->by_args( $this->setup_repository_args( $this->context->alter( [
-			'eventDisplay' => 'past',
-			'paged'        => $page,
+			'event_display_mode' => 'past',
+			'paged'              => $page,
 		] ) ) );
 
 		if ( $past->count() > 0 ) {
@@ -209,4 +213,26 @@ class Photo_View extends View {
 		return $args;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	protected function setup_template_vars() {
+		$template_vars = parent::setup_template_vars();
+
+		$template_vars['placeholder_url'] = trailingslashit( \Tribe__Events__Pro__Main::instance()->pluginUrl ) . 'src/resources/images/tribe-event-placeholder-image.svg';
+
+		$template_vars = $this->setup_datepicker_template_vars( $template_vars );
+
+		return $template_vars;
+	}
+
+	/**
+	 * Overrides the base implementation to remove notions of a "past" events request on page reset.
+	 *
+	 * @since 4.7.9
+	 */
+	protected function on_page_reset() {
+		parent::on_page_reset();
+		$this->remove_past_query_args();
+	}
 }

@@ -1,0 +1,48 @@
+.tribe-events-pro {
+
+	/* -----------------------------------------------------------------------------
+	 * Week Day Selector
+	 * ----------------------------------------------------------------------------- */
+
+	.tribe-events-pro-week-day-selector__day {
+		border: 1px solid transparent;
+		border-radius: var(--border-radius-default);
+		transition: var(--transition-border-color);
+
+		&:hover,
+		&:focus {
+
+			.tribe-events-pro-week-day-selector__day-weekday,
+			.tribe-events-pro-week-day-selector__day-daynum {
+				color: var(--color-accent-secondary-hover);
+			}
+		}
+
+		&:active {
+
+			.tribe-events-pro-week-day-selector__day-weekday,
+			.tribe-events-pro-week-day-selector__day-daynum {
+				color: var(--color-accent-secondary-active);
+			}
+		}
+	}
+
+	.tribe-events-pro-week-day-selector__day--active {
+		border-color: var(--color-accent-primary);
+	}
+
+	.tribe-events-pro-week-day-selector__events-icon {
+		background-color: var(--color-accent-primary);
+	}
+
+	.tribe-events-pro-week-day-selector__day-weekday,
+	.tribe-events-pro-week-day-selector__day-daynum {
+		transition: var(--transition-color);
+	}
+
+	.tribe-events-pro-week-day-selector__day-weekday {
+		color: var(--color-text-secondary);
+		text-transform: uppercase;
+		margin: 9px 0 -7px;
+	}
+}

@@ -2,13 +2,13 @@
 # This file is distributed under the same license as the The Events Calendar PRO package.
 msgid ""
 msgstr ""
-"Project-Id-Version: The Events Calendar PRO 4.7.8\n"
+"Project-Id-Version: The Events Calendar PRO 4.7.10\n"
 "Report-Msgid-Bugs-To: http://m.tri.be/191x\n"
-"POT-Creation-Date: 2019-09-20 16:21:15+00:00\n"
+"POT-Creation-Date: 2019-11-20 05:11:54+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2019-09-20 16:21\n"
+"PO-Revision-Date: 2019-11-20 05:11\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 
@@ -46,22 +46,30 @@ msgid "Title"
 msgstr ""
 
 #: src/Tribe/APM_Filters/APM_Filters.php:97 src/Tribe/Recurrence/Meta.php:291
-#: src/views/v2/day/event/recurring.php:22
-#: src/views/v2/day/event/recurring.php:23
-#: src/views/v2/list/event/recurring.php:22
-#: src/views/v2/list/event/recurring.php:23
-#: src/views/v2/map/event-cards/event-card/event/date-time.php:73
-#: src/views/v2/map/event-cards/event-card/event/date-time.php:74
-#: src/views/v2/month/calendar-event/recurring.php:22
-#: src/views/v2/month/calendar-event/recurring.php:23
-#: src/views/v2/month/mobile-event/recurring.php:18
-#: src/views/v2/month/mobile-event/recurring.php:19
-#: src/views/v2/photo/event/date-time.php:52
-#: src/views/v2/photo/event/date-time.php:53
-#: src/views/v2/week/grid-body/events-day/event/date.php:43
+#: src/views/v2/day/event/recurring.php:27
+#: src/views/v2/day/event/recurring.php:28
+#: src/views/v2/list/event/recurring.php:27
+#: src/views/v2/list/event/recurring.php:28
+#: src/views/v2/map/event-cards/event-card/event/date-time.php:76
+#: src/views/v2/map/event-cards/event-card/event/date-time.php:77
+#: src/views/v2/month/calendar-event/recurring.php:29
+#: src/views/v2/month/calendar-event/recurring.php:30
+#: src/views/v2/month/calendar-event/tooltip/recurring.php:29
+#: src/views/v2/month/calendar-event/tooltip/recurring.php:30
+#: src/views/v2/month/mobile-event/recurring.php:23
+#: src/views/v2/month/mobile-event/recurring.php:24
+#: src/views/v2/photo/event/date-time.php:58
+#: src/views/v2/photo/event/date-time.php:59
 #: src/views/v2/week/grid-body/events-day/event/date.php:44
-#: src/views/v2/week/mobile-events/day/event/date.php:38
-#: src/views/v2/week/mobile-events/day/event/date.php:39
+#: src/views/v2/week/grid-body/events-day/event/date.php:45
+#: src/views/v2/week/grid-body/events-day/event/tooltip/date.php:49
+#: src/views/v2/week/grid-body/events-day/event/tooltip/date.php:50
+#: src/views/v2/week/grid-body/multiday-events-day/multiday-event.php:86
+#: src/views/v2/week/grid-body/multiday-events-day/multiday-event.php:87
+#: src/views/v2/week/grid-body/multiday-events-day/multiday-event.php:110
+#: src/views/v2/week/grid-body/multiday-events-day/multiday-event.php:111
+#: src/views/v2/week/mobile-events/day/event/date.php:42
+#: src/views/v2/week/mobile-events/day/event/date.php:43
 msgid "Recurring"
 msgstr ""
 
@@ -262,80 +270,80 @@ msgid ""
 "map view."
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:298
+#: src/Tribe/Geo_Loc.php:319
 msgid "Map"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:336
+#: src/Tribe/Geo_Loc.php:357
 msgid "Venue Overwrite Coordinates"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:367
+#: src/Tribe/Geo_Loc.php:388
 msgid "Near"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:368
+#: src/Tribe/Geo_Loc.php:389 src/Tribe/Views/V2/Geo_Loc/Static_Handler.php:146
 msgid "Location"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:393
+#: src/Tribe/Geo_Loc.php:414
 msgid "Use latitude + longitude"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:404
+#: src/Tribe/Geo_Loc.php:425
 msgid "Latitude"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:405
+#: src/Tribe/Geo_Loc.php:426
 msgid "Longitude"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:423
+#: src/Tribe/Geo_Loc.php:444
 msgid "Enter a custom Google Maps API key"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:424
+#: src/Tribe/Geo_Loc.php:445
 msgid ""
 "for latitude and longitude to be auto-generated; otherwise, you'll only be "
 "able to enter the values manually."
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:709
+#: src/Tribe/Geo_Loc.php:747
 msgid ""
 "The latitude and longitude for your venue could not be fetched. The Google "
 "Maps API daily query limit has been reached!. %1$s "
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:713
+#: src/Tribe/Geo_Loc.php:751
 msgid "Enter your API Key"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:1259
+#: src/Tribe/Geo_Loc.php:1297
 msgctxt "debug geodata"
 msgid "Geocode request failed ($1%s - $2%s)"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:1260
+#: src/Tribe/Geo_Loc.php:1298
 msgctxt "debug geodata"
 msgid "empty response"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:1287
+#: src/Tribe/Geo_Loc.php:1325
 msgid ""
 "There was an error while trying to fix the Venues geolocation information: %s"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:1340
+#: src/Tribe/Geo_Loc.php:1378
 msgid "Fix venues data"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:1389
+#: src/Tribe/Geo_Loc.php:1437
 msgid ""
 "You have venues for which we don't have Geolocation information. <a "
 "href='%s'>Click here to generate it</a>."
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:1418
+#: src/Tribe/Geo_Loc.php:1466
 msgid "Fixed geolocation data for %d venues"
 msgstr ""
 
@@ -360,11 +368,11 @@ msgstr ""
 msgid "Month/Week View"
 msgstr ""
 
-#: src/Tribe/Main.php:462
+#: src/Tribe/Main.php:462 src/Tribe/Views/V2/Template/Title.php:40
 msgid "All %1$s for %2$s"
 msgstr ""
 
-#: src/Tribe/Main.php:468
+#: src/Tribe/Main.php:468 src/Tribe/Views/V2/Template/Title.php:58
 msgid "%1$s for week of %2$s"
 msgstr ""
 
@@ -727,274 +735,274 @@ msgid ""
 "Yearly custom recurrences cannot have a dash set as the day to occur on."
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1366 src/Tribe/Recurrence/Meta.php:1704
+#: src/Tribe/Recurrence/Meta.php:1370 src/Tribe/Recurrence/Meta.php:1708
 #: src/admin-views/recurrence/months.php:82
 #: src/admin-views/recurrence/weeks.php:19
 #: src/admin-views/recurrence/years.php:128
 msgid "Monday"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1367 src/Tribe/Recurrence/Meta.php:1705
+#: src/Tribe/Recurrence/Meta.php:1371 src/Tribe/Recurrence/Meta.php:1709
 #: src/admin-views/recurrence/months.php:83
 #: src/admin-views/recurrence/weeks.php:30
 #: src/admin-views/recurrence/years.php:129
 msgid "Tuesday"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1368 src/Tribe/Recurrence/Meta.php:1706
+#: src/Tribe/Recurrence/Meta.php:1372 src/Tribe/Recurrence/Meta.php:1710
 #: src/admin-views/recurrence/months.php:84
 #: src/admin-views/recurrence/weeks.php:41
 #: src/admin-views/recurrence/years.php:130
 msgid "Wednesday"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1369 src/Tribe/Recurrence/Meta.php:1707
+#: src/Tribe/Recurrence/Meta.php:1373 src/Tribe/Recurrence/Meta.php:1711
 #: src/admin-views/recurrence/months.php:85
 #: src/admin-views/recurrence/weeks.php:52
 #: src/admin-views/recurrence/years.php:131
 msgid "Thursday"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1370 src/Tribe/Recurrence/Meta.php:1708
+#: src/Tribe/Recurrence/Meta.php:1374 src/Tribe/Recurrence/Meta.php:1712
 #: src/admin-views/recurrence/months.php:86
 #: src/admin-views/recurrence/weeks.php:63
 #: src/admin-views/recurrence/years.php:132
 msgid "Friday"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1371 src/Tribe/Recurrence/Meta.php:1709
+#: src/Tribe/Recurrence/Meta.php:1375 src/Tribe/Recurrence/Meta.php:1713
 #: src/admin-views/recurrence/months.php:87
 #: src/admin-views/recurrence/weeks.php:74
 #: src/admin-views/recurrence/years.php:133
 msgid "Saturday"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1372 src/Tribe/Recurrence/Meta.php:1710
+#: src/Tribe/Recurrence/Meta.php:1376 src/Tribe/Recurrence/Meta.php:1714
 #: src/admin-views/recurrence/months.php:88
 #: src/admin-views/recurrence/weeks.php:8
 #: src/admin-views/recurrence/years.php:134
 msgid "Sunday"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1373
+#: src/Tribe/Recurrence/Meta.php:1377
 msgctxt ""
 "placeholder used where the true day of the day is determined dynamically"
 msgid "day"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1376 src/Tribe/Recurrence/Meta.php:1739
+#: src/Tribe/Recurrence/Meta.php:1380 src/Tribe/Recurrence/Meta.php:1743
 msgid "January"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1377 src/Tribe/Recurrence/Meta.php:1740
+#: src/Tribe/Recurrence/Meta.php:1381 src/Tribe/Recurrence/Meta.php:1744
 msgid "February"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1378 src/Tribe/Recurrence/Meta.php:1741
+#: src/Tribe/Recurrence/Meta.php:1382 src/Tribe/Recurrence/Meta.php:1745
 msgid "March"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1379 src/Tribe/Recurrence/Meta.php:1742
+#: src/Tribe/Recurrence/Meta.php:1383 src/Tribe/Recurrence/Meta.php:1746
 msgid "April"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1380 src/Tribe/Recurrence/Meta.php:1743
+#: src/Tribe/Recurrence/Meta.php:1384 src/Tribe/Recurrence/Meta.php:1747
 msgid "May"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1381 src/Tribe/Recurrence/Meta.php:1744
+#: src/Tribe/Recurrence/Meta.php:1385 src/Tribe/Recurrence/Meta.php:1748
 msgid "June"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1382 src/Tribe/Recurrence/Meta.php:1745
+#: src/Tribe/Recurrence/Meta.php:1386 src/Tribe/Recurrence/Meta.php:1749
 msgid "July"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1383 src/Tribe/Recurrence/Meta.php:1746
+#: src/Tribe/Recurrence/Meta.php:1387 src/Tribe/Recurrence/Meta.php:1750
 msgid "August"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1384 src/Tribe/Recurrence/Meta.php:1747
+#: src/Tribe/Recurrence/Meta.php:1388 src/Tribe/Recurrence/Meta.php:1751
 msgid "September"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1385 src/Tribe/Recurrence/Meta.php:1748
+#: src/Tribe/Recurrence/Meta.php:1389 src/Tribe/Recurrence/Meta.php:1752
 msgid "October"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1386 src/Tribe/Recurrence/Meta.php:1749
+#: src/Tribe/Recurrence/Meta.php:1390 src/Tribe/Recurrence/Meta.php:1753
 msgid "November"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1387 src/Tribe/Recurrence/Meta.php:1750
+#: src/Tribe/Recurrence/Meta.php:1391 src/Tribe/Recurrence/Meta.php:1754
 msgid "December"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1390 src/Tribe/Recurrence/Meta.php:1409
+#: src/Tribe/Recurrence/Meta.php:1394 src/Tribe/Recurrence/Meta.php:1413
 msgctxt ""
 "Used when displaying the word \"day\" in \"the last day\" or \"the first day"
 "\""
 msgid "day"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1391
+#: src/Tribe/Recurrence/Meta.php:1395
 msgctxt "Used when displaying the word \"days\" in e.g. \"every 3 days\""
 msgid "days"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1392
+#: src/Tribe/Recurrence/Meta.php:1396
 msgctxt ""
 "Used when displaying the word \"week\" in \"the last week\" or \"the first "
 "week\""
 msgid "week"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1393
+#: src/Tribe/Recurrence/Meta.php:1397
 msgctxt "Used when displaying the word \"weeks\" in e.g. \"every 3 weeks\""
 msgid "weeks"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1394
+#: src/Tribe/Recurrence/Meta.php:1398
 msgctxt "Used when displaying the word \"month\" in e.g. \"every month\""
 msgid "month"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1395
+#: src/Tribe/Recurrence/Meta.php:1399
 msgctxt "Used when displaying the word \"months\" in e.g. \"every 3 months\""
 msgid "months"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1396
+#: src/Tribe/Recurrence/Meta.php:1400
 msgctxt "Used when displaying the word \"year\" in e.g. \"every year\""
 msgid "year"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1397
+#: src/Tribe/Recurrence/Meta.php:1401
 msgctxt "Used when displaying the word \"years\" in e.g. \"every 2 years\""
 msgid "years"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1399
+#: src/Tribe/Recurrence/Meta.php:1403
 msgctxt ""
 "Joins the last item in a list of items (i.e. the \"and\" in Monday, Tuesday, "
 "and Wednesday)"
 msgid "and"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1400
+#: src/Tribe/Recurrence/Meta.php:1404
 msgctxt ""
 "Placeholder text for a day of the week (or days of the week) before the user "
 "has selected any"
 msgid "[day]"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1401
+#: src/Tribe/Recurrence/Meta.php:1405
 msgctxt ""
 "Placeholder text for a month (or months) before the user has selected any"
 msgid "[month]"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1402
+#: src/Tribe/Recurrence/Meta.php:1406
 msgctxt "Describes a day of the month (e.g. \"day 5\" or \"day 27\")"
 msgid "day %1$s"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1403
+#: src/Tribe/Recurrence/Meta.php:1407
 msgctxt "Used when displaying: \"the first Monday\" or \"the first day\""
 msgid "the first %1$s"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1404
+#: src/Tribe/Recurrence/Meta.php:1408
 msgctxt "Used when displaying: \"the second Monday\" or \"the second day\""
 msgid "the second %1$s"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1405
+#: src/Tribe/Recurrence/Meta.php:1409
 msgctxt "Used when displaying: \"the third Monday\" or \"the third day\""
 msgid "the third %1$s"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1406
+#: src/Tribe/Recurrence/Meta.php:1410
 msgctxt "Used when displaying: \"the fourth Monday\" or \"the fourth day\""
 msgid "the fourth %1$s"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1407
+#: src/Tribe/Recurrence/Meta.php:1411
 msgctxt "Used when displaying: \"the fifth Monday\" or \"the fifth day\""
 msgid "the fifth %1$s"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1408
+#: src/Tribe/Recurrence/Meta.php:1412
 msgctxt "Used when displaying: \"the last Monday\" or \"the last day\""
 msgid "the last %1$s"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1636
+#: src/Tribe/Recurrence/Meta.php:1640
 msgctxt "An unspecified end date"
 msgid "an unspecified date"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1717
+#: src/Tribe/Recurrence/Meta.php:1721
 msgid ", and"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1719
+#: src/Tribe/Recurrence/Meta.php:1723
 msgid "and"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1721
+#: src/Tribe/Recurrence/Meta.php:1725
 msgid ","
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1757
+#: src/Tribe/Recurrence/Meta.php:1761
 msgid ", and "
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1759
+#: src/Tribe/Recurrence/Meta.php:1763
 msgid " and "
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1761
+#: src/Tribe/Recurrence/Meta.php:1765
 msgid ", "
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1787
+#: src/Tribe/Recurrence/Meta.php:1791
 msgid "Recurring event instances"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1788
+#: src/Tribe/Recurrence/Meta.php:1792
 msgid ""
 "Show only the first instance of each recurring event (only affects list-"
 "style views)."
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1794
+#: src/Tribe/Recurrence/Meta.php:1798
 msgid "Front-end recurring event instances toggle"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1795
+#: src/Tribe/Recurrence/Meta.php:1799
 msgid ""
 "Allow users to decide whether to show all instances of a recurring event on "
 "list-style views."
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1802
+#: src/Tribe/Recurrence/Meta.php:1806
 msgid "Clean up recurring events after"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1803
+#: src/Tribe/Recurrence/Meta.php:1807
 msgid "Automatically remove recurring event instances older than this"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1810
+#: src/Tribe/Recurrence/Meta.php:1814
 msgid "Create recurring events in advance for"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1811
+#: src/Tribe/Recurrence/Meta.php:1815
 msgid "Recurring events will be created this far in advance"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1832
+#: src/Tribe/Recurrence/Meta.php:1836
 msgid " months"
 msgstr ""
 
@@ -1799,19 +1807,22 @@ msgstr ""
 msgid "All %s"
 msgstr ""
 
-#: src/Tribe/Templates/Week.php:202
+#. translators: the placeholder is the keyword(s), as the user entered it.
+#: src/Tribe/Templates/Week.php:202 src/Tribe/Views/V2/Messages.php:48
 msgid ""
 "There were no results found for <strong>\"%s\"</strong> this week. Try "
 "searching another week."
 msgstr ""
 
-#: src/Tribe/Templates/Week.php:204
+#. translators: the placeholder is the location search string, as the user
+#. entered it.
+#: src/Tribe/Templates/Week.php:204 src/Tribe/Views/V2/Messages.php:53
 msgid ""
 "No results were found for events in or near <strong>\"%s\"</strong> this "
 "week. Try searching another week."
 msgstr ""
 
-#: src/Tribe/Templates/Week.php:209
+#: src/Tribe/Templates/Week.php:209 src/Tribe/Views/V2/Messages.php:43
 msgid "No results were found for this week. Try searching another week."
 msgstr ""
 
@@ -1835,11 +1846,27 @@ msgstr ""
 msgid "Events Featured Venue"
 msgstr ""
 
-#: src/Tribe/Views/V2/Views/Map_View.php:114
-#: src/Tribe/Views/V2/Views/Map_View.php:138
-#: src/Tribe/Views/V2/Views/Map_View.php:162
-#: src/Tribe/Views/V2/Views/Map_View.php:186
-msgid "4.7 mi away"
+#: src/Tribe/Views/V2/Geo_Loc/Services/Google_Maps.php:24
+msgid ""
+"Google Maps API geocode resolution is only supported with a custom API key."
+msgstr ""
+
+#: src/Tribe/Views/V2/Geo_Loc/Services/Google_Maps.php:53
+msgid "Google Maps API replied with an error status to the request: %s"
+msgstr ""
+
+#: src/Tribe/Views/V2/Geo_Loc/Services/Google_Maps.php:70
+msgid "Google Maps API returned a malformed response."
+msgstr ""
+
+#: src/Tribe/Views/V2/Geo_Loc/Services/Google_Maps.php:91
+msgid "Google Maps API response is missing some data."
+msgstr ""
+
+#. translators: the placeholder is the location, as the user entered it in the
+#. bar.
+#: src/Tribe/Views/V2/Messages.php:39
+msgid "No results were found for events in or near <strong>\"%1$s\"</strong>."
 msgstr ""
 
 #: src/admin-views/custom-fields/gutenberg.php:3
@@ -2121,7 +2148,7 @@ msgid "Fix geolocation data"
 msgstr ""
 
 #: src/admin-views/geolocation-fix-text.php:17
-msgid "You have %d venues for which we don't have geolocation data."
+msgid "You have venues for which we don't have geolocation data."
 msgstr ""
 
 #: src/admin-views/geolocation-fix-text.php:19
@@ -2702,9 +2729,9 @@ msgid "&larr; Back to %s"
 msgstr ""
 
 #: src/views/pro/week/loop-grid-allday.php:18
-#: src/views/v2/map/event-cards/event-card/event/date-time.php:29
+#: src/views/v2/map/event-cards/event-card/event/date-time.php:30
 #: src/views/v2/map/event-cards/event-card/tooltip/date-time.php:27
-#: src/views/v2/week/grid-body/multiday-events-row-header.php:21
+#: src/views/v2/week/mobile-events/day/type-separator.php:22
 msgid "All Day"
 msgstr ""
 
@@ -2775,33 +2802,42 @@ msgstr ""
 msgid "In a location"
 msgstr ""
 
+#: src/views/v2/map/event-cards/event-card/event/actions/details.php:27
+msgid "Event Details"
+msgstr ""
+
+#: src/views/v2/map/event-cards/event-card/event/actions/directions.php:30
+msgid "Get Directions"
+msgstr ""
+
+#: src/views/v2/map/event-cards/event-card/event/date-time.php:46
 #: src/views/v2/map/event-cards/event-card/event/date-time.php:47
-#: src/views/v2/map/event-cards/event-card/event/date-time.php:48
-#: src/views/v2/map/event-cards/event-card/event/date-time.php:52
+#: src/views/v2/map/event-cards/event-card/event/date-time.php:51
 #: src/views/v2/map/event-cards/event-card/tooltip/date-time.php:45
 #: src/views/v2/map/event-cards/event-card/tooltip/date-time.php:46
 #: src/views/v2/photo/event/date-time.php:26
 #: src/views/v2/photo/event/date-time.php:27
 #: src/views/v2/photo/event/date-time.php:31
-#: src/views/v2/week/grid-body/events-day/event/date.php:26
 #: src/views/v2/week/grid-body/events-day/event/date.php:27
+#: src/views/v2/week/grid-body/events-day/event/date.php:28
 #: src/views/v2/week/grid-body/events-day/event/title.php:24
 #: src/views/v2/week/grid-body/events-day/event/title.php:25
-#: src/views/v2/week/grid-body/multiday-events-day/multiday-event.php:63
-#: src/views/v2/week/grid-body/multiday-events-day/multiday-event.php:64
+#: src/views/v2/week/grid-body/events-day/event/tooltip/date.php:28
+#: src/views/v2/week/grid-body/events-day/event/tooltip/date.php:29
+#: src/views/v2/week/grid-body/multiday-events-day/multiday-event.php:75
+#: src/views/v2/week/grid-body/multiday-events-day/multiday-event.php:76
+#: src/views/v2/week/grid-body/multiday-events-day/multiday-event.php:99
+#: src/views/v2/week/grid-body/multiday-events-day/multiday-event.php:100
 #: src/views/v2/week/mobile-events/day/event/date.php:24
 #: src/views/v2/week/mobile-events/day/event/date.php:25
 msgid "Featured"
 msgstr ""
 
-#: src/views/v2/map/event-cards/event-card/event/venue.php:29
-#: src/views/v2/map/event-cards/event-card/tooltip/venue.php:27
-msgid "Venue Title"
-msgstr ""
-
-#: src/views/v2/map/event-cards/event-card/event/venue.php:32
-#: src/views/v2/map/event-cards/event-card/tooltip/venue.php:30
-msgid "1234 Street, San Francisco"
+#: src/views/v2/map/event-cards/event-card/event/venue.php:24
+#: src/views/v2/map/event-cards/event-card/tooltip/venue.php:24
+#: src/views/v2/week/mobile-events/day/event/venue.php:20
+msgctxt "Address separator"
+msgid ", "
 msgstr ""
 
 #: src/views/v2/map/event-cards/event-card/tooltip/navigation.php:27
@@ -2812,44 +2848,59 @@ msgstr ""
 
 #: src/views/v2/map/event-cards/event-card/tooltip/navigation.php:35
 #: src/views/v2/map/event-cards/nav/next-disabled.php:20
-#: src/views/v2/map/event-cards/nav/next.php:24 src/views/v2/week/nav.php:37
-#: src/views/v2/week/nav.php:39
+#: src/views/v2/map/event-cards/nav/next.php:24
+#: src/views/v2/week/mobile-events/nav/next-disabled.php:18
+#: src/views/v2/week/mobile-events/nav/next.php:25
 msgid "Next"
 msgstr ""
 
 #: src/views/v2/map/event-cards/nav/today.php:26
-#: src/views/v2/photo/nav/today.php:31 src/views/v2/photo/top-bar/today.php:23
-#: src/views/v2/week/nav/today.php:31 src/views/v2/week/top-bar/today.php:23
+#: src/views/v2/photo/nav/today.php:24
+#: src/views/v2/week/mobile-events/nav/today.php:24
 msgid "Today"
 msgstr ""
 
+#: src/views/v2/map/map/no-venue-modal.php:29
+#: src/views/v2/map/map/no-venue-modal.php:32
+msgid "Close modal"
+msgstr ""
+
+#: src/views/v2/map/map/no-venue-modal.php:42
+msgid "This event doesn’t have a venue or address."
+msgstr ""
+
+#: src/views/v2/map/map/no-venue-modal.php:50
+msgid "View Event Details"
+msgstr ""
+
+#: src/views/v2/map/top-bar/datepicker.php:67
+#: src/views/v2/photo/top-bar/datepicker.php:67
+#: src/views/v2/week/top-bar/datepicker.php:61
+msgid "Select date."
+msgstr ""
+
+#: src/views/v2/map.php:38 src/views/v2/photo.php:38 src/views/v2/week.php:36
+msgid "Loading..."
+msgstr ""
+
 #. translators: %s: Event (plural or singular).
-#: src/views/v2/photo/nav/next-disabled.php:24
+#: src/views/v2/photo/nav/next-disabled.php:22
 #: src/views/v2/photo/nav/next.php:29
 msgid "Next %1$s"
 msgstr ""
 
 #. translators: %s: Event (plural or singular).
-#: src/views/v2/photo/nav/prev-disabled.php:24
+#: src/views/v2/photo/nav/prev-disabled.php:22
 #: src/views/v2/photo/nav/prev.php:29
 msgid "Previous %1$s"
 msgstr ""
 
-#: src/views/v2/photo/top-bar/datepicker.php:45
-msgid "Now"
-msgstr ""
-
-#: src/views/v2/photo/top-bar/datepicker.php:60
-#: src/views/v2/week/top-bar/datepicker.php:38
-msgid "Select date."
-msgstr ""
-
-#: src/views/v2/recurrence/hide-recurring.php:25
+#: src/views/v2/recurrence/hide-recurring.php:30
 msgid "Hide Recurring Events"
 msgstr ""
 
-#: src/views/v2/week/day-selector/days/day.php:45
 #: src/views/v2/week/day-selector/days/day.php:46
+#: src/views/v2/week/day-selector/days/day.php:47
 msgid "Has events"
 msgstr ""
 
@@ -2859,10 +2910,6 @@ msgstr ""
 
 #: src/views/v2/week/day-selector/nav/prev.php:24
 msgid "Previous week"
-msgstr ""
-
-#: src/views/v2/week/grid-body/events-day/event/tooltip/cta.php:35
-msgid "Buy Now"
 msgstr ""
 
 #: src/views/v2/week/grid-body/multiday-events-day/more-events.php:21
@@ -2879,16 +2926,13 @@ msgstr ""
 msgid "Week of %s"
 msgstr ""
 
-#: src/views/v2/week/mobile-events/day/event/venue.php:27
-msgid "Venue Name"
+#: src/views/v2/week/mobile-events/day/type-separator.php:23
+msgid "Ongoing"
 msgstr ""
 
-#: src/views/v2/week/nav.php:27 src/views/v2/week/nav.php:29
+#: src/views/v2/week/mobile-events/nav/prev-disabled.php:18
+#: src/views/v2/week/mobile-events/nav/prev.php:25
 msgid "Previous"
-msgstr ""
-
-#: src/views/v2/week.php:32
-msgid "Loading..."
 msgstr ""
 
 #. Plugin Name of the plugin/theme

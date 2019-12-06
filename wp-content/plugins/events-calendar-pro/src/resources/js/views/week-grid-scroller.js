@@ -45,6 +45,48 @@ tribe.events.views.weekGridScroller = {};
 		weekGridEventsRowWrapperActiveClass: '.tribe-events-pro-week-grid__events-row-wrapper--active',
 		weekGridEventsPaneClass: '.tribe-events-pro-week-grid__events-row-scroll-pane',
 		weekGridEventsSliderClass: '.tribe-events-pro-week-grid__events-row-scroll-slider',
+		weekGridEvent: '[data-js="tribe-events-pro-week-grid-event"]',
+	};
+
+	/**
+	 * Get position of the event that starts the earliest by time.
+	 *
+	 * @since 4.7.9
+	 *
+	 * @param {jQuery} $container jQuery object of view container.
+	 *
+	 * @return {integer}
+	 */
+	obj.getFirstEventPosition = function( $container ) {
+		var $firstEvent = null;
+		var startTime = 0;
+		var position = 0;
+
+		$container
+			.find( obj.selectors.weekGridEvent )
+			.each( function( index, event ) {
+				var $event = $( event );
+				var eventStartTime = $event.data( 'start-time' );
+
+				if (
+					! $firstEvent ||
+					( $firstEvent && ( eventStartTime < startTime ) )
+				) {
+					$firstEvent = $event;
+					startTime = eventStartTime;
+				}
+			} );
+
+		var position = $firstEvent ? $firstEvent.position().top : position;
+
+		// Add 16px spacer to top of first event position
+		if ( position - 16 > 0 ) {
+			position -= 16;
+		} else {
+			position = 0;
+		}
+
+		return position;
 	};
 
 	/**
@@ -72,6 +114,8 @@ tribe.events.views.weekGridScroller = {};
 	 * @return {void}
 	 */
 	obj.initScroller = function( $container ) {
+		var topPosition = obj.getFirstEventPosition( $container );
+
 		$container
 			.find( obj.selectors.weekGridEventsRowOuterWrapper )
 			.nanoScroller( {
@@ -80,10 +124,7 @@ tribe.events.views.weekGridScroller = {};
 				contentClass: obj.selectors.weekGridEventsRowWrapperClass.className(),
 				iOSNativeScrolling: true,
 				alwaysVisible: false,
-				/**
-				 * @todo: implement scrollTo when events are available.
-				 */
-				// scrollTo: $first_event
+				scrollTop: topPosition,
 			} )
 			.find( obj.selectors.weekGridEventsRowWrapper )
 			.addClass( obj.selectors.weekGridEventsRowWrapperActiveClass.className() );
@@ -118,7 +159,9 @@ tribe.events.views.weekGridScroller = {};
 	 * @return {void}
 	 */
 	obj.init = function( event, index, $container, data ) {
-		if ( 'week' !== data.slug ) return;
+		if ( 'week' !== data.slug ) {
+			return;
+		}
 
 		obj.initScroller( $container );
 		$container.on( 'beforeAjaxSuccess.tribeEvents', { container: $container }, obj.deinit );

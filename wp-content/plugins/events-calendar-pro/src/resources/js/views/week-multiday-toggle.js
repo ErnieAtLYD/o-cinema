@@ -215,7 +215,9 @@ tribe.events.views.weekMultidayToggle = {};
 	obj.init = function( event, index, $container, data ) {
 		var $toggleButton = $container.find( obj.selectors.weekMultidayToggleButton );
 
-		if ( ! $toggleButton.length ) return;
+		if ( ! $toggleButton.length ) {
+			return;
+		}
 
 		obj.initToggle( $container );
 		$container.on( 'beforeAjaxSuccess.tribeEvents', { container: $container }, obj.deinit );

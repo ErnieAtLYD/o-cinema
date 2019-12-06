@@ -9,7 +9,7 @@
  *
  * @link {INSERT_ARTCILE_LINK_HERE}
  *
- * @version 4.7.8
+ * @version 4.7.9
  *
  * @var WP_Post $event The event post object with properties added by the `tribe_get_event` function.
  *
@@ -18,5 +18,5 @@
  */
 ?>
 <h3 class="tribe-events-pro-map__event-title tribe-common-h8 tribe-common-h7--min-medium">
-	<?php echo get_the_title( $event->ID ); ?>
+	<?php echo wp_kses_post( get_the_title( $event->ID ) ); ?>
 </h3>

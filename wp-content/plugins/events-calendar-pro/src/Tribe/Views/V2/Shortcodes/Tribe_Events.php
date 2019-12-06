@@ -7,9 +7,14 @@
  */
 namespace Tribe\Events\Pro\Views\V2\Shortcodes;
 
-use Tribe__Utils__Array as Arr;
+use Tribe\Events\Pro\Views\V2\Assets as Pro_Assets;
+use Tribe\Events\Views\V2\Assets as Event_Assets;
+use Tribe\Events\Views\V2\Manager as Views_Manager;
+use Tribe\Events\Views\V2\Theme_Compatibility;
 use Tribe\Events\Views\V2\View;
-use Tribe\Events\Views\V2\Assets;
+use Tribe\Utils\Element_Classes;
+use Tribe__Context as Context;
+use Tribe__Events__Main as TEC;
 
 /**
  * Class for Shortcode Tribe_Events.
@@ -17,6 +22,17 @@ use Tribe\Events\Views\V2\Assets;
  * @package Tribe\Events\Pro\Views\V2\Shortcodes
  */
 class Tribe_Events extends Shortcode_Abstract {
+
+	/**
+	 * Prefix for the transient where we will save the base values for the
+	 * setup of the context of the shortcode.
+	 *
+	 * @since 4.7.9
+	 *
+	 * @var   string
+	 */
+	const TRANSIENT_PREFIX = 'tribe_events_shortcode_tribe_events_params_';
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -26,24 +42,31 @@ class Tribe_Events extends Shortcode_Abstract {
 	 * {@inheritDoc}
 	 */
 	protected $default_arguments = [
-		'view'          => null,
+		'id'                => null,
+		'view'              => null,
+
+		/**
+		 * @todo @bordoni Update this to true after beta.
+		 */
+		'should_manage_url' => false,
 
 		// Legacy Params, registered for compatibility
-		'date'          => null,
-		'tribe-bar'     => true,
-		'category'      => null,
-		'cat'           => null,
-		'featured'      => false,
-		'main-calendar' => false,
+		'date'              => null,
+		'tribe-bar'         => true,
+		'category'          => null,
+		'cat'               => null,
+		'featured'          => false,
+		'main-calendar'     => false,
 	];
 
 	/**
 	 * {@inheritDoc}
 	 */
-	protected $arguments_validate_map = [
-		'tribe-bar'     => 'tribe_is_truthy',
-		'featured'      => 'tribe_is_truthy',
-		'main-calendar' => 'tribe_is_truthy',
+	protected $validate_arguments_map = [
+		'should_manage_url' => 'tribe_is_truthy',
+		'tribe-bar'         => 'tribe_is_truthy',
+		'featured'          => 'tribe_is_truthy',
+		'main-calendar'     => 'tribe_is_truthy',
 	];
 
 	/**
@@ -56,16 +79,16 @@ class Tribe_Events extends Shortcode_Abstract {
 	 *
 	 * @return void
 	 */
-	protected function toggle_view_hooks( bool $toggle ) {
+	protected function toggle_view_hooks( $toggle ) {
 		if ( $toggle ) {
-			add_filter( 'tribe_events_views_v2_view_url', [ $this, 'filter_view_url' ], 15, 3 );
+			add_filter( 'tribe_events_views_v2_url_query_args', [ $this, 'filter_view_query_args' ], 15, 3 );
 		} else {
-			remove_filter( 'tribe_events_views_v2_view_url', [ $this, 'filter_view_url' ], 15 );
+			remove_filter( 'tribe_events_views_v2_url_query_args', [ $this, 'filter_view_query_args' ], 15 );
 		}
 	}
 
 	/**
-	 * Verifies if in this Shortcode we should allow view url managemet.
+	 * Verifies if in this Shortcode we should allow View URL management.
 	 *
 	 * @since  4.7.5
 	 *
@@ -73,7 +96,7 @@ class Tribe_Events extends Shortcode_Abstract {
 	 */
 	public function should_manage_url() {
 		// Defaults to true due to old behaviors on Views V1
-		$should_manage_url = $this->get_argument( 'should_manage_url', true );
+		$should_manage_url = $this->get_argument( 'should_manage_url', $this->default_arguments['should_manage_url'] );
 
 		$disallowed_locations = [
 			'widget_text_content',
@@ -93,7 +116,7 @@ class Tribe_Events extends Shortcode_Abstract {
 		foreach ( $disallowed_locations as $location ) {
 			// If any we are in any of the disallowed locations
 			if ( doing_filter( $location ) ) {
-				$should_manage_url = false;
+				$should_manage_url = $this->default_arguments['should_manage_url'];
 			}
 		}
 
@@ -113,52 +136,343 @@ class Tribe_Events extends Shortcode_Abstract {
 	/**
 	 * Changes the URL to match the Shortcode if needed.
 	 *
-	 * @todo  actually do the URL management.
-	 *
 	 * @since 4.7.5
 	 *
-	 * @param  string          $url       Current URL for this view.
-	 * @param  bool            $canonical Whether this url is canonical.
-	 * @param  View_Interface  $view      Which view we are dealign with.
+	 * @param  array           $query_args  Current URL for this view.
 	 *
-	 * @return string
+	 * @return array The filtered View query args, with the shortcode ID added.
 	 */
-	public function filter_view_url( $url, $canonical, $view ) {
-		// Dont touch the URL in case we are not managing it.
-		if ( ! $this->should_manage_url() ) {
-			return $url;
+	public function filter_view_query_args( $query_args ) {
+		// Always add the id of the shortcode to the URLs
+		$query_args['shortcode'] = $this->get_id();
+
+		return $query_args;
+	}
+
+	/**
+	 * Fetches from the database the params of a given shortcode based on the ID created.
+	 *
+	 * @since  4.7.9
+	 *
+	 * @param string $shortcode_id The shortcode identifier, or `null` to use the current one.
+	 *
+	 * @return array Array of params configuring the Shortcode.
+	 */
+	public function get_database_arguments( $shortcode_id = null ) {
+		$shortcode_id = $shortcode_id ?: $this->get_id();
+		$transient_key = static::TRANSIENT_PREFIX . $shortcode_id;
+		$transient_arguments = get_transient( $transient_key );
+
+		return $transient_arguments;
+	}
+
+	/**
+	 * Configures the Relationship between shortcode ID and their params in the database
+	 * allowing us to pass the URL as the base for the Queries.
+	 *
+	 * @since 4.7.9
+	 *
+	 * @return  bool  Return if we have the arguments configured or not.
+	 */
+	public function set_database_params() {
+		$shortcode_id = $this->get_id();
+		$transient_key = static::TRANSIENT_PREFIX . $shortcode_id;
+		$db_arguments = $this->get_database_arguments();
+
+		// If the value is the same it's already on the Database.
+		if ( $db_arguments === $this->get_arguments() ) {
+			return true;
 		}
 
-		return $url;
+		return set_transient( $transient_key, $this->get_arguments() );
+	}
+
+	/**
+	 * Alters the shortcode context with its arguments.
+	 *
+	 * @since  4.7.9
+	 *
+	 * @param \Tribe__Context $context Context we will use to build the view.
+	 *
+	 * @return \Tribe__Context Context after shortcodes changes.
+	 */
+	public function alter_context( Context $context ) {
+		$arguments    = $this->get_arguments();
+
+		$alter_context = $this->args_to_context( $arguments );
+
+		// The View will consume this information on initial state.
+		$alter_context['shortcode'] = $this->get_id();
+
+		if ( ! $alter_context ) {
+			return $context;
+		}
+
+		$context = $context->alter( $alter_context );
+
+		return $context;
+	}
+
+	/**
+	 * Based on the either a argument "id" of the shortcode definition
+	 * or the 8 first characters of the hashed version of a string serialization
+	 * of the params sent to the shortcode we will create/get an ID for this
+	 * instance of the tribe_events shortcode
+	 *
+	 * @since  4.7.9
+	 *
+	 * @return string The shortcode unique(ish) identifier.
+	 */
+	public function get_id() {
+		$arguments = $this->get_arguments();
+
+		// In case we have the ID argument we just return that.
+		if ( ! empty( $arguments['id'] ) ) {
+			return $arguments['id'];
+		}
+
+		ksort( $arguments );
+
+		/*
+		 * Generate a string id based on the arguments used to setup the shortcode.
+		 * Note that arguments are sorted to catch substantially same shortcode w. diff. order argument.
+		 */
+		$hash = substr( md5( maybe_serialize( $arguments ) ), 0, 8 );
+
+		return $hash;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function get_html() {
-		$context   = tribe_context();
+		// Before anything happens we set a DB ID and value for this shortcode entry.
+		$this->set_database_params();
+
+		// Modifies the Context for the shortcode params.
+		$context   = $this->alter_context( tribe_context() );
+
+		// Fetches if we have a specific view are building.
 		$view_slug = $this->get_argument( 'view', $context->get( 'view' ) );
 
-		// Make sure to enqueue assets
-		tribe_asset_enqueue_group( Assets::$group_key );
+		/**
+		 * Triggers an action to allow other plugins or extensions to load assets.
+		 *
+		 * @since 4.7.9
+		 *
+		 * @param self $shortcode Instance of this class.
+		 */
+		do_action( 'tribe_events_pro_shortcode_tribe_events_before_assets', $this );
 
-		// Toggle the shortcode required modifications
-		$this->toggle_view_hooks( true );
+		// Make sure to enqueue assets.
+		tribe_asset_enqueue_group( Pro_Assets::$group_key );
+		tribe_asset_enqueue_group( Event_Assets::$group_key );
 
 		/**
-		 * @todo modify the context based on arguments passed to the method.
+		 * Triggers an action to allow other plugins or extensions to load assets.
+		 *
+		 * @since 4.7.9
+		 *
+		 * @param self $shortcode Instance of this class.
 		 */
+		do_action( 'tribe_events_pro_shortcode_tribe_events_after_assets', $this );
+
+		// Removing tribe-bar when that argument is false
+		if ( false === $this->get_argument( 'tribe-bar' ) ) {
+			add_filter( 'tribe_template_html:events/components/events-bar', '__return_false' );
+		}
+
+		// Toggle the shortcode required modifications.
+		$this->toggle_view_hooks( true );
+
 		// Setup the view instance.
 		$view = View::make( $view_slug, $context );
 
 		// Setup wether this view should manage url or not.
 		$view->get_template()->set( 'should_manage_url', $this->should_manage_url() );
 
-		$html = $view->get_html();
+		$theme_compatiblity = tribe( Theme_Compatibility::class );
 
-		// Toggle the shortcode required modifications
+		$html      = '';
+
+		if ( $theme_compatiblity->is_compatibility_required() ) {
+			$classes = $theme_compatiblity->get_body_classes();
+			$element_classes = new Element_Classes( $classes );
+			$html .= '<div ' . $element_classes->get_attribute() . '>';
+		}
+
+		$html .= $view->get_html();
+
+		if ( $theme_compatiblity->is_compatibility_required() ) {
+			$html .= '</div>';
+		}
+
+		// Toggle the shortcode required modifications.
 		$this->toggle_view_hooks( false );
 
 		return $html;
+	}
+
+	/**
+	 * Filters the View repository args to add the ones required by shortcodes to work.
+	 *
+	 * @since 4.7.9
+	 *
+	 * @param array           $repository_args An array of repository arguments that will be set for all Views.
+	 * @param \Tribe__Context $context         The current render context object.
+	 */
+	public function filter_view_repository_args( $repository_args, $context ) {
+		if ( ! $context instanceof Context ) {
+			return $repository_args;
+		}
+
+		$shortcode_id = $context->get( 'shortcode' ,false );
+
+		if ( false === $shortcode_id || $context->doing_php_initial_state() ) {
+			return $repository_args;
+		}
+
+		$shortcode_args = $this->get_database_arguments( $shortcode_id );
+
+		$repository_args = $this->args_to_repository( (array) $repository_args, (array) $shortcode_args, $context );
+
+		// Removing tribe-bar when that argument is false
+		if ( isset( $shortcode_args['tribe-bar'] ) && false === tribe_is_truthy( $shortcode_args['tribe-bar'] ) ) {
+			add_filter( 'tribe_template_html:events/components/events-bar', '__return_false' );
+		}
+
+		return $repository_args;
+	}
+
+	/**
+	 * Translates shortcode arguments to their Context argument counterpart.
+	 *
+	 * @since 4.7.9
+	 *
+	 * @param array $arguments The shortcode arguments to translate.
+	 *
+	 * @return array The translated shortcode arguments.
+	 */
+	protected function args_to_context( array $arguments ) {
+		$context_args = [];
+
+		$term_value = null;
+
+		if ( ! empty( $arguments['cat'] ) ) {
+			$term_value = $arguments['cat'];
+		}
+
+		if ( ! empty( $arguments['category'] ) ) {
+			$term_value = $arguments['category'];
+		}
+
+		// Try by ID first.
+		if ( is_numeric( $term_value ) ) {
+			$term = get_term_by( 'id', $term_value, TEC::TAXONOMY );
+		}
+
+		// If numeric didn't work we look for slug.
+		if ( empty( $term->slug ) ) {
+			$term = get_term_by( 'slug', $term_value, TEC::TAXONOMY );
+		}
+
+		// If slug didn't work we look for name.
+		if ( empty( $term->slug ) ) {
+			$term = get_term_by( 'name', $term_value, TEC::TAXONOMY );
+		}
+
+		// Only save it if it returns a correct name.
+		if ( ! empty( $term->slug ) ) {
+			$context_args[ TEC::TAXONOMY ] = $term->slug;
+		}
+
+		if ( ! empty( $arguments['date'] ) ) {
+			$context_args['event_date'] = $arguments['date'];
+		}
+
+		if ( isset( $arguments['featured'] ) ) {
+			$context_args['featured'] = tribe_is_truthy( $arguments['featured'] );
+		}
+
+		return $context_args;
+	}
+
+	/**
+	 * Translates shortcode arguments to their Repository argument counterpart.
+	 *
+	 * @since 4.7.9
+	 *
+	 * @param array          $repository_args  The current repository arguments.
+	 * @param array          $arguments        The shortcode arguments to translate.
+	 * @param Tribe_Context  $context          The shortcode arguments to translate.
+	 *
+	 * @return array The translated shortcode arguments.
+	 */
+	public function args_to_repository( array $repository_args, array $arguments, $context ) {
+		if ( isset( $arguments['cat'] ) ) {
+			$repository_args['category'] = $arguments['cat'];
+		}
+
+		if ( isset( $arguments['category'] ) ) {
+			$repository_args['category'] = $arguments['category'];
+		}
+
+		if ( isset( $arguments['date'] ) ) {
+			// The date can be used in many ways, so we juggle a bit here.
+			$date_filters = tribe_events()->get_date_filters();
+			$date_keys    = array_filter(
+				$repository_args,
+				static function ( $key ) use ( $date_filters ) {
+					return in_array( $key, $date_filters, true );
+				},
+				ARRAY_FILTER_USE_KEY
+			);
+
+			if ( count( $date_keys ) === 1 ) {
+				if ( $date_keys[0] === $arguments['date'] ) {
+					// Let's only set it if we are sure.
+					$repository_args[ array_keys( $date_keys )[0] ] = $arguments['date'];
+				} else {
+					$repository_args[ array_keys( $date_keys )[0] ] = reset( $date_keys );
+				}
+			}
+		}
+
+		if ( isset( $arguments['featured'] ) ) {
+			$repository_args['featured'] = tribe_is_truthy( $arguments['featured'] );
+		}
+
+		return $repository_args;
+	}
+
+	/**
+	 * Filters the default view in the views manager for shortcodes navigation.
+	 *
+	 * @since  4.7.9
+	 *
+	 * @param string $view_class Fully qualified class name for default view.
+	 *
+	 * @return string             Fully qualified class name for default view of the shortcode in question.
+	 */
+	public function filter_default_url( $view_class ) {
+		if ( tribe_context()->doing_php_initial_state() ) {
+			return $view_class;
+		}
+
+		// Use the global context here as we should be in the context of an AJAX shortcode request.
+		$shortcode_id = tribe_context()->get( 'shortcode', false );
+
+		if ( false === $shortcode_id ) {
+			// If we're not in the context of an AJAX shortcode request, bail.
+			return $view_class;
+		}
+
+		$shortcode_args = $this->get_database_arguments( $shortcode_id );
+
+		if ( ! $shortcode_args['view'] ) {
+			return $view_class;
+		}
+
+		return tribe( Views_Manager::class )->get_view_class_by_slug( $shortcode_args['view'] );
 	}
 }

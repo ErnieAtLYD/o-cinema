@@ -1025,23 +1025,27 @@ class Tribe__Events__Pro__Recurrence__Meta {
 	 * Get the start dates of all instances of the event,
 	 * in ascending order
 	 *
-	 * @param int $post_id
+	 * @param int $request_post The post ID of the requested post, this might not be the Series parent, but the ID
+	 *                          of any post in the Series.
 	 *
 	 * @return array Start times, as Y-m-d H:i:s
 	 */
-	public static function get_start_dates( $post_id ) {
-		if ( empty( $post_id ) ) {
+	public static function get_start_dates( $request_post ) {
+		if ( empty( $request_post ) ) {
 			return array();
 		}
+
+		// We get the parent first to make sure we leverage the cache correctly, that is set for the series parent.
+		/** @var wpdb $wpdb */
+		global $wpdb;
+		$ancestors = get_post_ancestors( $request_post );
+		$post_id   = empty( $ancestors ) ? $request_post : end( $ancestors );
+
 		$cache = tribe( 'cache' );
 		$dates = $cache->get( 'event_dates_' . $post_id, 'save_post' );
 		if ( is_array( $dates ) ) {
 			return $dates;
 		}
-		/** @var wpdb $wpdb */
-		global $wpdb;
-		$ancestors = get_post_ancestors( $post_id );
-		$post_id   = empty( $ancestors ) ? $post_id : end( $ancestors );
 
 		$sql       = "
 			SELECT     meta_value

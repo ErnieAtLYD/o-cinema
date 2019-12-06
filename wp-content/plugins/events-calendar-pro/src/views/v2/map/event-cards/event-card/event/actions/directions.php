@@ -14,10 +14,18 @@
  * @var WP_Post $event The event post object with properties added by the `tribe_get_event` function.
  *
  * @see tribe_get_event() For the format of the event object.
- *
  */
-// @todo @be @bordoni: The map directions to the event venue.
+
+if ( ! $event->venues->count() ) {
+	return;
+}
+
+$venue = $event->venues[0];
 ?>
-<a href="<?php echo esc_url( $event->get_directions ); ?>" class="tribe-events-c-small-cta__link tribe-common-cta tribe-common-cta--thin-alt">
+<a
+	href="<?php echo esc_url( $venue->directions_link ); ?>"
+	class="tribe-events-c-small-cta__link tribe-common-cta tribe-common-cta--thin-alt"
+	target="_blank"
+>
 	<?php esc_html_e( 'Get Directions', 'tribe-events-calendar-pro' ); ?>
 </a>

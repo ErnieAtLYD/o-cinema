@@ -36,7 +36,7 @@ interface Shortcode_Interface {
 	 *
 	 * @return void
 	 */
-	public function setup( array $arguments, string $content );
+	public function setup( $arguments, $content );
 
 	/**
 	 * Returns the arguments for the shortcode parsed correctly with defaults applied.
@@ -47,7 +47,7 @@ interface Shortcode_Interface {
 	 *
 	 * @return array
 	 */
-	public function parse_arguments( array $arguments );
+	public function parse_arguments( $arguments );
 
 	/**
 	 * Returns the array of arguments for this shortcode after applying the validation callbacks.
@@ -58,7 +58,7 @@ interface Shortcode_Interface {
 	 *
 	 * @return array
 	 */
-	public function validate_arguments( array $arguments );
+	public function validate_arguments( $arguments );
 
 	/**
 	 * Returns the array of callbacks for this shortcode's arguments.
