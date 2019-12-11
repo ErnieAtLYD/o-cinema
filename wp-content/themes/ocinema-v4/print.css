@@ -1,0 +1,80 @@
+@charset "UTF-8";
+/*
+ Note to self, I may need to take more notes from
+ https://www.jotform.com/blog/css-perfect-print-stylesheet-98272/
+ */
+
+.print-only {
+	display: none;
+}
+
+@media print {
+  .container {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background: none;
+  }
+  .print-only {
+  	display: block;
+  	float: right;
+  	width: 200px;
+  	font-family: 'Carrois Gothic', sans-serif;
+  	font-size: 10pt;
+  }
+  .flexslider, .venue-logo, .navbar, footer, #trailer, .btn-block, .social-media, .venue-thumb,
+  .quotes, .details.muted, #synopsis img, .post-edit-link, .hidden-print, .timetable td br {
+    display: none !important;
+  }
+  .thumbnail.poster {
+     width: 200px;
+     float: right;
+  }
+  #synopsis p:first-child {
+    display: block !important;
+    font-size: 12pt;
+    line-height: 16pt;
+  }
+  #synopsis {
+  	width: 70%;
+  	padding: 0;
+  	margin: 0;
+  	float: left;
+  }
+  .body.container, .purchase-tix {
+    border: 0 !important;
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    box-shadow: none !important;
+  }
+
+  .purchase-tix, .purchase-tix td {
+  	display: inline-table !important;
+  	padding: 0; margin: 0;
+  }
+  .showtimes {
+  	display: inline-table !important;
+  }
+
+  .timetable, .timetable td, .showtimes {
+	display: inline-table !important;
+  }
+  .timetable td {
+  	font-size: 16pt;
+  	line-height: 20pt;
+  }
+  .print-friendly-date {
+  	display: inline-table !important;
+  	width: 150px;
+  }
+
+  .showtimes {
+  	color: #000 !important;
+  }
+  .showtimes:after {
+    content: ", ";
+  }
+  td .showtimes:last-child:after {
+  	content: "";
+  }
+}

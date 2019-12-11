@@ -7,12 +7,13 @@ function ocinema_v4_scripts() {
 	wp_enqueue_style( 'ocinema_v4-fontawesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css' );
 	wp_enqueue_style( 'ocinema_v4-googlefont', '//fonts.googleapis.com/css?family=Carrois+Gothic|Courgette|Lato:700' );
 	wp_enqueue_style( 'ocinema_v4-style', get_stylesheet_uri(), array(), filemtime( get_template_directory() . '/css/style.css' ), false );
+	wp_enqueue_style( 'ocinema_v4-print-style', get_template_directory_uri() . '/print.css', null, filemtime( get_template_directory_uri() . '/print.css' ), 'print' );
 
 	wp_enqueue_script( 'ocinema_v4-jq', '//code.jquery.com/jquery-latest.js' );
-	wp_enqueue_script( 'ocinema_v4-bootstrap', get_template_directory_uri() . '/js/bootstrap.min.js', array(), filemtime( get_template_directory_uri() . '/js/bootstrap.min.js' ), true );
-	wp_enqueue_script( 'ocinema_v4-fitvids', get_template_directory_uri() . '/js/jquery.fitvids.js', array(), filemtime( get_template_directory_uri() . '/js/jquery.fitvids.js' ), true );
-	wp_enqueue_script( 'ocinema_v4-flexslider', get_template_directory_uri() . '/js/flexslider-min.js', array(), filemtime( get_template_directory_uri() . '/js/flexslider-min.js' ), true );
-	wp_enqueue_script( 'ocinema_v4-plugins', get_template_directory_uri() . '/js/plugins.js', array(), filemtime( get_template_directory_uri() . '/js/plugins.js' ), true );
+	wp_enqueue_script( 'ocinema_v4-bootstrap', get_template_directory_uri() . '/assets/js/bootstrap.min.js', array(), filemtime( get_template_directory_uri() . '/assets/js/bootstrap.min.js' ), true );
+	wp_enqueue_script( 'ocinema_v4-fitvids', get_template_directory_uri() . '/assets/js/jquery.fitvids.js', array(), filemtime( get_template_directory_uri() . '/assets/js/jquery.fitvids.js' ), true );
+	wp_enqueue_script( 'ocinema_v4-flexslider', get_template_directory_uri() . '/assets/js/jquery.flexslider-min.js', array(), filemtime( get_template_directory_uri() . '/assets/js/jquery.flexslider-min.js' ), true );
+	wp_enqueue_script( 'ocinema_v4-plugins', get_template_directory_uri() . '/assets/js/plugins.js', array(), filemtime( get_template_directory_uri() . '/assets/js/plugins.js' ), true );
 }
 add_action( 'wp_enqueue_scripts', 'ocinema_v4_scripts' );
 
@@ -63,4 +64,4 @@ function return_fancy_html_for_venue( $id ) {
 
 add_filter( 'gform_submit_button', 'form_submit_button', 10, 2 );
 
-require_once 'wp_bootstrap_navwalker.php';
+require_once 'classes/class-wp-bootstrap-navwalker.php';
