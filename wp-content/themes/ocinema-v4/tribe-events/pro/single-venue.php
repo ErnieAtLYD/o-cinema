@@ -7,7 +7,8 @@
 
 // Don't load directly
 if ( ! defined( 'ABSPATH' ) ) {
-	die( '-1' ); } ?>
+	die( '-1' );
+} ?>
 <div class="body container">
 	<div class="row">                
 		<div class="span12">
@@ -17,9 +18,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<div style="background: rgba(0, 0, 0, 0.67); position:absolute; bottom:0; width:100%; color:#fff;">
 							<div style="margin:10px;">
 								<h1 style="margin:0; line-height:1.5em; font-size:3em;">
-									<?php returnFancyHtmlForVenue( tribe_get_venue_id() ); ?>
+									<?php return_fancy_html_for_venue( tribe_get_venue_id() ); ?>
 								</h1>
-								<span style="font-family: 'Carrois Gothic', sans-serif; font-size:22px;"><?php echo tribe_get_address(); ?>, <?php echo tribe_get_city(); ?> <?php echo tribe_get_phone(); ?></span>
+								<span style="font-family: 'Carrois Gothic', sans-serif; font-size:22px;">
+									<?php echo esc_html( tribe_get_address() ); ?>, <?php echo esc_html( tribe_get_city() ); ?> <?php echo esc_html( tribe_get_phone() ); ?>
+								</span>
 							</div>
 						</div>
 					</div>
@@ -31,7 +34,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<li><a href="#venue" data-toggle="tab">About This Venue</a></li>
 				<?php $whileindex = 0; while ( the_flexible_field( 'venue_tab' ) ) : ?>
 					<?php if ( get_row_layout() === 'tab_layout_content' ) : ?>
-					<li><a href="#tab_<?php echo $whileindex; ?>" data-toggle="tab">
+					<li><a href="#tab_<?php echo esc_attr( $whileindex ); ?>" data-toggle="tab">
 						<?php the_sub_field( 'tab_name' ); ?></a></li>
 						<?php
 					endif;
@@ -63,18 +66,18 @@ if ( count( $venue_events ) > 0 ) :
 			<li class="span3">
 				<div class="thumbnail">
 					<div>
-						<a  href="<?php echo get_permalink( $post->ID ); ?>" 
+						<a  href="<?php echo esc_url( get_permalink( $post->ID ) ); ?>" 
 							title="<?php the_title_attribute( 'echo=0' ); ?>">
 							<?php
 							$attr = array(
 								'style' => 'width:90%; margin:16px 0 0 16px;',
 							);
-								   the_post_thumbnail( 'poster-thumb', $attr );
+								esc_url( the_post_thumbnail( 'poster-thumb', $attr ) );
 							?>
 						</a>
 					</div>
 					<div style="margin:10px;">
-						<i class="fa fa-ticket fa-3x pull-right venue-fg-<?php echo tribe_get_venue_id(); ?>"></i>
+						<i class="fa fa-ticket fa-3x pull-right venue-fg-<?php echo esc_attr( tribe_get_venue_id() ); ?>"></i>
 						<?php
 						the_title( '<h4><a href="' . get_permalink( $post->ID ) . '" title="' . the_title_attribute( 'echo=0' ) . '" rel="bookmark" itemprop="url">', '</a></h4>' );
 
@@ -104,7 +107,7 @@ if ( count( $venue_events ) > 0 ) :
 
 						echo '<div style="margin-top:5px; font-size:93%; font-family: \'Carrois Gothic\', sans-serif;">';
 						$parser = new ML_Agile_Parser( $post->ID );
-						echo $parser->get_front_run_dates();
+						echo esc_html( $parser->get_front_run_dates() );
 						echo '</div>';
 
 						?>
@@ -124,11 +127,11 @@ endif;
 <div class="tab-pane" id="maps" style="margin-bottom:2.5em;">
 	<div class="row">
 		<div class="span4">
-			<?php echo tribe_get_embedded_map( get_the_ID(), '350px', '400px' ); ?>
+			<?php echo esc_html( tribe_get_embedded_map( get_the_ID(), '350px', '400px' ) ); ?>
 		</div>
 		<div class="span8">
 			<?php
-			wp_reset_query();
+			wp_reset_postdata();
 			the_field( 'venue_directions' );
 			?>
 		</div>
@@ -137,7 +140,7 @@ endif;
 <div class="tab-pane" id="venue" style="margin-bottom:2.5em;">
 	<div class="row">
 		<div class="span8 offset4">
-			<h3>About <?php echo tribe_get_venue(); ?></h3>
+			<h3>About <?php echo esc_html( tribe_get_venue() ); ?></h3>
 			<?php if ( get_the_content() !== '' ) : ?>
 				<?php the_content(); ?>
 			<?php endif ?>
@@ -145,10 +148,10 @@ endif;
 	</div>
 </div>
 
-<?php wp_reset_query(); ?>
+<?php wp_reset_postdata(); ?>
 <?php $whileindex = 0; while ( the_flexible_field( 'venue_tab' ) ) : ?>
 	<?php if ( get_row_layout() === 'tab_layout_content' ) : ?>
-		<div class="tab-pane" id="tab_<?php echo $whileindex; ?>" style="margin-bottom:2.5em;">
+		<div class="tab-pane" id="tab_<?php echo esc_attr( $whileindex ); ?>" style="margin-bottom:2.5em;">
 			<div class="row">
 				<div class="span4">
 				<img src="<?php the_sub_field( 'tab_featured_image' ); ?>">
@@ -164,7 +167,6 @@ endif;
 	$whileindex++;
 	?>
 <?php endwhile; ?>
-			
 			</div> <!-- tab-content -->
 		</div>  
 	</div>

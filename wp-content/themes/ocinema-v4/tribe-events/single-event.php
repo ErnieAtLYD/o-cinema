@@ -19,7 +19,7 @@ get_header();
 <div class="body container">
 	<div class="row">
 		<span class="span1">
-			<a href="<?php echo tribe_get_venue_link( null, false ); ?>">
+			<a href="<?php echo esc_html( tribe_get_venue_link( null, false ) ); ?>">
 				<img class="venue-logo" src="<?php the_field( 'venue_logo', tribe_get_venue_id() ); ?>" />
 			</a>
 		</span>
@@ -27,14 +27,13 @@ get_header();
 			<h1 style="font-size:3.5em;">
 				<?php the_title(); ?>
 			</h1>
-			 <div class="muted" style="font-family: 'Carrois Gothic', sans-serif; text-transform:uppercase; letter-spacing: 0.05em">
+			<div class="muted" style="font-family: 'Carrois Gothic', sans-serif; text-transform:uppercase; letter-spacing: 0.05em">
 				<?php the_field( 'event_metadata' ); ?>    
 			</div>
 		</span>
 	</div>
 	<div class="row">
 		<span class="span4" style="float:right;">
-		
 			<h3 class="hidden-print" style="margin:0; text-transform:uppercase;">Purchase a ticket</h3>
 			<p class="hidden-print muted" style="font-family: 'Carrois Gothic', sans-serif; text-transform:uppercase; letter-spacing: 0.05em">Select your showtime below.</p>
 			<div class="purchase-tix thumbnail">			
@@ -44,9 +43,9 @@ get_header();
 
 				if ( get_field( 'ticketurl' ) ) :
 					echo '<a class="btn btn-large btn-';
-					echo tribe_get_venue_id();
+					echo esc_attr( tribe_get_venue_id() );
 					echo ' btn-block" href="';
-					echo get_field( 'ticketurl' );
+					echo esc_url( get_field( 'ticketurl' ) );
 					echo '" style="font-family:\'Lato\', sans-serif; font-weight:700; font-size:24px; color: #fff !important;">
 						Purchase Tickets Now <i class="fa fa-ticket fa-lg"></i>';
 					echo '</a>';
@@ -77,19 +76,19 @@ get_header();
 			<?php
 			if ( wp_oembed_get( get_field( 'trailer' ) ) ) {
 				echo '<div style="clear:both;" id="trailer">';
-				echo wp_oembed_get( get_field( 'trailer' ) );
+				echo esc_html( wp_oembed_get( get_field( 'trailer' ) ) );
 				echo '</div>';
 			} elseif ( isset( $xml_media_embed ) && ( ! empty( $xml_media_embed ) ) ) {
 				echo '<div style="clear: both;" id="trailer">';
 				switch ( $xml_media_embed['Type'] ) {
 					case 'YouTube':
-						echo wp_oembed_get( 'http://www.youtube.com/watch?v=' . $xml_media_embed['Value'] );
+						echo esc_html( wp_oembed_get( 'http://www.youtube.com/watch?v=' . $xml_media_embed['Value'] ) );
 						break;
 					case 'Vimeo':
-						echo wp_oembed_get( 'http://vimeo.com/' . $xml_media_embed['Value'] );
+						echo esc_html( wp_oembed_get( 'http://vimeo.com/' . $xml_media_embed['Value'] ) );
 						break;
 					default:
-						echo $xml_media_embed['MediaEmbed'];
+						echo esc_html( $xml_media_embed['MediaEmbed'] );
 				}
 				echo '</div>';
 			}
@@ -116,8 +115,8 @@ get_header();
 							<ul class="slides">
 								<?php foreach ( $images as $image ) : ?>
 									<li>
-										<img src="<?php echo $image['sizes']['slideshow']; ?>" alt="<?php echo $image['alt']; ?>" />
-										<p><?php echo $image['caption']; ?></p>
+										<img src="<?php echo esc_url( $image['sizes']['slideshow'] ); ?>" alt="<?php echo esc_attr( $image['alt'] ); ?>" />
+										<p><?php echo esc_html( $image['caption'] ); ?></p>
 									</li>
 								<?php endforeach; ?>
 							</ul>
@@ -148,7 +147,6 @@ get_header();
 	</div>
 </div>
 
-<script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
 <script>
 $(document).ready(function(){
 	// Target your .container, .wrapper, .post, etc.
