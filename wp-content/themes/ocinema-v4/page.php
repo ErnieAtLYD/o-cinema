@@ -1,7 +1,9 @@
-<?php get_header(); ?>
+<?php get_header();
 
-<?php if ( have_posts() ) while ( have_posts() ) : the_post(); ?>
-	<div <?php post_class('body container'); ?>>
+while ( have_posts() ) :
+	the_post();
+	?>
+	<div <?php post_class( 'body container' ); ?>>
 		<div class="row">
 			<div class="span8 offset2">
 				<h2><?php the_title(); ?></h2>
@@ -10,6 +12,6 @@
 			</div> 		
 		</div>
 	</div>
-<?php endwhile; // end of the loop. ?>
-
-<?php get_footer(); ?>
+	<?php
+endwhile; // end of the loop.
+get_footer();

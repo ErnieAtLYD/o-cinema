@@ -3,8 +3,10 @@
 /**
 * The main page of the O Cinema front page
 */
-	// In order: North Beach, South Beach
-	$venue_arrays = array( 4202, 8845 );
+global $post;
+
+// In order: North Beach, South Beach
+	$venue_arrays = array( 8845 );
 ?>
 	<div class="container home">
 		<div class="row">
@@ -52,15 +54,13 @@
 				'post_per_page' => -1,
 			]
 		);
-		global $post;
 
 		foreach ( $events as $post ) :
 			setup_postdata( $post );
 			?>
 			<?php $venue = tribe_get_venue_id(); ?>
 			<li class="item">
-				<a href="<?php echo get_permalink( $post->ID ); ?>"
-				   title="<?php echo the_title_attribute( 'echo=0' ); ?>">
+				<a href="<?php echo esc_url( get_permalink( $post->ID ) ); ?>" title="<?php echo the_title_attribute( 'echo=0' ); ?>">
 					<div class="thumbnail">
 						<?php the_post_thumbnail( 'poster-thumb' ); ?>
 						<div style="margin:10px 5px">
@@ -68,7 +68,7 @@
 							<span style="font-family: 'Carrois Gothic', sans-serif;">
 								<?php
 									$parser = new ML_Agile_Parser( $post->ID );
-									echo $parser->get_front_run_dates();
+									echo esc_html( $parser->get_front_run_dates() );
 								?>
 								<br>
 								<?php
@@ -82,7 +82,7 @@
 										echo '<span class="venue-fg-2118">South Beach</span>';
 										break;
 									default:
-										echo tribe_get_venue();
+										echo esc_html( tribe_get_venue() );
 										break;
 								}
 								?>

@@ -9,7 +9,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">  
 	<meta name="apple-mobile-web-app-capable" content="yes">
-	<link rel="shortcut icon" href="<?php bloginfo( 'template_directory' ); ?>/images/ocinema3_favicon.png" />
+	<link rel="shortcut icon" href="<?php bloginfo( 'template_directory' ); ?>/assets/images/ocinema3_favicon.png" />
 	<link rel="apple-touch-icon" href="//www.o-cinema.org/wp-content/uploads/2013/04/mobilehomescreen.png"/>
 
 <script type="text/javascript">
@@ -28,7 +28,7 @@ var addToHomeConfig = {
 		echo ': 404 Nothing Found';
 	} elseif ( tribe_is_venue() ) {
 		wp_title( '' );
-		echo ': A cinema showing movies in ' . tribe_get_city() . ', FL';
+		echo ': A cinema showing movies in ' . esc_html( tribe_get_city() ) . ', FL';
 	} elseif ( is_page() ) {
 		bloginfo( 'name' );
 		echo ': ';
@@ -75,19 +75,19 @@ var addToHomeConfig = {
 		</div><!--/.nav-collapse -->
 		<ul style="padding-left:10px;" class="nav pull-right">
 			<li>
-			<a class="logo" href="https://twitter.com/ocinema" target="_blank">
-				<i class="fa fa-twitter fa-lg"></i>
-			</a>
+				<a class="logo" href="https://twitter.com/ocinema" target="_blank">
+					<i class="fa fa-twitter fa-lg"></i>
+				</a>
 			</li>
 			<li>
-			<a class="logo" href="https://www.facebook.com/ocinema" target="_blank">
-				<i class="fa fa-facebook fa-lg"></i>
-			</a>
+				<a class="logo" href="https://www.facebook.com/ocinema" target="_blank">
+					<i class="fa fa-facebook fa-lg"></i>
+				</a>
 			</li>
 			<li>
-			<a class="logo" href="https://www.instagram.com/ocinema/" target="_blank">
-				<i class="fa fa-instagram fa-lg"></i>
-			</a>
+				<a class="logo" href="https://www.instagram.com/ocinema/" target="_blank">
+					<i class="fa fa-instagram fa-lg"></i>
+				</a>
 			</li>        	
 		</ul>
 
@@ -96,9 +96,9 @@ var addToHomeConfig = {
 			action="//visitor.constantcontact.com/d.jsp" 
 			class="navbar-form pull-right" 
 			name="ccoptin">
-		<input type="text" id="edit-email" class="span2" name="ea" placeholder="Email">
-		<input type="submit" class="form-submit btn btn-inverse" value="Subscribe" id="go" name="go">
-		<input type="hidden" value="1101408126288" name="m"> <input type="hidden" value="oi" name="p">
+			<input type="text" id="edit-email" class="span2" name="ea" placeholder="Email">
+			<input type="submit" class="form-submit btn btn-inverse" value="Subscribe" id="go" name="go">
+			<input type="hidden" value="1101408126288" name="m"> <input type="hidden" value="oi" name="p">
 		</form>		
 		</div>
 	</div>
