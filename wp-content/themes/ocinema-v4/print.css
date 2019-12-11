@@ -4,10 +4,6 @@
  https://www.jotform.com/blog/css-perfect-print-stylesheet-98272/
  */
 
-.print-only {
-	display: none;
-}
-
 @media print {
   .container {
     width: 100%;
