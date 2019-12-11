@@ -127,7 +127,7 @@ endif;
 <div class="tab-pane" id="maps" style="margin-bottom:2.5em;">
 	<div class="row">
 		<div class="span4">
-			<?php echo esc_html( tribe_get_embedded_map( get_the_ID(), '350px', '400px' ) ); ?>
+			<?php echo tribe_get_embedded_map( get_the_ID(), '350px', '400px' ); ?>
 		</div>
 		<div class="span8">
 			<?php
