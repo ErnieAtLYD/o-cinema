@@ -26,6 +26,7 @@ if ( ! function_exists( 'wpt_setup' ) ) :
 endif;
 
 if ( function_exists( 'add_theme_support' ) ) {
+	add_theme_support( 'post-thumbnails' );
 	if ( function_exists( 'add_image_size' ) ) {
 		// additional image sizes
 		// delete the next line if you do not need additional image sizes
