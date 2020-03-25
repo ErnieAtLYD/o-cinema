@@ -4,8 +4,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 }; // Don't allow direct access
 
 ?>
-<a class="venue-thumb" href="<?php echo esc_url( tribe_get_venue_link( $venue, false ) ); ?>" style="display:block;position:relative; background:url(<?php the_field( 'venue_banner', $venue ); ?>) center center; background-size:cover; height:14em; margin-bottom:1em;">
-	<div style="background: rgba(0, 0, 0, 0.67); position:absolute; bottom:0; width:100%; color:#fff;">
+<a	class="venue-thumb venue-thumb-<?php echo esc_attr( $venue ); ?>"
+	href="<?php echo esc_url( tribe_get_venue_link( $venue, false ) ); ?>"
+	style="background:url(<?php the_field( 'venue_banner', $venue ); ?>) center center;">
+	<div>
 		<?php if ( ! empty( tribe_get_address( $venue ) ) ) : ?>
 		<div style="margin:10px;">
 			<h3 style="margin:0; line-height:30px;">

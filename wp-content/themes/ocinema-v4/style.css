@@ -6456,6 +6456,21 @@ footer a {
   background-color: #24748c \9;
 }
 
+.venue-thumb {
+  background-size: cover;
+  display: block;
+  height: 14em;
+  margin-bottom: 1em;
+  position: relative;
+}
+.venue-thumb > div {
+  background: rgba(0, 0, 0, 0.67);
+  bottom: 0;
+  color: #fff;
+  position: absolute;
+  width: 100%;
+}
+
 /* .venue-2118, .venue-2119, .venue-4202 { border-radius: 5px 5px 5px 5px; margin: 5px !important; } */
 .venue-2118,
 .venue-8845 {
