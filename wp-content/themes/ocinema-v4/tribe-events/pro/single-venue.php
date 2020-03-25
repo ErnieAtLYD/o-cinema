@@ -18,18 +18,18 @@ global $post;
 			<div class="row" style="margin-bottom:2em;">
 				<div class="span12">
 					<div style="margin-top:15px; background:url(<?php the_field( 'venue_banner' ); ?>) center center; display:block;position:relative; background-size:cover; height:24em;">
+					<?php if ( ! empty( tribe_get_address() ) ) : ?>
 						<div style="background: rgba(0, 0, 0, 0.67); position:absolute; bottom:0; width:100%; color:#fff;">
 							<div style="margin:10px;">
 								<h1 style="margin:0; line-height:1.5em; font-size:3em;">
 									<?php return_fancy_html_for_venue( tribe_get_venue_id() ); ?>
 								</h1>
-								<?php if ( ! empty( tribe_get_address() ) ) : ?>
 								<span style="font-family: 'Carrois Gothic', sans-serif; font-size:22px;">
 									<?php echo esc_html( tribe_get_address() ); ?>, <?php echo esc_html( tribe_get_city() ); ?> <?php echo esc_html( tribe_get_phone() ); ?>
 								</span>
-								<?php endif; ?>
 							</div>
 						</div>
+					<?php endif; ?>
 					</div>
 				</div>
 			</div>
