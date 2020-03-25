@@ -6464,6 +6464,10 @@ footer a {
   margin-bottom: 1em;
   position: relative;
 }
+/* Override "virtual cinema" background position */
+.venue-thumb.venue-thumb-9362 {
+  background-size: contain;
+}
 .venue-thumb > div {
   background: rgba(0, 0, 0, 0.67);
   bottom: 0;
@@ -6472,7 +6476,6 @@ footer a {
   width: 100%;
 }
 
-/* .venue-2118, .venue-2119, .venue-4202 { border-radius: 5px 5px 5px 5px; margin: 5px !important; } */
 .venue-2118,
 .venue-8845 {
   background-color: #ed008c;
@@ -6494,29 +6497,6 @@ footer a {
   color: #09f;
 }
 
-.wynwood h2 {
-  background-color: #ed008c;
-  border-radius: 5px;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-}
-.miamishores h2 {
-  background-color: #afdd52;
-  border-radius: 5px;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-}
-.wynwood h2 a,
-.miamishores h2 a {
-  color: #fff;
-  text-shadow: 0px 2px 1px #000;
-}
-.wynwood small,
-.miamishores small {
-  color: #444;
-  font-family: "Courgette", cursive;
-  display: block;
-}
 h1,
 h2,
 h3,
