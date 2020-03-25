@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 <a	class="venue-thumb venue-thumb-<?php echo esc_attr( $venue ); ?>"
 	href="<?php echo esc_url( tribe_get_venue_link( $venue, false ) ); ?>"
-	style="background:url(<?php the_field( 'venue_banner', $venue ); ?>) center center;">
+	style="background-image:url(<?php the_field( 'venue_banner', $venue ); ?>);">
 	<div>
 		<?php if ( ! empty( tribe_get_address( $venue ) ) ) : ?>
 		<div style="margin:10px;">

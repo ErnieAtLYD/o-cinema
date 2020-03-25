@@ -6457,6 +6457,7 @@ footer a {
 }
 
 .venue-thumb {
+  background-position: center center;
   background-size: cover;
   display: block;
   height: 14em;
