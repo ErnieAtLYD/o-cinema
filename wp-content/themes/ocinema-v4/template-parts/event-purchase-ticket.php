@@ -6,7 +6,7 @@
 	get_template_part( 'template-parts/showtime-table' );
 
 	if ( get_field( 'ticketurl' ) ) : ?>
-		<a class="btn btn-large btn-<?php echo esc_attr( tribe_get_venue_id() ); ?> btn-block" href="<?php echo esc_url( get_field( 'ticketurl' ) ); ?>" style="font-family:\'Lato\', sans-serif; font-weight:700; font-size:24px; color: #fff !important;">
+		<a class="btn btn-large btn-<?php echo esc_attr( tribe_get_venue_id() ); ?> btn-block" href="<?php echo esc_url( get_field( 'ticketurl' ) ); ?>" style="font-family:\'Lato\', sans-serif; font-weight:700; font-size:24px; background-color:#ED008C; color: #fff !important;">
 			Purchase Tickets Now <i class="fa fa-ticket fa-lg"></i>
 		</a>
 		<?php
