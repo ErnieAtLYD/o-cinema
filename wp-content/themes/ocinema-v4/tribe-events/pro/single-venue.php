@@ -23,9 +23,11 @@ global $post;
 								<h1 style="margin:0; line-height:1.5em; font-size:3em;">
 									<?php return_fancy_html_for_venue( tribe_get_venue_id() ); ?>
 								</h1>
+								<?php if ( ! empty( tribe_get_address() ) ) : ?>
 								<span style="font-family: 'Carrois Gothic', sans-serif; font-size:22px;">
 									<?php echo esc_html( tribe_get_address() ); ?>, <?php echo esc_html( tribe_get_city() ); ?> <?php echo esc_html( tribe_get_phone() ); ?>
 								</span>
+								<?php endif; ?>
 							</div>
 						</div>
 					</div>
