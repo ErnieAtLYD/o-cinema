@@ -175,6 +175,10 @@ class ML_Agile_Parser extends ML_Agile_Base {
 	 * @return string
 	 */
 	protected function parse_media( $data_arr ) {
+		if ( ! isset( $data_arr['ArrayOfShows'] ) || empty( $data_arr['ArrayOfShows'] ) ) {
+			return '';
+		}
+
 		$media = $data_arr['ArrayOfShows']['Show']['AdditionalMedia']['Media'];
 		if ( ( ! empty( $media ) ) && ( ! empty( $media[0] ) ) ) {
 			return $media[0];
@@ -194,6 +198,9 @@ class ML_Agile_Parser extends ML_Agile_Base {
 		$data_arr = $API->get_json_from_agile_api( $evtinfo );
 
 		if ( ! isset( $data_arr ) || empty( $data_arr ) ) {
+			return [];
+		}
+		if ( ! isset( $data_arr['ArrayOfShows'] ) || empty( $data_arr['ArrayOfShows'] ) ) {
 			return [];
 		}
 
