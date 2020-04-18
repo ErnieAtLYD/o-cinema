@@ -29,6 +29,7 @@ class ML_Agile_REST extends ML_Agile_Base {
 			'event_details'   => get_post_meta( $event_id, 'event_details', true ),
 			'event_sponsor'   => get_post_meta( $event_id, 'event_sponsor', true ),
 			'event_reviews'   => get_post_meta( $event_id, 'event_reviews', true ),
+			'ticket_url'      => get_post_meta( $event_id, 'ticketurl', true ),
 			'event_showtimes' => $parser->get_showtimes(),
 		];
 
