@@ -11,6 +11,12 @@ class ML_Agile_REST extends ML_Agile_Base {
 	public static function init() {
 		// register post type
 		add_filter( 'tribe_rest_event_data', [ get_class(), 'register_fields' ] );
+
+		// add ACF relevent fields for series pages
+		add_filter( 'rest_prepare_page', function($response) {
+			$response->data['acf'] = get_fields($response_data['id']);
+			return $response;
+		});
 	}
 
 	/**
