@@ -35,6 +35,7 @@ if ( have_posts() ) while ( have_posts() ) : the_post(); ?>
 				$index = 0;
 				global $post;
 				if ( count( $venue_events ) > 0 ) :
+					echo '<h2>Current &amp; Upcoming Screenings</h2>';
 					foreach ( $chunked_events as $row ) :
 						echo '<ul class="thumbnails row">';
 						foreach( $row as $post ) :
