@@ -21,6 +21,7 @@ if ( have_posts() ) while ( have_posts() ) : the_post(); ?>
 				$venue_events = tribe_get_events(
 					array(
 						'eventDisplay'   => 'list',
+						'ends_after'     => 'now',
 						'posts_per_page' => -1,
 						'tax_query'      => array(
 							array(
